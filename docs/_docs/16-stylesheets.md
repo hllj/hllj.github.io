@@ -111,7 +111,7 @@ Not a fan of the refreshed typography of the theme and want to revert back an ol
 **2.** Update the following SCSS variables:
 
 ```scss
-$serif              : "PT Serif", Georgia, Times, serif;
+$serif              : "Lato", "PT Serif", Georgia, Times, serif;
 $sans-serif-narrow  : "PT Sans Narrow", -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
 
 $global-font-family : $serif;
