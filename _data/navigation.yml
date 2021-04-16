@@ -2,11 +2,11 @@
 main:
   - title: "Home"
     url: /
-  - title: "About"
-    url: /
   - title: "Blog"
-    url: /
+    url: /blog/
   - title: "Reading"
+    url: /
+  - title: "Articles"
     url: /
   - title: "Miscellaneous"
     url: /
