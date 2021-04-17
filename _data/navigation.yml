@@ -5,10 +5,12 @@ main:
   - title: "Blog"
     url: /blog/
   - title: "Reading"
-    url: /
+    url: /reading/
   - title: "Articles"
-    url: /
+    url: /article/
+  - title: "Project"
+    url: /project/
   - title: "Miscellaneous"
-    url: /
+    url: /misc/
   - title: "FAQs"
-    url: /
+    url: /faqs/
