@@ -1,17 +1,19 @@
 ---
 title: "Giới thiệu về mô hình SVM"
+classes: wide
 categories:
   - knowledge
+  - machine learning
 tags:
   - vietnamese
-toc: true
+toc: false
 toc_label: "My Table of Contents"
 toc_icon: "cog"
-toc_sticky: true
+toc_sticky: false
 header:
   overlay_image: "/images/res2.png"
   overlay_filter: 0.7
-  overlay_color: "#333"
+  overlay_color: "#005eff"
 ---
 
 # Phần 1: Tổng quan về mô hình SVM
@@ -73,20 +75,26 @@ Ta có bài toán tối ưu:
 
 Gọi những $x_n$ là những điểm dữ liệu gần nhất với mặt phẳng $w^Tx + b$. Với kiến thức hình học cấp 3, ta dễ dàng tính được khoảng cách từ $x_n$ tới mặt phẳng là:
 
-$$\frac{|w^Tx_n + b|}{||w||_2} ~~~~ (2)$$
+$$ \frac{|w^T x_n + b|}{||w||_2} ~~~~ (2) $$
 
-Với $||w||_2 = \sqrt{\sum_{i=1}^d w_i^2}$.
+Với
 
-Để thuận tiện cho việc tính toán, sẽ normalize lại vector $w$ sao cho $|w^Tx_n + b| = 1 ~~~~ (3)$.
+$$ ||w||_2 = \sqrt{\sum_{i=1}^d w_i^2} $$
 
-![Normalize lại w](images/res2.png)
+Để thuận tiện cho việc tính toán, sẽ normalize lại vector $w$ sao cho:
+
+$$ |w^Tx_n + b| = 1 ~~~~ (3) $$
+
+![Normalize lại w](/images/res2.png)
 
 
 Từ đây ta có 2 nhận xét:
 
 * Những điểm $x_n$ được phân vào lớp $+1$ đều có giá trị $w^Tx + b \geq 1$, tương tự nếu được phân vào lớp $-1$, giá trị $w^Tx + b \leq -1$. Đây chính là cách phân lớp cho các điểm dữ liệu sau khi normalize $w$. Đặt $N$ là số lượng điểm dữ liệu, ta có $y_n(w^Tx_n +b) >= 1$ $\forall n=1, 2, 3 ... N$
 
-* Độ lớn của "lề" lớn nhất cho một mặt phẳng $w^Tx + b$ là $\frac{2}{||w||_2}$
+* Độ lớn của "lề" lớn nhất cho một mặt phẳng $w^Tx + b$ là
+
+$$ \frac{2}{||w||_2} $$
 
 Ta phát biểu **bài toán tối ưu cho SVM** như sau:
 
@@ -106,7 +114,9 @@ Từ đây chúng ta thấy áp dụng phương pháp nhân tử Lagrange (đã 
 
 $$\mathcal{L}(w, b, \alpha) = \frac{1}{2} w^Tw - \sum_{n=1}^N \alpha_n(y_n(w^Tx_n + b) - 1)$$
 
-$$ (4) \Leftrightarrow \text{Minimize with  } w, b; \text{Maximize with  } \alpha:\alpha_n \geq 0 \text{  } \mathcal{L}(w, b, \alpha) ~~~~ (*)$$
+$$ (4) \Leftrightarrow \text{Minimize with  } w, b;
+
+\text{Maximize with  } \alpha:\alpha_n \geq 0 \text{  } \mathcal{L}(w, b, \alpha) ~~~~ (*)$$
 
 Nhìn chung đây là bài toán tối ưu từ dạng primal form cho bài toán (4) thành dạng dual form (đối ngẫu với min, max) của bài toán (\*).
 
@@ -150,7 +160,11 @@ $$w = \sum_{n=1}^N \alpha_n y_n x_n ~~~~ (5)$$
 
 Mặt khác, với những $\alpha_n > 0$, ta lại có $\alpha_n (y_n(w^T + b) - 1) = 0$ (Từ một trong những điều kiện Karush-Kuhn-Tucker - KKT để chuyển từ dạng  primal form thành dual form), suy ra: $y_n(w^T + b) = 1$.
 
-Từ nhận xét này, ta có thể khẳng định những điểm $x_n$ có các $\alpha_n > 0$ tương ứng là **những điểm nằm gần nhất** với mặt phẳng $w^Tx + b$ và có **khoảng cách tới mặt phẳng** là $\frac{1}{||w||_2}$, chúng đóng góp vào việc tính toán ra vector pháp tuyến $w$ của mặt phẳng, vậy nên ta gọi những điểm $x_n$ đó là những **support vector**.
+Từ nhận xét này, ta có thể khẳng định những điểm $x_n$ có các $\alpha_n > 0$ tương ứng là **những điểm nằm gần nhất** với mặt phẳng $w^Tx + b$ và có **khoảng cách tới mặt phẳng** là
+
+$$ \frac{1}{||w||_2} $$
+
+Chúng đóng góp vào việc tính toán ra vector pháp tuyến $w$ của mặt phẳng, vậy nên ta gọi những điểm $x_n$ đó là những **support vector**.
 
 3. Tìm hệ số $b$. Ta có thể tìm hệ số $b$ bằng cách dùng bất kì support vector nào vì $y_n(w^T x_n + b) = 1$.
 
@@ -159,6 +173,7 @@ Từ nhận xét này, ta có thể khẳng định những điểm $x_n$ có c�
 * Vì sao gọi là **Support Vector Machine** ? Vì mô hình này được xây dựng dựa trên việc tìm ra các điểm $x_n$ đóng góp vào việc tìm ra mặt phẳng phân tách dữ liệu bài toán, cụ thể hoá bằng việc giải ra bài toán tối ưu với những $\alpha_n$ tương ứng $x_n$ ta đã chứng minh ở trên.
 
 * **Khả năng tổng quát** của mô hình SVM như thế nào ? Đây chính là một kết quả được đánh giá từ những phân tích thực tế. Người ta thấy rằng mô hình càng cho ra **ít** support vector thì khả năng tổng quát càng tốt. Kết quả tổng quát được tóm tắt với biểu thức sau:
+
     $$\mathop{\mathbb{E}}[Error_{out}] \leq \frac{\mathop{\mathbb{E}}[\text{\#SV}]}{N - 1}$$
 
     Nhìn chung người ta luôn kì vọng vào việc tìm ra thật **ít Support Vector** để làm giảm cận trên của độ lỗi trong thực tế ($Error_{out}$). Nếu có dữ liệu 1000 điểm, bạn tìm ra được khoảng 10 support vector, thì mô hình của bạn khá là tốt :)
