@@ -1,5 +1,5 @@
 ---
-title: "Giới thiệu về mô hình SVM"
+title: "Giới thiệu về mô hình SVM - Phần 1"
 classes: wide
 categories:
   - knowledge
