@@ -16,6 +16,10 @@ header:
   overlay_color: "#005eff"
 ---
 
+## Phần 3: Ví dụ minh họa cho mô hình SVM
+
+Xây dựng một bộ dữ liệu và đường phân cách đơn giản để thực nghiệm.
+
 ```python
 import numpy as np
 import pandas as pd
