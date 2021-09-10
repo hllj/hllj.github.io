@@ -4,12 +4,12 @@ main:
     url: /
   - title: "Blog"
     url: /blog/
-  - title: "Categories"
-    url: /categories/
   - title: "Articles"
     url: /articles/
   - title: "Projects"
     url: /projects/
+  - title: "Categories"
+    url: /categories/
   - title: "Miscellaneous"
     url: /misc/
   - title: "FAQs"
