@@ -53,7 +53,9 @@ Một số tóm tắt về mô hình:
 
 - Mô hình bao gồm 22 lớp (nếu kể cả các lớp max-pooling là 27), nhưng thực tế số lớp được tính độc lập với nhau là 100 với các lớp Convolution được kết hợp trong các inception module.
 
-- Mô hình sử dụng một lớp Global Average Pooling 7x7 trước khi đưa nó vào các lớp FC.
+- Module đầu tiên trước khi đưa vào các Inception module là một Stem module với tuần tự 1 convolution 7x7, max pool 3x3, 1 convolution 1x1, 1 convolution 3x3 và max pool 3x3. Mục tiêu của lớp này không được tác giả giải thích, nhưng ta có thể hiểu là nhưng lớp ban đầu với các kernel size lớn và các vùng nhận thức lớn sẽ học tốt cho các đặc trưng cấp thấp như tần số, góc cạnh, ...
+
+- Mô hình sử dụng một lớp Global Average Pooling 7x7 trước khi đưa nó vào các lớp FC. Các lớp FC của mô hình Inception nhìn chung khá ít để giảm các tham số và dồn hết các phần học đặc trưng vào các lớp Convolution.
 
 - Ngoài ra các phiên bản được cập nhật của Inceptionv1 cũng đã thêm vào 2 nhánh phụ Auxiliary Branch (được trích ra từ các lớp khác nhau) đóng góp cho quá trình huấn luyện nhằm giảm thiểu vấn đề vanishing gradient.
 
@@ -64,6 +66,21 @@ Một số tóm tắt về mô hình:
 ## Mô hình Inception v2, v3
 
 Mô hình Inception-v2 được đề cập trong bài báo [Rethinking the Inception Architecture for Computer Vision](https://arxiv.org/pdf/1512.00567.pdf) đưa ra các phương pháp cải tiến cho mô hình v1. Và mô hình Inception-v3 chính là Inception-v2 với việc thêm vào BatchNorm.
+
+Một số chỉnh sửa được đưa ra nhằm cải tiến để tối ưu các inception module:
+
+![Inception V3](/images/inception_v3.png)
+
+- Thay thế convolution 7x7, 5x5 tương ứng thành 3 convolution 3x3 và 2 convolution 3x3, với tác dụng như VGG, giảm số tham số nhưng vẫn giữ nguyên vùng nhận thức 7x7 hay 5x5.
+
+- Biến đổi các convolution thành các Spatial Seperable Convolution để giảm thiểu tham số cho các convolution 3x3, 5x5, 7x7.
+
+![Spatial Seperable Convolution](/images/spatial_seperable_convolution.webp)
+<div align="center" style="font-style: italic">
+Các convolution nxn sẽ được phân tách thành 2 convolution nx1 và 1xn, tỉ lệ tham số giảm được tương đối lớn từ n^2 -> 2n
+</div>
+
+- Các thiết kế cho mạng học nhằm rộng hơn và cân bằng giữa chiều sâu và chiều rộng hơn so với mô hình v1. Ngoài ra, các mô hình sau còn thêm 1 số lớp Batch Normalization nhằm tăng tốc độ huấn luyện.
 
 # ResNet
 
