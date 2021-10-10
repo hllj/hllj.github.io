@@ -133,8 +133,23 @@ Các thực nghiệm đầu tiên của ResNet về sự hiệu quả của vi�
 Kết quả độ lỗi khi huấn luyện của mạng Plain-34 và Plain-18 đều không thấp hơn so với ResNet-34 và ResNet-18
 </div>
 
+Mô hình ResNet được xây dựng dựa trên 2 module cơ bản là basic block cho các cấu hình mô hình nhỏ như ResNet-18 và ResNet-34; và bottleneck block để xây dựng cho các mô hình sâu hơn như ResNet-50, ResNet-101, ResNet-152.
+![Basic Block and Bottleneck Block](/images/basicblock_bottleneckblock.png)
+<div align="center" style="font-style: italic">
+2 Loại block cơ bản để xây dựng nên các mô hình ResNet
+</div>
 
-Mô hình ResNet được đề xuất đã tạo nên một mô hình cực sâu với 152 lớp, so với VGG-19 hay Inception với 22 lớp.
+Nói kĩ hơn về các thành phần cơ bản của ResNet:
+
+- Với basic block là 2 convolution 3x3 nối với nhau cho phần residual learning.
+
+- Với bottleneck block là 3 convolution liên tiếp nhau bao gồm 1 convolution 1x1 để giảm số chiều sâu của đặc trưng, 1 convolution 3x3, 1 convolution 1x1 để tăng số chiều sâu lên đúng với đầu vào ban đầu. Lí do gọi đây là bottleneck (cổ chai) vì kiến trúc này khi đưa vào sẽ làm nhỏ chiều sâu đặc trưng sau đó mới học và tăng lên lại đúng với số chiều ban đầu, tác giả đã tận dụng khả năng thay đổi chiều của các convolution 1x1 để giảm chi phí tính toán cho loại block này.
+
+- Ở các block nếu gặp trường hợp không đúng chiều, tác giả sử dụng các convolution 1x1 để điều chỉnh lại cho skip connection. Và sau mỗi convolution, tác giả đi kèm với 1 lớp batchnorm trước khi đưa vào hàm kích hoạt ReLU.
+
+![Skip connection for bottleneck block](/images/Bottleneck-Blocks-for-ResNet-50-left-identity-shortcut-right-projection-shortcut.png)
+
+Mô hình ResNet được đề xuất đã tạo nên một mô hình cực sâu với 152 lớp, so với VGG-19 hay Inception với 22 lớp. Mọi người có thể tự tham khảo lại source code cho ResNet ở mọi cấu hình [tại đây](https://github.com/pytorch/vision/blob/a9940fe4b2b63bd82a2f853616e00fd0bd112f9a/torchvision/models/resnet.py)
 
 ![ResNet architecture](/images/resnet_arch.png)
 
