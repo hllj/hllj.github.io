@@ -306,7 +306,7 @@ Cấu trúc của mô hình MobileNetV2 với các bottleneck module với t = 1
 Cấu trúc bottleneck với t=6 và stride=1 có sử dụng skip connection được gọi là Inverted Residual Block
 </div>
 
-Lấy ý tưởng từ Residual Block trong ResNet, bottleneck này sẽ làm giảm chiều độ sâu bằng các 1x1 convolution trước (đã được giới thiệu ở ResNet), cụ thể là chiều input và output sẽ lớn hơn so với chiều trung gian.
+Lấy ý tưởng từ Residual Block trong ResNet, bottleneck của ResNet sẽ làm giảm chiều độ sâu bằng các 1x1 convolution trước (đã được giới thiệu ở ResNet), cụ thể là chiều input và output sẽ lớn hơn so với chiều trung gian.
 
 Ngược lại với loại Residual Block này, tác giả của MobileNetV2 lại muốn làm **tăng** chiều độ sâu trước khi học các đặc trưng (nên gọi là "Inverted" - ngược), chiều của input và output sẽ nhỏ hơn và từ đó có thể đẩy khả năng bottleneck này học được nhiều đặc trưng hơn.
 
@@ -328,4 +328,18 @@ Nhìn chung mô hình MobileNetV2 có kết quả vượt qua mô hình MobileNe
 
 Với các mô hình cùng kích thước về lượng tham số như ShuffleNet 1.5, mô hình MobileNetV2 nhỉnh hơn, và mô hình scale up với các kích thước alpha như mình đã đề cập của MobileNet là 1.4 cho ra kết quả tốt hơn.
 
-# Kết luận
+# Tổng kết
+
+Sau khi điểm qua các kĩ thuật của các mô hình như Inception, ResNet, MobileNet chúng ta có thể áp dụng 1 số use case như sau:
+
+- Sử dụng nhiều loại kernel khác nhau, có thể bắt chước như InceptionNet sử dụng các kernel lớn nhất 7x7 ở đầu, và phối hợp các kernel 3x3, 5x5 cho các module khác nhau.
+
+- Các kĩ thuật làm giảm độ phức tạp tính toán: với InceptionNet là Spatial Seperable Convolutions phân tách các convolution nxn thành nx1 và 1xn; với MobileNet có thể sử dụng Depthwise Seperable Convolution.
+
+- Skip connection cho các mạng học sâu rất tốt, có thể khắc phục các vấn đề như vanishing gradient, degrade problem khi thiết kế các mô hình học sâu. Sau này mô hình ResNet có áp dụng tương đối nhiều ý tưởng từ Inception và MobileNet để tạo ra ResNeXt hay Wide-ResNet.
+
+- Một số kĩ thuật có thể dùng để tăng tốc độ học như Batch Normalization hay là sử dụng Auxiliary Branch để khắc phục overfitting cho mô hình như InceptionNet.
+
+- Thiết kế các bottleneck module để học các đặc trưng hiệu quả hơn.
+
+- Với các mô hình học để triển khai trên các thiết bị nhỏ như di động, thiết bị nhúng, có thể chọn các mô hình như MobileNet, hoặc SqueezeNet, ShuffleNet với các kĩ thuật làm giảm chi phí tính toán.
