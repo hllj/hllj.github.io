@@ -108,7 +108,7 @@ Trong bài báo về ResNet, tác giả đưa ra lý giải cho những ván đ�
 
 Kĩ thuật này thay đổi cách học của mạng học sâu, giả sử gọi hàm mục tiêu của ta cần học là H(x), trước đây ta sẽ dùng các mạng học để học từ x -> H(x). Bây giờ với skip connection, H(x) = F(x) + x, với F(x) là những đặc trưng mạng học được "bổ sung" vào x thay vì trực tiếp tác động vào x. Ta gọi đây là Residual Learning, F(x) là phần "residue" và x là "identity".
 
-## Vì sao kĩ thuật skip connection lại hiêu quả ?
+## Vì sao kĩ thuật skip connection lại hiệu quả ?
 
 Đầu tiên, việc thay đổi mạng học thành những Residual Block ở trên khiến cho mạng học sâu của ta "dễ học hơn", khi H(x) là một hàm kết hợp giữa 1 identity function I(x) = x và 1 phần "residue" F(x). Giả sử, trong quá trình tối ưu, việc tối ưu hàm F(x) không cải thiện cho hàm mục tiêu H(x) (thậm chí là làm tệ đi), bài toán tối ưu đơn giản sẽ zero out F(x) và vẫn lưu giữ lại H(x) = 0 + I(x), giúp cho mô hình học được các identity mapping và tránh bị hiện tượng degrade như đã nói.
 
@@ -157,3 +157,175 @@ Kết quả so với các mô hình trong cuộc thi ILSVRC đã vượt trội 
 ![ResNet Result](/images/resnet_result.png)
 
 # MobileNet
+
+Trong phần này mình muốn đưa ra một mô hình tuy không phải là SOTA nhưng cực kì quan trọng vì nó phù hợp với các thiết bị đòi hỏi chi phí tính toán, lưu trữ thấp như điện thoại, thiết bị nhúng, chỉ với những tinh chỉnh phù hợp.
+
+Mục tiêu chính được đề ra trong mô hình MobileNet là:
+
+- Làm giảm số lượng tham số trong mô hình
+
+- Làm giảm chi phí tính toán thông qua đại lượng được đưa ra là Multi-Adds (Multiplications and Additions - số lượng phép tính cộng và nhân).
+
+## Ý tưởng
+
+Xuất phát từ việc giảm chi phí tính toán từ việc phân tách các phép convolution nxn thành 2 convolution nx1 và 1xnnhư trong các mô hình Inception.
+
+![Spatial Seperable Convolution](/images/spatial_seperable_convolution.webp)
+
+Với việc thay đổi từ phép convolution tiêu chuẩn thành các seperable convolution ta có thể giảm chi phí tính toán từ n phép nhân (từ convolution nxn) thành 2n phép nhân (cho spatial seperable convolution)
+
+MobileNet đã giới thiệu 1 loại convolution mới nhằm thay thế cho các phép convolution tiêu chuẩn trước đây, được gọi là Seperable Depthwise Convolution, với sự rút gọn về chi phi tính toán và số lượng tham số. Seperable Depthwise Convolution bao gồm 2 convolution khác nhau:
+
+- Depth-wise convolution: Đây là một loại Convolution đặc biệt, khi nào bao gồm M filter với kích thước KxK nhưng mỗi filter áp dụng cho riêng 1 chiều sâu m trong M chiều của feature-map ban đầu. Mục tiêu sử dụng convolution này là học được những feature riêng lẻ của từng độ sâu (chưa có kết hợp giữa các độ sâu với nhau).
+
+![Depth-wise convolution](/images/depthwise_convolution.png)
+<div align="center" style="font-style: italic">
+Depth-wise convolution với chi phí tính toán là D x D x M x K x K. Số lượng tham số là M x K x K.
+</div>
+
+- Point-wise convolution: Đây chính là các convolution 1x1 được áp dụng giống như trong mô hình Inception, mục tiêu của Pointwise Convolution là kết hợp các đặc trưng từ nhiều vị trí của các độ sâu cũng như là điều chỉnh lại độ sâu
+
+![Point-wise convolution](/images/pointwise_convolution.png)
+<div align="center" style="font-style: italic">
+Point-wise convolution với chi phí tính toán là D x D x M x N. Số lượng tham số là M x N.
+</div>
+
+![Standard Convolution vs Depthwise Seperable Convolution](/images/standard_conv_vs_depthwise_seperable_conv.png)
+
+Với chi phí tính toán được giảm bởi việc thay thế các convolution tiêu chuẩn bằng các Depthwise Seperable Convolution ta đã giảm được chi phí tính toán cũng như số lượng tham số như sau:
+
+- Về chi phí tính toán: Theo hình, chi phí cho các convolution tiêu chuẩn là M x D x D x N x K x K. Với Depthwise Seprable Convolution là D x D x M x K x K + D x D x M x N. Xét theo tỉ lệ:
+
+$$
+\frac{D \times D \times M \times K \times K + D \times D \times M \times N}{M \times D \times D \times N \times K \times K} = \frac{1}{N} + \frac{1}{K^2}
+$$
+
+- Về số lượng tham số: Số lượng tham số của convolution tiêu chuẩn là M x K x K x N. Số lượng tham số của Depthwise Seperable Convolution đã được giảm còn M x K x K + M x N
+
+## Mô hình MobileNet và kết quả thực nghiệm
+
+### Mô hình MobileNet
+
+![MobileNet Architecture](/images/mobilenet_v1_arch.png)
+
+Mô hình MobileNet được Google giới thiệu vào năm 2017 với 30 lớp có một số điểm đáng chú ý sau:
+
+- Lớp đầu tiên Conv / s2 3x3x3x32 là Convolution tiêu chuẩn 3x3, stride 2, 32 filter.
+
+- Các lớp Conv dw/s1 hay là Conv dw/s2 là các Depth-wise Convolution stride bằng 1 hoặc 2.
+
+- Các lớp Conv / s1 1x1 là các Convolution 1x1 được đặt tên là Point-wise Convolution.
+
+- Các module của MobileNet đều sử dụng Batch Normlization trước khi đưa qua hàm kích hoạt ReLU.
+
+![MobileNet Modules](/images/mobilenet_modules.png)
+
+- Trước khi đưa vào đưa vào lớp FC 1000 unit để phân lớp, feature map được đưa qua một Avg Pool s1 là một Global Average Pooling để đưa feature map 7x7x1024 thành 1x1x1024.
+
+Source code của MobileNet mọi người có thể tham khảo [tại đây](https://github.com/tensorflow/tensorflow/blob/85c8b2a817f95a3e979ecd1ed95bff1dc1335cff/tensorflow/python/keras/applications/mobilenet.py)
+
+### Các kết quả thực nghiệm và cấu hình
+
+Đầu tiên về sự so sánh giữa mô hình MobileNet với các Convolution tiêu chuẩn so với sử dụng các Depthwise Seperable Convolution.
+
+![Standard Convolution vs Depthwise Seperable Convolution](/images/conv_mobilenet_vs_depthwise_conv_mobilenet.png)
+
+MobileNet với Depthwise Seperable Convolution tuy thấp hơn 1% so với các Convolution tiêu chuẩn, nhưng mô hình đã giảm nhẹ đi tới 90% lượng tham số và số phép tính.
+
+Nhóm tác giả của MobileNet đã tạo ra các cấu hình khác nhau bằng các siêu tham số để làm nhẹ hơn các mô hình theo 2 dạng tham số:
+
+- Sử dụng tham số alpha = {0.25, 0.5, 0.75, 1} là một tham số để điều khiển các tất cả các chiều sâu của feature map ở các lớp.
+
+Với alpha = 1.0 là baseline model cho MobileNet lớn nhất.
+
+Chi phí tính toán khi học từ chiều sâu M thành N sẽ được scale lại thành (alpha * M) -> (alpha * N), chi phí đó sẽ thành: D x D x (alpha x M) x K x K + D x D x (alpha x M)  x (alpha x N).
+
+![MobileNet with Multipliers](/images/mobilenet_multiplier.png)
+<div align="center" style="font-style: italic">
+Kết quả của các alpha multiplier cho MobileNet
+</div>
+
+- Sử dụng tham số rho trong khoảng [0.0, 1.0] để kiểm soát các độ phân giải của ảnh đầu vào.
+
+Gọi D là ảnh đầu kích thước ảnh đầu vào, scale lại từ D là (rho x D) có chi phí là: (rho x D) x (rho x D) x (alpha x M) x K x K + (rho x D) x (rho x D) x (alpha x M)  x (alpha x N).
+
+Trong bài báo MobileNet các (rho x D) được thực nghiệm cho các kích thước khác nhau là rho x D = {224, 192, 160, 128}.
+
+![MobileNet with Resolutions](/images/mobilenet_resolution.png)
+<div align="center" style="font-style: italic">
+Kết quả của các độ phân giải của ảnh đầu vào khác cho MobileNet
+</div>
+
+Nhìn chung chúng ta có rất nhiều sự lựa chọn về cấu hình cho MobileNet khác nhau để phù hợp cho việc đưa mô hình này lên các thiết bị khác nhau.
+
+Sau khi đưa ra các cấu hình khác nhau cho MobileNet, nhóm tác giả đưa ra các kết quả của MobileNet so với các SOTA với tập ImageNet và tập Standford Dogs.
+
+![MobileNet vs SOTA](/images/mobilenet_vs_sota.png)
+
+![MobileNet vs Smaller](/images/mobilenet_vs_smaller.png)
+
+![MobileNet Standford Dogs](/images/mobilenet_standforddogs.png)
+
+Nhận xét trên các tập dữ liệu các mô hình MobileNet có kết quả tương đối cao, gần với các SOTA lúc đó, nhưng có số lượng tham số cũng như chi phí tính toán thấp hơn rất nhiều.
+
+## MobileNetv2
+
+Đây là mô hình cải tiến MobileNet được Google đưa ra với một số cải tiến đáng chú ý sau:
+
+- **Sử dụng hàm kích hoạt ReLU6(x)** = min(max(0, x), 6), và sau này các phiên bản cập nhật của MobileNet cũng sử dụng. Có một số bài báo đã chứng minh việc sử dụng hàm này tốt hơn so với ReLU.
+
+![ReLU6](/images/ReLU6.png)
+
+- **Giới thiệu Inverted Residual Block**, nhóm tác giả giới thiệu ra một loại bottleneck module áp dụng skip connection (tương tự như ResNet) và áp dụng hàm kích hoạt TUYẾN TÍNH thay cho các hàm kích hoạt phi tuyến.
+
+### Inverted Residual Block
+
+Trong blog tóm tắt về MobileNetV2 được Google công bố [tại đây](https://ai.googleblog.com/2018/04/mobilenetv2-next-generation-of-on.html) và bài báo [MobileNetV2: Inverted Residuals and Linear Bottlenecks](https://arxiv.org/abs/1801.04381), nhóm tác giả đã giới thiệu một module gọi là Inverted Residual Block.
+
+![Modules in MobileNetV2](/images/module_mobilenetv2.png)
+
+MobileNetV2 giới thiệu 2 loại module tương ứng với từng stride như sau:
+
+- Với module stride 1, trước khi đưa vào một Depth-wise Convolution 3x3 stride 1, ngươi ta sử dụng thêm một 1x1 Convolutionvới hàm kích hoạt ReLU6, và trước khi đưa ra output cũng sử dụng một 1x1 Convolution với hàm kích hoạt là tuyến tính. Ngoài ra module này sử dụng skip connection tương tự như ResNet.
+
+- Với module stride 2, chỉ khác với module stride 1 là ta sử dụng Depth-wise Convolution 3x3 stride 2, và không sử dụng skip connection.
+
+Với sự thiết kế cả 2 module này, người ta đều gọi chúng là những bottleneck module. Chúng được định nghĩa chung qua bảng sau:
+
+![Bottleneck MobileNetV2](/images/mobilenetv2_bottleneck.png)
+
+Giải thích về các bottleneck này được áp dụng cho cả 2 module stride 1 và stride 2, tuy nhiên chỉ khác biệt với tham số t, ở trong mô hình MobileNetV2 tham số t này thường là 6. Nếu tham số t càng lớn nghĩa là số chiều của convolution 1x1 đầu tiên sẽ càng cao.
+
+![MobileNetV2 Architecture](/images/mobilenetv2_arch.png)
+<div align="center" style="font-style: italic">
+Cấu trúc của mô hình MobileNetV2 với các bottleneck module với t = 1 và t = 6
+</div>
+
+![Inverted Residual Block](/images/inverted_residual_block.png)
+<div align="center" style="font-style: italic">
+Cấu trúc bottleneck với t=6 và stride=1 có sử dụng skip connection được gọi là Inverted Residual Block
+</div>
+
+Lấy ý tưởng từ Residual Block trong ResNet, bottleneck này sẽ làm giảm chiều độ sâu bằng các 1x1 convolution trước (đã được giới thiệu ở ResNet), cụ thể là chiều input và output sẽ lớn hơn so với chiều trung gian.
+
+Ngược lại với loại Residual Block này, tác giả của MobileNetV2 lại muốn làm **tăng** chiều độ sâu trước khi học các đặc trưng (nên gọi là "Inverted" - ngược), chiều của input và output sẽ nhỏ hơn và từ đó có thể đẩy khả năng bottleneck này học được nhiều đặc trưng hơn.
+
+### Thực nghiệm về hàm kích hoạt và skip connection
+
+Bài báo cũng đưa ra một số thực nghiệm bằng việc thay thế hàm kích hoạt của đầu ra các bottleneck là Tuyến tính, hay việc sử dụng các skip connection.
+
+![Ablation Study for Linear Activations and Skip Connections](/images/mobilenetv2_linear_activation_skip_connection.png)
+
+Qua thực nghiệm thì việc sử dụng hàm tuyến tính cho các bottleneck và việc sử dụng skip connection cho ra kết quả cải thiện rất đáng kể, đây có thể là những use case sau này cho việc thiết kế các module của các mạng học sâu mà mọi người có thể tham khảo.
+
+### Kết quả thực nghiệm mô hình
+
+Qua đây một số kết quả thực nghiệm của mô hình MobileNetV2 so sánh với các mô hình cùng kích thước được đưa ra.
+
+![MobileNetV2 vs SOTA](/images/mobilenetv2_vs_sota.png)
+
+Nhìn chung mô hình MobileNetV2 có kết quả vượt qua mô hình MobileNetV1 về cả độ chính xác, số lượng tham số, số lượng phép tính và tốc độ tính toán và thậm chí gần đạt tới khả năng các mô hình SOTA (tuy nhiên vẫn chưa thể vượt qua).
+
+Với các mô hình cùng kích thước về lượng tham số như ShuffleNet 1.5, mô hình MobileNetV2 nhỉnh hơn, và mô hình scale up với các kích thước alpha như mình đã đề cập của MobileNet là 1.4 cho ra kết quả tốt hơn.
+
+# Kết luận
