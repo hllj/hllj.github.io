@@ -137,13 +137,13 @@ cc: **c**hange a whole line and get into INSERT MODE.
 
 ## Find và Delete command
 
-f <c>: **f**ind until character <c> in line.
+f <<c>>: **f**ind until character <<c>> in line.
 
-f <c> + ; : **f**ind next occurence of <c> 
+f <<c>> + ; : **f**ind next occurence of <<c>> 
 
-f <c> + , : **f**ind previous occurence of <c>
+f <<c>> + , : **f**ind previous occurence of <<c>>
 
-c t <c> : **c**hange **t**ill <c> in line.
+c t <<c>> : **c**hange **t**ill <<c>> in line.
 
 If you are in  (), {}, [], '', ""
 
