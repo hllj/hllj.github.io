@@ -61,7 +61,7 @@ Vim sẽ bao gồm 3 mode cơ bản cho người sử dụng với những chứ
 
 Đây sẽ là Mode mặc định ngay khi bạn mới vào Vim. Ở trong mode này, công việc của bạn là *di chuyển* để tìm tới vị trí cần chỉnh sửa. 
 
-< Thêm gif demo Normal Mode >
+![Normal Motion](/images/Normal_Motions.gif)
 
 ## Insert Mode
 
@@ -69,13 +69,13 @@ Vim sẽ bao gồm 3 mode cơ bản cho người sử dụng với những chứ
 
 Tuy nhiên hãy nhớ rằng triết lý của Vim tập trung vào việc di chuyển và chỉnh sửa, vậy nên sau khi chỉnh sửa xong ở một vị trí, hãy nhấn <ESC> để quay lại Normal Mode và tiếp tục di chuyển tới nơi cần chỉnh sửa tiếp theo. Đừng bao giờ mất công di chuyển trong Insert Mode, vì nó cực kì tốn thời gian.
 
-< Thêm gif demo Insert >
+![Insert](/images/Insert.gif)
 
 ## Visual Mode và các command
 
 Đây là Mode nơi bạn sẽ chọn những dòng, những chữ để di chuyển, chỉnh sửa; nhìn chung nó mô phỏng lại cách bạn sẽ dùng chuột rê vào từng vùng, bôi đen chúng rồi copy paste, ...
 
-< Thêm gif demo Visual >
+![Visual](/images/Visual.gif)
 
 # Command nâng cao
 
@@ -99,7 +99,7 @@ $: to the end of current line.
 
 ## Insert command
 
-i: INSERT at current position
+i: **I**NSERT at current position
 
 A: **A**ppend on the end of line
 
@@ -109,7 +109,7 @@ I: **I**nsert at beginning of line
 
 ## Delete command
 
-**Formulard: delete + <number> + motion**
+**Formulard: delete + <<number>> + motion**
 
 dw: **d**elete a **w**ord
 
@@ -131,9 +131,11 @@ dG: **d**elete from current line to end of lines.
 
 Note: **change** command deletes texts and get into INSERT MODE.
 
-cw: **c**hange the next word and get into INSERT MODE.
+cw: **c**hange the next **w**ord and get into INSERT MODE.
 
 cc: **c**hange a whole line and get into INSERT MODE.
+
+C (shift-c): **C**hange from current position to end of line
 
 ## Find và Delete command
 
@@ -147,9 +149,9 @@ c t <<c>> : **c**hange **t**ill <<c>> in line.
 
 If you are in  (), {}, [], '', ""
 
-c i ( : **c**hange **i** (
+c i ( : **c**hange **i**n (
 
-d i { : **d**elete **i** {
+d i { : **d**elete **i**n {
 
 c a [ : **c**hange **a**round [
 
@@ -185,7 +187,7 @@ To go back : Ctrl - o
 
 To go forward: Ctrl - i
 
-## Substitue command
+## Substitute command
 
 :s /<<old pattern>>/<<new pattern>> : **s**ubstitute first <<old pattern>> occurence with <<new pattern>>
 
