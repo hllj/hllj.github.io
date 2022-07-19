@@ -1,5 +1,5 @@
 ---
-title: "[Read with me] Introduction to Probability for Data Science"
+title: "[Read with me] Introduction to Probability for Data Science - Chapter 1"
 classes: wide
 categories:
   - math
