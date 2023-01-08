@@ -2,7 +2,7 @@
 title: "Top 2 Zalo AI Challenge 2022 và một số cảm nhận của bản thân - Phần 1"
 classes: wide
 categories:
-  - thinking
+  - sharing
 tags:
   - vietnamese
 toc: true
