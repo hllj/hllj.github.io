@@ -80,7 +80,7 @@ Tới hôm trao giải thì tất nhiên mình cũng không đi được và ch�
 
 ![Final Standing](/images/final-standing.png)
 
-Team mình chỉ kém team bạn khoảng 0.002, có vẻ như khoảng cách là quá xa để tới top 1 rồi :( So sánh kết quả thì team bạn Ensemble tới 8 model, team mình chỉ ensemble 2, về độ lỗi thì đúng thật team mình thua xa team bạn; điều duy nhất để tụi mình kéo lại kết quả là thời gian inference tụi mình là rất nhanh, nhanh hơn gấp đôi so với team bạn. Tuy vậy kết quả cũng đã có, ngậm ngùi top 2.
+Team mình chỉ kém team bạn khoảng 0.002, có vẻ như khoảng cách là quá xa để tới top 1 rồi :( So sánh kết quả thì team bạn Ensemble tới 8 model, team mình chỉ ensemble 2, về độ lỗi thì đúng thật team mình thua xa team bạn; điều duy nhất để tụi mình kéo lại kết quả là thời gian inference tụi mình là rất nhanh, nhanh hơn gấp đôi so với team bạn. Tuy vậy kết quả cũng đã có, lại "ngậm ngùi" top 2 thôi.
 
 Dù sao đi chăng nữa, top 2 cũng là một kết quả tốt, team mình đã có nhiều trải nghiệm tuyệt vời cho cuộc thi. Team đã thử những cái mình chưa từng thử, thật sự nghiêm túc cho cuộc thi, cả ngàn thử nghiệm finetune, params search, ... thậm chí còn exploit cả metric để lấy được kết quả cao nhất. Có những lúc team hồ hởi tham gia, có lúc xìu xuống thất vọng vì kết quả, cũng có những lúc như thế, rất thăng trầm luôn. 
 
