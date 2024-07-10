@@ -63,8 +63,8 @@ Việc mình tìm hiểu về Machine Learning cũng tương đối tính cờ, 
 
 # Những bài học
 
-Có lẽ sau một thời gian dài, trải qua nhiều thất bại và thay đổi, mình cũng đã tìm được một Khung học tập cho bản thân.
+Có lẽ sau một thời gian dài, trải qua nhiều thất bại và thay đổi, mình cũng đã tìm được một **Khung học tập cho bản thân**.
 
-Một quãng thời gian trong ngày có thể từ 3-4 tiếng, sáng sớm dậy bật những video từ các khoá học, ghi chép và đọc lại. Sau đó là thời gian để thử thách lập trình lại và kiểm tra kết quả và đọc các bài báo khoa học, chiêm nghiệm và thực nghiệm nó. Một quãng thời gian tươi đẹp để sống đấy :D
+Một quãng thời gian trong ngày có thể từ 3-4 tiếng, sáng sớm dậy bật những video từ các khoá học, ghi chép và đọc lại. Sau đó là thời gian để thử thách lập trình lại, kiểm tra kết quả và đọc các bài báo khoa học, chiêm nghiệm và thực nghiệm nó. Một quãng thời gian tươi đẹp để sống đấy :D
 
 Để mọi thứ cho sự tò mò và để sự khó khăn hướng mình tới giải pháp, đó là bài học đầu tiên cho cách tự học của mình.
