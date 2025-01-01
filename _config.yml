@@ -96,7 +96,7 @@ analytics:
 author:
   name             : "Bùi Văn Hợp"
   avatar           : "/images/avatar.jpg"
-  bio              : "A normal guy"
+  bio              : "A normal, medium guy living in a median place, but I still have my mode of life."
   location         : "Ho Chi Minh"
   email            : "vanhop3499@gmail.com"
   links:
@@ -117,7 +117,7 @@ author:
       url: "https://github.com/hllj"
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
-      url: "https://instagram.com/vanhop3499"
+      url: "https://instagram.com/hllj3499"
 
 # Site Footer
 footer:
@@ -299,7 +299,7 @@ defaults:
       author_profile: true
       comments: true
       share: true
-  # _articles
+  # _projects
   - scope:
       path: ""
       type: projects

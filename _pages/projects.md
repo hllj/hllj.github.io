@@ -7,4 +7,10 @@ entries_layout: grid
 classes: wide
 ---
 
-## Some projects I have done so far
+## This is where I made
+
+{% for post in site.posts %}
+  {% if post.path contains 'projects' %}
+     {% include archive-single.html %}
+  {% endif %}
+{% endfor %} 
