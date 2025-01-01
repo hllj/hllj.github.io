@@ -10,6 +10,7 @@ toc_label: "My Table of Contents"
 toc_icon: "cog"
 toc_sticky: true
 header:
+  teaser: "/images/2022-thumb.jpeg"
   overlay_image: "/images/2022-thumb.jpeg"
   overlay_filter: 0.5
   overlay_color: "#005eff"

@@ -1,16 +1,13 @@
 ---
 title: Reading
-layout: collection
+layout: splash
 permalink: /reading/
 collection: reading
-entries_layout: list
-classes: wide
+classes: wide  # optional, for wider content
 ---
 
-## This is where I read
+## This is what I read
 
-{% for post in site.posts %}
-  {% if post.path contains 'reading' %}
-     {% include archive-single.html %}
-  {% endif %}
-{% endfor %} 
+{% for post in site.categories.reading %}
+  {% include archive-single.html type="grid" %}
+{% endfor %}

@@ -1,16 +1,14 @@
 ---
 title: Projects
-layout: collection
+layout: splash
 permalink: /projects/
 collection: projects
-entries_layout: grid
-classes: wide
+entries_layout: list  # or 'list' depending on your preference
+classes: wide  # optional, for wider content
 ---
 
-## This is where I made
+## This is what I made
 
-{% for post in site.posts %}
-  {% if post.path contains 'projects' %}
-     {% include archive-single.html %}
-  {% endif %}
-{% endfor %} 
+{% for post in site.categories.projects %}
+  {% include archive-single.html type="grid" %}
+{% endfor %}

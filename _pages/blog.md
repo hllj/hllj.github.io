@@ -1,8 +1,8 @@
 ---
 layout: posts
 permalink: /blog/
-entries_layout: list
+entries_layout: grid
 classes: wide
 ---
 
-## This is where I wrote
+## This is what I wrote

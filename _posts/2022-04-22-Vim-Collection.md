@@ -10,6 +10,7 @@ toc_label: "My Table of Contents"
 toc_icon: "cog"
 toc_sticky: true
 header:
+  teaser: "/images/vim_thumb.png"
   overlay_image: "/images/vim_thumb.png"
   overlay_filter: 0.7
   overlay_color: "#005eff"

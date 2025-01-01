@@ -10,6 +10,7 @@ toc_label: "My Table of Contents"
 toc_icon: "cog"
 toc_sticky: true
 header:
+  teaser: "/images/a_recipe_for_training_nn.jpg"
   overlay_image: "/images/a_recipe_for_training_nn.jpg"
   overlay_filter: 0.7
   overlay_color: "#005eff"
