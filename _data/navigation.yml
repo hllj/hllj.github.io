@@ -4,10 +4,10 @@ main:
     url: /
   - title: "Blog"
     url: /blog/
-  - title: "Articles"
-    url: /articles/
   - title: "Projects"
     url: /projects/
+  - title: "Reading"
+    url: /reading/
   - title: "Categories"
     url: /categories/
   - title: "Miscellaneous"

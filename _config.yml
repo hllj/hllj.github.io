@@ -290,10 +290,10 @@ defaults:
       related: true
       show_date: true
       read_time: true
-  # _articles
+  # reading
   - scope:
       path: ""
-      type: articles
+      type: reading
     values:
       layout: single
       author_profile: true
