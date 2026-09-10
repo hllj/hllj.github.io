@@ -2,9 +2,7 @@
 title: Projects
 layout: splash
 permalink: /projects/
-collection: projects
-entries_layout: list  # or 'list' depending on your preference
-classes: wide  # optional, for wider content
+classes: wide
 ---
 
 ## This is what I made

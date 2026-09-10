@@ -1,4 +1,8 @@
 /*!
+ * KEEP THIS FILE: stock Minimal Mistakes 4.22.0 main importer.
+ * Sass resolves @import paths relative to the importing file first, so this shim
+ * makes the customized partials in _sass/minimal-mistakes/ win over the remote
+ * theme; everything else falls back to the theme. Do not delete while using remote_theme.
  * Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
  * Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
  * Licensed under MIT (https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE)

@@ -2,8 +2,7 @@
 title: Reading
 layout: splash
 permalink: /reading/
-collection: reading
-classes: wide  # optional, for wider content
+classes: wide
 ---
 
 ## This is what I read
