@@ -1,19 +1,27 @@
 ---
 title: "Pi coding agent của mình đạt 35/50 SWE-bench Verified Mini — nhưng 15 task fail mới là phần thú vị"
 categories: blog
+classes: wide
 tags:
   - vietnamese
   - tutorial
   - pi
   - swe-bench
   - benchmark
-toc: true
+toc: false
 toc_label: "Table of Contents"
 toc_icon: "cog"
 toc_sticky: true
+header:
+  teaser: "/images/pi-bench-dashboard.png"  
+  overlay_image: "/images/pi-bench-dashboard.png"
+  overlay_filter: 0.7
+  overlay_color: "#005eff"
 ---
 
-Mình đã xây một Pi coding-agent harness gồm custom tools, subagents, session memory và các bước kiểm tra trước khi agent kết thúc công việc. Setup này dùng hằng ngày khá ổn, nhưng “cảm thấy ổn” không trả lời được câu hỏi quan trọng nhất:
+Mình đã xây một Pi coding-agent harness gồm custom tools, subagents, session memory và các bước kiểm tra trước khi agent kết thúc công việc. 
+
+Setup này dùng hằng ngày khá ổn, nhưng “cảm thấy ổn” không trả lời được câu hỏi quan trọng nhất:
 
 > **Những extension mình thêm vào có thực sự giúp agent sửa code tốt hơn không?**
 
