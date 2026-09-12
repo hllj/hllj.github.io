@@ -11,7 +11,7 @@
 # https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#installing-the-theme
 
 # theme                  : "minimal-mistakes-jekyll"
-remote_theme           : "mmistakes/minimal-mistakes@4.22.0"
+remote_theme           : "mmistakes/minimal-mistakes"
 minimal_mistakes_skin    : "air" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
@@ -154,7 +154,11 @@ exclude:
   - .bundle
   - .jekyll-assets-cache
   - .sass-cache
+  - assets/js/plugins
+  - assets/js/_main.js
+  - assets/js/vendor
   - Capfile
+  - CHANGELOG
   - config
   - Gemfile
   - Gruntfile.js
@@ -162,7 +166,13 @@ exclude:
   - LICENSE
   - log
   - node_modules
+  - package.json
+  - package-lock.json
+  - Rakefile
+  - README
   - tmp
+  - /docs # ignore Minimal Mistakes /docs
+  - /test # ignore Minimal Mistakes /test
 keep_files:
   - .git
   - .svn
@@ -256,14 +266,14 @@ compress_html:
   ignore:
     envs: development
 
-# Collections (none currently; posts use subfolders -> categories)
-# collections:
-#   articles:
-#     output: true
-#     permalink: /:collection/:path/
-#   projects:
-#     output: true
-#     permalink: /:collection/:path/
+# Collections
+collections:
+  articles:
+    output: true
+    permalink: /:collection/:path/
+  projects:
+    output: true
+    permalink: /:collection/:path/
 
 # Defaults
 defaults:
@@ -279,3 +289,22 @@ defaults:
       share: true
       related: true
       show_date: true
+      read_time: true
+  # reading
+  - scope:
+      path: ""
+      type: reading
+    values:
+      layout: single
+      author_profile: true
+      comments: true
+      share: true
+  # _projects
+  - scope:
+      path: ""
+      type: projects
+    values:
+      layout: single
+      author_profile: true
+      comments: true
+      share: true
