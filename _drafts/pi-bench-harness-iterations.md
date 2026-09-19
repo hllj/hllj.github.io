@@ -34,7 +34,7 @@ Toàn bộ phân tích chi tiết nằm ở [`debug/analysis_report_deepseek-v4-
 
 Nhìn qua thì đây là một sự tiến triển rất tốt, score tăng lên rất đẹp. Nhưng khi đọc lại transcript của cả 150 lần chạy, mình thấy con số này kể một câu chuyện khác:
 
-> **TL;DR** — Điểm tăng từ v1 lên v2 chủ yếu vì mình đổi *thứ được đo* (agent được nhìn output của test thật một lần), không phải vì agent giỏi hơn. Điểm tăng từ v2 lên v2.1 gần như chỉ là hiệu ứng của mẫu số. Và trong lúc sửa benchmark, mình phát hiện container vẫn có internet, nên agent có thể `pip download` bản Django mới hơn — bản đã chứa sẵn lời giải.
+> **TL;DR** — Sau hai lần điều chỉnh, kết quả tăng từ **35/50 lên 45/50**. Nhưng mức tăng này không thể đọc đơn giản là "harness tốt hơn": nếu bỏ verification retry thì v2 chỉ đạt 37/50, tức phần lớn bước nhảy đến từ việc agent được nhìn output test thật; bước từ v2 lên v2.1 chủ yếu là mẫu số (2 task dữ liệu hỏng) và nhiễu. Ngoài ra container vẫn có internet nên agent có thể `pip download` code upstream, làm các con số tuyệt đối bị thổi phồng một lượng chưa biết (gần như đều ở cả ba run, nên không giải thích khác biệt giữa các run). Điều đáng chú ý nhất vì thế không phải con số 90%, mà là quá trình tách xem phần cải thiện nào đến từ agent và phần nào do cách benchmark được thiết kế.
 
 # Những thay đổi chính
 
@@ -136,7 +136,7 @@ Mình đã có lưu lại một tham số là số lần retry khi verify `Verif
 
 Nếu bỏ retry đi, v2 chỉ đạt 37/50 = 74%, hơn v1 đúng 4 điểm phần trăm. Khoảng 14 điểm còn lại là **vòng phản hồi**, không phải lần thử đầu tiên tốt hơn.
 
-Điều này không có nghĩa retry là xấu. Nó là một tính năng harness hợp lý, và trong thực tế agent luôn có thể chạy test. Nhưng nó thay đổi ý nghĩa của con số: v2 và v2.1 đo "agent cộng với một vòng phản hồi từ test chấp nhận", không còn là `pass@1` thuần như v1. Nếu mình đặt 88% cạnh 70% mà không nói rõ điều đó thì đang so hai thứ khác nhau. 
+Điều này không có nghĩa retry là xấu. Nó là một tính năng harness hợp lý, và trong thực tế agent luôn có thể chạy test. Nhưng nó thay đổi ý nghĩa của con số: v2 và v2.1 đo "agent cộng với một vòng phản hồi từ test chấp nhận", không còn là `pass@1` thuần như v1. Nếu mình đặt 88% cạnh 70% mà không nói rõ điều đó thì đang so hai thứ khác nhau.
 
 Tuy nhiên đây là một điều mình mong muốn, agent cần nhận được tín hiệu nhiều hơn, test đúng, test sai, thậm chí là tín hiệu từ hệ thống và con người.
 
@@ -201,9 +201,9 @@ Vài điểm cần nói rõ, để không kết luận quá tay:
 
 > **Bài học thứ hai**: **khi chặn một đường rò rỉ, hãy tự hỏi agent còn đường nào khác để đi tới cùng đích.** Scrub git history giải quyết đúng một trong hai đường. Cách xử lý đúng là chặn network egress của container, chỉ cho phép host của LLM API, rồi chạy lại những task đã tải code upstream để đo mức độ thổi phồng.
 
-# 4. Bốn lỗi khác của chính runner
+# 4. Ba lỗi khác của chính runner
 
-Khi kiểm từng task fail còn lại, mình tìm thêm bốn thứ nữa nằm ở runner hoặc dữ liệu, không phải ở model.
+Khi kiểm từng task fail còn lại, mình tìm thêm ba thứ nữa nằm ở runner hoặc dữ liệu, không phải ở model.
 
 ## Agent bị "nudge" tới chết
 
