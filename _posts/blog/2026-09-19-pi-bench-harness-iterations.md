@@ -8,7 +8,7 @@ tags:
   - swe-bench
   - benchmark
   - harness
-toc: false
+toc: true
 toc_label: "Table of Contents"
 toc_icon: "cog"
 header:
@@ -19,6 +19,9 @@ header:
 ---
 
 Ở [bài trước]({% post_url blog/2026-09-12-pi-coding-agent-setup %}), mình chạy Pi harness của mình với `deepseek/deepseek-v4-flash-0731` trên 50 task SWE-bench Verified Mini và được **35/50 — 70%**. Cuối bài mình hứa bài sau sẽ làm thí nghiệm "stock Pi so với Pi cộng custom harness". Trước khi làm thí nghiệm đó, mình đọc lại transcript, sửa cả harness lẫn benchmark runner (pi-bench), rồi chạy lại **hai lần nữa** với cùng model và cùng 50 task. Mình có đưa ra một số vấn đề cần cải thiện trong harness và trong runner, và có một vài kết luận khá thú vị :)
+
+Xem những phần trước:
+- Phần 1: [Pi coding agent của mình đạt 35/50 SWE-bench Verified Mini — nhưng 15 task fail mới là phần thú vị]({% post_url blog/2026-09-12-pi-coding-agent-setup %})
 
 # Tổng quan kết quả
 
