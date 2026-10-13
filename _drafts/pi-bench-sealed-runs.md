@@ -39,7 +39,7 @@ Xem những phần trước:
 
 Tên run mình đặt theo tag của [pi-config](https://github.com/hllj/pi-config) (harness), vì harness là thứ thay đổi giữa các run. Hai task có dữ liệu hỏng từ dataset (`django-12209`, `sphinx-8265`) vẫn bị loại khỏi mẫu số như bài trước.
 
-> **TL;DR** — Sau khi niêm phong, agent vẫn *thử* tải code upstream (`pip download sphinx==…`), nhưng lần này bị chặn. Điểm đi từ 45/48 xuống 43/48 rồi 42/48 — nghe thì tệ, nhưng chênh lệch giữa ba run vẫn nằm trong vùng nhiễu (McNemar p ≥ 0.38), nên phần thổi phồng do rò rỉ upstream hoá ra **nhỏ hơn mình lo**. Cái thực sự tệ là thời gian: mỗi task chậm gấp đôi. Mình tìm ra bốn nguyên nhân, sửa được hai trong số đó ở harness/runner, còn nguyên nhân lớn nhất lại nằm ngoài tầm tay: provider trên OpenRouter sinh token chậm hơn gần một nửa so với tuần trước. Và hai bản sửa mình rất tự tin — LSP offline và reviewer không timeout — **đều không hoạt động** khi chạy thật.
+> **TL;DR** — Sau khi niêm phong, agent vẫn *thử* tải code upstream (`pip download sphinx==…`), nhưng lần này bị chặn. Điểm đi từ 45/48 xuống 43/48 rồi 42/48 — nghe thì tệ, nhưng chênh lệch giữa ba run vẫn nằm trong vùng nhiễu (McNemar p ≥ 0.38), nên phần thổi phồng do rò rỉ upstream hoá ra **nhỏ hơn mình lo**. Cái thực sự tệ là thời gian: mỗi task chậm gấp đôi. Mình tìm ra bốn nguyên nhân, sửa được hai trong số đó ở harness/runner, còn nguyên nhân lớn nhất lại nằm ngoài tầm tay: provider trên OpenRouter sinh token chậm hơn gần một nửa so với tuần trước. Và hai bản sửa mình rất tự tin — LSP offline và reviewer không timeout — **đều không hoạt động** khi chạy thật. Sau đó mình tìm ra nguyên nhân thật của LSP (một khác biệt nhỏ giữa bun và node khi spawn một file không tồn tại) và sửa ở pi-bench `v1.2.0`; reviewer thì mình giữ lại, nhưng thêm một công tắc để đo một run không có nó.
 
 # Danh sách "việc tiếp theo" đã làm đến đâu
 
@@ -169,7 +169,43 @@ Phần này là lý do mình muốn viết bài, vì nó ngược với cảm gi
 
 Sau khi cài sẵn `pyright`, `ruff` và `node`, mình kiểm tra bằng tay trong đúng image của task, `--network none`, volume read-only: `pyright` chạy và ra diagnostic thật, `ruff` chạy, `pyright-langserver --stdio` trả lời handshake `initialize` của LSP. Mình khá chắc là xong.
 
-Ở v3.2: **17/18 lần** agent gọi `lens_diagnostics` vẫn nhận về `no LSP client is currently ready; ready=0/5`. Tool có trên PATH, chạy được bằng tay, nhưng pi-lens trong một session thật thì không bao giờ báo nó sẵn sàng. Mình chưa biết nguyên nhân — nghi ngờ hàng đầu là pyright khởi tạo trên repo cỡ Django quá chậm khi chạy giả lập x86 trên máy Mac ARM, vượt thời gian chờ của pi-lens. Cái giá ít nhất đã giảm: không còn 54 giây retry mỗi lần gọi.
+Ở v3.2: **17/18 lần** agent gọi `lens_diagnostics` vẫn nhận về `no LSP client is currently ready; ready=0/5`. Tool có trên PATH, chạy được bằng tay, nhưng pi-lens trong một session thật thì không bao giờ báo nó sẵn sàng. Lúc viết bản nháp đầu, mình đoán là pyright khởi tạo quá chậm dưới giả lập x86. Đoán sai.
+
+### Nguyên nhân thật: bun và mã thoát 127
+
+Lần này mình không đoán nữa mà tái hiện: chạy một session `pi` thật trong đúng image của task, cùng cấu hình như sealed run, bắt agent gọi `lens_diagnostics` một lần, rồi đọc log của chính pi-lens trước khi container biến mất. Log nói rõ:
+
+```text
+lsp launch: command=/opt/miniconda3/envs/testbed/bin/pyright-langserver ...
+lsp launch candidate failed ... exited immediately with code 127
+...
+lsp spawn python: failed (426ms)
+```
+
+pi-lens ưu tiên pyright "của project" trước: tìm trong `bin/` của conda env, rồi `node_modules/.bin/`. Trong image SWE-bench không có file nào ở đó. Bình thường thì không sao: spawn một file không tồn tại sẽ báo lỗi `ENOENT`, pi-lens hiểu là "không có tool này", và đi tiếp xuống `pyright-langserver` trên PATH.
+
+Nhưng pi-bench chạy `pi` bằng **bun**, không phải node. Mình viết một đoạn test nhỏ để so:
+
+| Runtime | Spawn một file không tồn tại |
+| --- | --- |
+| node (Mac và trong container) | lỗi `ENOENT` |
+| bun trên Mac | lỗi `ENOENT` |
+| **bun trên Linux (trong container)** | một process có pid, **thoát với mã 127** |
+
+pi-lens thấy mã 127 thì coi như server bị crash, không phải "không có tool", nên bỏ cả Python server sau 0.4 giây, không bao giờ thử tới pyright trên PATH. Fallback `jedi` thì bị từ chối vì mình đã tắt auto-install. Kết quả: `ready=0/5` ở mọi lần gọi, ở mọi sealed run.
+
+Bản sửa trong pi-bench `v1.2.0` gồm hai phần:
+
+- Trong container của agent, symlink pyright của mình vào `bin/` của conda env, tức đúng chỗ đầu tiên pi-lens tìm. Ứng viên đầu tiên giờ là thật, và pi-lens còn đưa cho nó interpreter của testbed nên import được resolve đúng. Symlink nằm ngoài `/testbed` nên không lọt vào diff, và container chấm điểm không có nó.
+- Tăng thời gian chờ diagnostic mỗi file lên 20 giây (`PI_LENS_LSP_DIAGNOSTICS_MAX_WAIT_MS=20000`). Pyright dưới giả lập x86 cần khoảng 8 giây cho file đầu tiên và 2.4 giây cho các lần sau, trong khi mặc định của pi-lens chỉ chờ 1.5 giây.
+
+| Thử nghiệm | Kết quả `lens_diagnostics` |
+| --- | --- |
+| Trước khi sửa | "LSP unavailable" |
+| Chỉ có symlink | server khởi động, nhưng check bị timeout |
+| Symlink + chờ 20 giây | **4 lỗi pyright thật** trên `django/core/paginator.py` |
+
+Thứ đáng nhớ không phải là bản sửa, mà là con đường tới nó: lần trước mình "kiểm tra bằng tay" từng mảnh (pyright chạy, handshake trả lời) và kết luận cả hệ thống chạy. Lỗi lại nằm ở chỗ ghép các mảnh: runtime nào spawn tool, và pi-lens diễn giải mã thoát ra sao. Chỉ khi chạy đúng session thật và đọc log của chính pi-lens thì mới thấy.
 
 ## Reviewer vẫn timeout
 
@@ -185,6 +221,23 @@ Bản sửa trong pi-config `v3.2`: reviewer dùng `thinking: low`, timeout mặ
 - Một reviewer chỉ chạy 2 lượt rất ngắn rồi im lặng tới hết 420 giây — một kiểu treo khác hẳn.
 
 Lần chạy lại trên máy host là một mẫu duy nhất, và nó không tổng quát hoá.
+
+### Vì sao `thinking: low` không giúp, và mình quyết định gì
+
+Mình kiểm tra lại đường đi của tham số: `thinking: low` được pi chuyển thành `reasoning: {effort: "low"}` gửi lên OpenRouter, và metadata của model cũng nói nó nhận mức `low`. Tức là tham số tới nơi đúng, nhưng provider phục vụ model này gần như bỏ qua nó. Với provider này, không có nút nào làm reviewer nghĩ ngắn lại một cách đáng tin.
+
+Tổng kết reviewer qua hai sealed run:
+
+| | Số lượng |
+| --- | ---: |
+| Lần gọi | 23, tốn **173 phút** thời gian agent (khoảng 10% của cả hai run) |
+| Timeout, không có verdict | 9 |
+| `OK` / `OK with notes` | 10 |
+| `BLOCK` | 1 |
+
+Lần `BLOCK` duy nhất (`django-11815`) khiến agent sửa lại và task pass, nhưng chính task đó cũng pass ở v2.1 khi không có reviewer, và pass ở v3.2 khi reviewer timeout. Ngược lại, ở `sphinx-7590` reviewer nói `OK with notes` rồi task fail. Mình không tìm thấy task nào mà verdict của reviewer biến fail thành pass.
+
+Mình đã định bỏ reviewer khỏi benchmark, nhưng cuối cùng **giữ lại**: nó là một phần của harness mình dùng hằng ngày, và benchmark nên đo đúng harness đó. Thay vào đó, pi-bench `v1.2.0` có thêm `--exclude-agents`. Mặc định không loại agent nào; muốn đo một run không có reviewer thì thêm `--exclude-agents reviewer`, agent gọi tới sẽ nhận lỗi "Unknown agent" ngay lập tức. Một cặp run có và không có reviewer sẽ trả lời câu hỏi "nó có đáng tiền không" tốt hơn mọi lần mình đọc transcript.
 
 > **Bài học thứ ba** — Một lần tái hiện thành công không phải là bằng chứng bản sửa hoạt động. Nó chỉ chứng minh bản sửa *có thể* hoạt động trong đúng điều kiện đó.
 
@@ -209,11 +262,11 @@ Lần chạy lại trên máy host là một mẫu duy nhất, và nó không t�
 # Việc tiếp theo
 
 1. **Ghim provider trên OpenRouter**: gateway có thể chèn `provider` vào mỗi request. Không ghim thì so sánh thời gian giữa các run là vô nghĩa.
-2. **Tìm nguyên nhân LSP không bao giờ sẵn sàng** trong session thật: đo thời gian khởi tạo pyright dưới giả lập x86, và thời gian chờ của pi-lens.
-3. **Reviewer**: hoặc làm nó rẻ hơn hẳn (ít tool hơn, prompt hẹp hơn), hoặc bỏ khỏi luồng benchmark. Một subagent timeout một nửa số lần gọi đang tốn thời gian nhiều hơn giá trị nó mang lại.
+2. ~~**Tìm nguyên nhân LSP không bao giờ sẵn sàng**~~ — xong ở pi-bench `v1.2.0` (bun spawn trả về mã 127; xem phần 5). Run tiếp theo sẽ cho thấy agent có thật sự dùng diagnostic của pyright hay không.
+3. **Reviewer: chạy A/B** — một run mặc định và một run với `--exclude-agents reviewer`, cùng provider, để biết 173 phút đó đổi lại được gì.
 4. **Chạy mỗi cấu hình 3 lần** — vẫn là món nợ từ bài trước, và giờ nó càng cần vì các chênh lệch đều nhỏ.
 5. **Báo cáo pass ngay lần đầu làm con số chính**, và sửa nốt `summary.json` đếm trùng.
 
-Code của lần cập nhật này: pi-bench [`v1.1.0`](https://github.com/hllj/pi-bench/tree/v1.1.0) và pi-config [`v3.2`](https://github.com/hllj/pi-config/tree/v3.2). AGENTS.md v3.1 mình để ở [gist này](https://gist.github.com/hllj/d716e5e0aa34d4971cef7fa459b2cffc).
+Code của lần cập nhật này: pi-bench [`v1.1.0`](https://github.com/hllj/pi-bench/tree/v1.1.0) (code chạy run v3.2), [`v1.2.0`](https://github.com/hllj/pi-bench/tree/v1.2.0) (sửa LSP, thêm `--exclude-agents`; chưa có run nào trên bản này) và pi-config [`v3.2`](https://github.com/hllj/pi-config/tree/v3.2). AGENTS.md v3.1 mình để ở [gist này](https://gist.github.com/hllj/d716e5e0aa34d4971cef7fa459b2cffc).
 
 > Lần này điểm giảm, nhưng mình tin nó hơn. Có lẽ đó cũng là một kiểu tiến bộ :)
