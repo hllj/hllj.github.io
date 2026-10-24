@@ -35,7 +35,6 @@ Các bạn có thể xem qua thử code của mình trên GitHub [tại đây](h
 | Best chỉ dùng model của mình: EXP-076 / EXP-071 | 0.940 | 0.925 |
 | Best public chỉ dùng model của mình: EXP-074 | 0.941 | 0.923 |
 | Rank | **571 / 6,425** | **722 / 6,425** |
-| Top public LB | 0.970 | |
 
 - **99 experiment id** (EXP-000 … EXP-128), **66 submission**, 64 được chấm.
 - **9 submission cùng hoà ở private 0.942** (EXP-106, 117, 118, 119, 123, 124, 125, 127, 128): cả tuần cuối làm recipe không đổi được gì trên private.
