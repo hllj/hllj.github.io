@@ -1,0 +1,194 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b"/>
+    </marker>
+    <style>
+      .t { font-size: 14px; fill: #111827; font-weight: 600; }
+      .s { font-size: 12px; fill: #4b5563; }
+      .al { font-size: 12px; fill: #475569; font-style: italic; }
+      .ph { font-size: 16px; fill: #1f2937; font-weight: 700; }
+      .data { fill: #e0f2fe; stroke: #0284c7; stroke-width: 1.5; }
+      .proc { fill: #f1f5f9; stroke: #475569; stroke-width: 1.5; }
+      .model { fill: #ede9fe; stroke: #7c3aed; stroke-width: 1.5; }
+      .lab { fill: #fef3c7; stroke: #d97706; stroke-width: 1.5; }
+      .ext { fill: #fce7f3; stroke: #db2777; stroke-width: 1.5; stroke-dasharray: 6 4; }
+      .out { fill: #dcfce7; stroke: #16a34a; stroke-width: 1.5; }
+      .a { stroke: #64748b; stroke-width: 1.5; fill: none; marker-end: url(#arr); }
+      .frame { fill: none; stroke: #e5e7eb; stroke-width: 1.5; }
+    </style>
+  </defs>
+  <rect x="0" y="0" width="1200" height="900" fill="#ffffff"/>
+  <text x="24" y="44" font-size="22" font-weight="700" fill="#1f2937">Model architectures: a study is a bag of 2.5D windows</text>
+  <text x="24" y="68" font-size="14" fill="#6b7280">Every model scores windows of 3 slices with a 2D ImageNet backbone, then pools them per finding into 12 logits (one per finding).</text>
+
+  <!-- ================= Panel A ================= -->
+  <rect class="frame" x="24" y="86" width="1152" height="342" rx="12"/>
+  <text class="ph" x="44" y="114">A · Our pipeline: 2.5D attention-MIL (src/models/model.py, EXP-009 … EXP-076)</text>
+
+  <!-- A row 1 -->
+  <rect class="data" x="44" y="134" width="168" height="124" rx="10"/>
+  <text class="t" x="128" y="164" text-anchor="middle">MRI study</text>
+  <text class="s" x="128" y="186" text-anchor="middle">sagittal · coronal · axial</text>
+  <text class="s" x="128" y="204" text-anchor="middle">fluid-sensitive (FS)</text>
+  <text class="s" x="128" y="222" text-anchor="middle">+ non-FS (T1 / PD)</text>
+  <text class="s" x="128" y="240" text-anchor="middle">DICOM series</text>
+
+  <rect class="proc" x="236" y="134" width="168" height="124" rx="10"/>
+  <text class="t" x="320" y="164" text-anchor="middle">Slice cache</text>
+  <text class="s" x="320" y="186" text-anchor="middle">6 slots (plane × FS)</text>
+  <text class="s" x="320" y="204" text-anchor="middle">72 / 88 slices per study</text>
+  <text class="s" x="320" y="222" text-anchor="middle">140 mm crop, 256 px</text>
+  <text class="s" x="320" y="240" text-anchor="middle">missing slot = masked</text>
+
+  <rect class="proc" x="428" y="134" width="168" height="124" rx="10"/>
+  <text class="t" x="512" y="164" text-anchor="middle">2.5D windows</text>
+  <text class="s" x="512" y="186" text-anchor="middle">3 adjacent slices</text>
+  <text class="s" x="512" y="204" text-anchor="middle">→ one RGB image</text>
+  <text class="s" x="512" y="222" text-anchor="middle">K = 16 per study (train)</text>
+  <text class="s" x="512" y="240" text-anchor="middle">K = 48 (eval / test)</text>
+
+  <rect class="model" x="620" y="134" width="168" height="124" rx="10"/>
+  <text class="t" x="704" y="164" text-anchor="middle">2D backbone (timm)</text>
+  <text class="s" x="704" y="186" text-anchor="middle">EfficientNet-B0 @224</text>
+  <text class="s" x="704" y="204" text-anchor="middle">ConvNeXt-S @288</text>
+  <text class="s" x="704" y="222" text-anchor="middle">CoAtNet-2 @384</text>
+  <text class="s" x="704" y="240" text-anchor="middle">ConvNeXt-T @256 (reader)</text>
+
+  <rect class="model" x="812" y="134" width="168" height="124" rx="10"/>
+  <text class="t" x="896" y="164" text-anchor="middle">Window features</text>
+  <text class="s" x="896" y="186" text-anchor="middle">one vector per window</text>
+  <text class="s" x="896" y="204" text-anchor="middle">(B, K, F)</text>
+  <text class="s" x="896" y="222" text-anchor="middle">+ learned slot embedding</text>
+  <text class="s" x="896" y="240" text-anchor="middle">(which plane / sequence)</text>
+
+  <rect class="model" x="1004" y="134" width="168" height="124" rx="10"/>
+  <text class="t" x="1088" y="164" text-anchor="middle">Attention-MIL head</text>
+  <text class="s" x="1088" y="186" text-anchor="middle">gated tanh · sigmoid</text>
+  <text class="s" x="1088" y="204" text-anchor="middle">one attention column</text>
+  <text class="s" x="1088" y="222" text-anchor="middle">per finding: softmax</text>
+  <text class="s" x="1088" y="240" text-anchor="middle">over the K windows</text>
+
+  <line class="a" x1="212" y1="196" x2="234" y2="196"/>
+  <line class="a" x1="404" y1="196" x2="426" y2="196"/>
+  <line class="a" x1="596" y1="196" x2="618" y2="196"/>
+  <line class="a" x1="788" y1="196" x2="810" y2="196"/>
+  <line class="a" x1="980" y1="196" x2="1002" y2="196"/>
+
+  <!-- A row 2 -->
+  <rect class="proc" x="44" y="296" width="552" height="112" rx="10"/>
+  <text class="t" x="64" y="324">Variants of the same skeleton</text>
+  <text class="s" x="64" y="346">Raptor repro / v2 (CoAtNet-2 @384): plain tanh attention, no slot embedding;</text>
+  <text class="s" x="64" y="364">v2 = 5 slots, 96 slices at native 384 px, windows across the concatenated stack,</text>
+  <text class="s" x="64" y="382">all 94 window positions at test. Reader (ConvNeXt-T): 2-layer transformer over</text>
+  <text class="s" x="64" y="400">all windows + slot / slice-position embeddings, then per-finding attention.</text>
+
+  <rect class="lab" x="620" y="296" width="290" height="112" rx="10"/>
+  <text class="t" x="640" y="324">Targets: soft labels</text>
+  <text class="s" x="640" y="346">report-derived LLM label sets, blended</text>
+  <text class="s" x="640" y="364">(3 sets; + JEV labels for Raptor v2)</text>
+  <text class="s" x="640" y="382">58 gold studies = fold −1, never trained</text>
+  <text class="s" x="640" y="400">loss: BCE on soft targets</text>
+
+  <rect class="out" x="1004" y="296" width="168" height="112" rx="10"/>
+  <text class="t" x="1088" y="326" text-anchor="middle">12 logits</text>
+  <text class="s" x="1088" y="348" text-anchor="middle">one per finding</text>
+  <text class="s" x="1088" y="366" text-anchor="middle">rank-averaged over</text>
+  <text class="s" x="1088" y="384" text-anchor="middle">folds / families</text>
+
+  <line class="a" x1="1088" y1="258" x2="1088" y2="294"/>
+  <line class="a" x1="910" y1="352" x2="1002" y2="352"/>
+  <text class="al" x="956" y="342" text-anchor="middle">supervise</text>
+
+  <!-- ================= Panel B ================= -->
+  <rect class="frame" x="24" y="446" width="1152" height="368" rx="12"/>
+  <text class="ph" x="44" y="474">B · S6 recipe: heliosli's compact architecture, nartaa's S6fall weights (+ our seed-43 retrain)</text>
+
+  <!-- B row 1 -->
+  <rect class="data" x="44" y="494" width="168" height="136" rx="10"/>
+  <text class="t" x="128" y="526" text-anchor="middle">MRI study</text>
+  <text class="s" x="128" y="548" text-anchor="middle">every series,</text>
+  <text class="s" x="128" y="566" text-anchor="middle">read from DICOM</text>
+  <text class="s" x="128" y="584" text-anchor="middle">with its geometry</text>
+
+  <rect class="ext" x="236" y="494" width="168" height="136" rx="10"/>
+  <text class="t" x="320" y="526" text-anchor="middle">Anatomy V-Net</text>
+  <text class="s" x="320" y="548" text-anchor="middle">SKM-TEA checkpoint</text>
+  <text class="s" x="320" y="566" text-anchor="middle">knee-joint + patella</text>
+  <text class="s" x="320" y="584" text-anchor="middle">centre, projected</text>
+  <text class="s" x="320" y="602" text-anchor="middle">into every series</text>
+
+  <rect class="ext" x="428" y="494" width="168" height="136" rx="10"/>
+  <text class="t" x="512" y="526" text-anchor="middle">"v4" views</text>
+  <text class="s" x="512" y="548" text-anchor="middle">full field of view</text>
+  <text class="s" x="512" y="566" text-anchor="middle">+ 100 mm knee crops:</text>
+  <text class="s" x="512" y="584" text-anchor="middle">sag / ax: joint, patella,</text>
+  <text class="s" x="512" y="602" text-anchor="middle">posterior; cor: medial,</text>
+  <text class="s" x="512" y="620" text-anchor="middle">lateral (±30 mm)</text>
+
+  <rect class="ext" x="620" y="494" width="168" height="136" rx="10"/>
+  <text class="t" x="704" y="526" text-anchor="middle">Windows</text>
+  <text class="s" x="704" y="548" text-anchor="middle">3 slices (3.5 mm slabs)</text>
+  <text class="s" x="704" y="566" text-anchor="middle">render 320 → crop 288</text>
+  <text class="s" x="704" y="584" text-anchor="middle">train: 64 random</text>
+  <text class="s" x="704" y="602" text-anchor="middle">test: every slice</text>
+  <text class="s" x="704" y="620" text-anchor="middle">(stride 1)</text>
+
+  <rect class="ext" x="812" y="494" width="168" height="136" rx="10"/>
+  <text class="t" x="896" y="526" text-anchor="middle">ConvNeXt-S</text>
+  <text class="s" x="896" y="548" text-anchor="middle">fb_in22k_ft_in1k init</text>
+  <text class="s" x="896" y="566" text-anchor="middle">keeps the h × w</text>
+  <text class="s" x="896" y="584" text-anchor="middle">feature map</text>
+  <text class="s" x="896" y="602" text-anchor="middle">(no global pool)</text>
+
+  <rect class="ext" x="1004" y="494" width="168" height="136" rx="10"/>
+  <text class="t" x="1088" y="526" text-anchor="middle">Spatial attention</text>
+  <text class="s" x="1088" y="548" text-anchor="middle">12 learned queries</text>
+  <text class="s" x="1088" y="566" text-anchor="middle">over the h × w grid</text>
+  <text class="s" x="1088" y="584" text-anchor="middle">(+ 2-D sin/cos position)</text>
+  <text class="s" x="1088" y="602" text-anchor="middle">→ 12 vectors / window</text>
+
+  <line class="a" x1="212" y1="562" x2="234" y2="562"/>
+  <line class="a" x1="404" y1="562" x2="426" y2="562"/>
+  <line class="a" x1="596" y1="562" x2="618" y2="562"/>
+  <line class="a" x1="788" y1="562" x2="810" y2="562"/>
+  <line class="a" x1="980" y1="562" x2="1002" y2="562"/>
+
+  <!-- B row 2 -->
+  <rect class="lab" x="44" y="666" width="552" height="128" rx="10"/>
+  <text class="t" x="64" y="694">Training (nartaa's exact argv)</text>
+  <text class="s" x="64" y="716">all training studies (gold-58 held out), report-derived blend + JEV labels,</text>
+  <text class="s" x="64" y="734">16 epochs, batch 2, lr 1e-4 / head 1e-3, random-crop augmentation, no EMA.</text>
+  <text class="s" x="64" y="752">Seed 42 = nartaa's public S6fall weights (used in EXP-127).</text>
+  <text class="s" x="64" y="770">Seed 43 = our ITER-14 retrain: 3.6 h on one RTX 4090, gold-58 0.929 vs</text>
+  <text class="s" x="64" y="788">0.932 for seed 42 (used in EXP-128 next to seed 42).</text>
+
+  <rect class="out" x="812" y="666" width="168" height="128" rx="10"/>
+  <text class="t" x="896" y="700" text-anchor="middle">12 logits</text>
+  <text class="s" x="896" y="722" text-anchor="middle">one per finding;</text>
+  <text class="s" x="896" y="740" text-anchor="middle">used at 0.3 inside</text>
+  <text class="s" x="896" y="758" text-anchor="middle">the heliosli slot</text>
+  <text class="s" x="896" y="776" text-anchor="middle">(EXP-127)</text>
+
+  <rect class="ext" x="1004" y="666" width="168" height="128" rx="10"/>
+  <text class="t" x="1088" y="696" text-anchor="middle">Window-attn MIL</text>
+  <text class="s" x="1088" y="718" text-anchor="middle">+ slot / view /</text>
+  <text class="s" x="1088" y="736" text-anchor="middle">geometry embedding</text>
+  <text class="s" x="1088" y="754" text-anchor="middle">per finding: softmax</text>
+  <text class="s" x="1088" y="772" text-anchor="middle">over all windows</text>
+
+  <line class="a" x1="1088" y1="630" x2="1088" y2="664"/>
+  <line class="a" x1="1004" y1="730" x2="982" y2="730"/>
+  <line class="a" x1="596" y1="730" x2="810" y2="730"/>
+  <text class="al" x="703" y="720" text-anchor="middle">supervise</text>
+
+  <!-- Legend -->
+  <g font-size="12" fill="#374151">
+    <rect class="data" x="44" y="840" width="22" height="14" rx="3"/><text x="74" y="852">data / input</text>
+    <rect class="proc" x="184" y="840" width="22" height="14" rx="3"/><text x="214" y="852">processing (ours)</text>
+    <rect class="model" x="354" y="840" width="22" height="14" rx="3"/><text x="384" y="852">model (ours)</text>
+    <rect class="lab" x="494" y="840" width="22" height="14" rx="3"/><text x="524" y="852">labels / training</text>
+    <rect class="ext" x="654" y="840" width="22" height="14" rx="3"/><text x="684" y="852">public / external recipe (not ours)</text>
+    <rect class="out" x="924" y="840" width="22" height="14" rx="3"/><text x="954" y="852">output</text>
+  </g>
+</svg>

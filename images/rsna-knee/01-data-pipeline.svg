@@ -1,0 +1,221 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <style>
+    .t { font-size: 22px; font-weight: 700; fill: #1f2937; }
+    .st { font-size: 14px; fill: #6b7280; }
+    .h { font-size: 14px; font-weight: 600; fill: #111827; }
+    .b { font-size: 14px; fill: #111827; }
+    .s { font-size: 12px; fill: #4b5563; }
+    .sec { font-size: 13px; font-weight: 700; fill: #475569; letter-spacing: 0.5px; }
+    .al { font-size: 12px; font-style: italic; fill: #475569; }
+    .data { fill: #e0f2fe; stroke: #0284c7; stroke-width: 1.5; }
+    .proc { fill: #f1f5f9; stroke: #475569; stroke-width: 1.5; }
+    .model { fill: #ede9fe; stroke: #7c3aed; stroke-width: 1.5; }
+    .lab { fill: #fef3c7; stroke: #d97706; stroke-width: 1.5; }
+    .ext { fill: #fce7f3; stroke: #db2777; stroke-width: 1.5; stroke-dasharray: 6 4; }
+    .out { fill: #dcfce7; stroke: #16a34a; stroke-width: 1.5; }
+    .arr { stroke: #64748b; stroke-width: 1.5; fill: none; marker-end: url(#ah); }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1200" height="900" fill="#ffffff"/>
+
+  <text x="24" y="44" class="t">Data pipeline: DICOM studies → 2.5D windows → caches</text>
+  <text x="24" y="66" class="st">The ~570 GB of DICOMs are read only on Kaggle; GPU boxes download preprocessed, checksummed shards.</text>
+
+  <!-- ===== Row 1: per-study preprocessing ===== -->
+  <text x="24" y="100" class="sec">PER-STUDY PREPROCESSING · src/dataset/dicom.py (same code for training cache and test-time inference)</text>
+
+  <rect x="24" y="112" width="264" height="178" rx="10" class="data"/>
+  <text x="40" y="136" class="h">Raw DICOM studies</text>
+  <text x="40" y="158" class="s">train: 4,407 studies, ~570 GB</text>
+  <text x="40" y="175" class="s">24,371 series (~5.5 per study)</text>
+  <text x="40" y="192" class="s">20–45 slices per series, median 30</text>
+  <text x="40" y="209" class="s">test: ~1,300 studies, images only</text>
+  <text x="40" y="232" class="s">series meta: Anatomical_Plane</text>
+  <text x="40" y="249" class="s">(Sag / Cor / Ax), Fluid_Sensitive,</text>
+  <text x="40" y="266" class="s">Fat_Suppression</text>
+
+  <rect x="320" y="112" width="264" height="178" rx="10" class="proc"/>
+  <text x="336" y="136" class="h">Slice order + orientation</text>
+  <text x="336" y="158" class="s">key = ImagePositionPatient · normal</text>
+  <text x="336" y="175" class="s">normal = row × col of ImageOrientation</text>
+  <text x="336" y="192" class="s">fallback: SliceLocation → InstanceNumber</text>
+  <text x="336" y="215" class="s">file names are random SOP UIDs;</text>
+  <text x="336" y="232" class="s">InstanceNumber reversed in ~1/3</text>
+  <text x="336" y="255" class="s">knee side from geometry → every</text>
+  <text x="336" y="272" class="s">study canonicalised to a right knee</text>
+
+  <rect x="616" y="112" width="264" height="178" rx="10" class="proc"/>
+  <text x="632" y="136" class="h">Crop · intensity · resize</text>
+  <text x="632" y="158" class="s">physical centre crop: 140 mm FOV</text>
+  <text x="632" y="175" class="s">(median FOV is 160 mm)</text>
+  <text x="632" y="198" class="s">slices sampled over the central</text>
+  <text x="632" y="215" class="s">4–96 % of each series</text>
+  <text x="632" y="238" class="s">1–99 percentile window → uint8</text>
+  <text x="632" y="255" class="s">stored at 256 px; resized to</text>
+  <text x="632" y="272" class="s">224 / 288 px at training time</text>
+
+  <rect x="912" y="112" width="264" height="178" rx="10" class="proc"/>
+  <text x="928" y="136" class="h">Fixed slot stack per study</text>
+  <text x="928" y="158" class="s">6 slots = plane × fluid-sensitive</text>
+  <text x="928" y="181" class="s">Sag FS 20 · Sag T1 10</text>
+  <text x="928" y="198" class="s">Cor FS 16 · Cor T1 8</text>
+  <text x="928" y="215" class="s">Ax FS 14 · Ax T1 4  → 72 slices</text>
+  <text x="928" y="238" class="s">dense cache: 88 slices; Raptor v2:</text>
+  <text x="928" y="255" class="s">96 slices at native 384 px</text>
+  <text x="928" y="272" class="s">missing slot → zeros + mask</text>
+
+  <line x1="288" y1="201" x2="318" y2="201" class="arr"/>
+  <line x1="584" y1="201" x2="614" y2="201" class="arr"/>
+  <line x1="880" y1="201" x2="910" y2="201" class="arr"/>
+
+  <!-- ===== Row 2: 2.5D windows ===== -->
+  <text x="24" y="330" class="sec">2.5D WINDOWS (what the model sees)</text>
+
+  <!-- slice stack illustration -->
+  <g>
+    <rect x="40" y="360" width="62" height="62" rx="3" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1"/>
+    <rect x="52" y="372" width="62" height="62" rx="3" fill="#cbd5e1" stroke="#94a3b8" stroke-width="1"/>
+    <rect x="64" y="384" width="62" height="62" rx="3" fill="#fecaca" stroke="#dc2626" stroke-width="1.2"/>
+    <rect x="76" y="396" width="62" height="62" rx="3" fill="#bbf7d0" stroke="#16a34a" stroke-width="1.2"/>
+    <rect x="88" y="408" width="62" height="62" rx="3" fill="#bfdbfe" stroke="#2563eb" stroke-width="1.2"/>
+    <rect x="100" y="420" width="62" height="62" rx="3" fill="#cbd5e1" stroke="#94a3b8" stroke-width="1"/>
+  </g>
+  <text x="40" y="504" class="s">sorted slices of one slot</text>
+  <text x="40" y="520" class="s">3 adjacent slices = 1 window</text>
+
+  <line x1="176" y1="420" x2="214" y2="420" class="arr"/>
+
+  <rect x="220" y="356" width="200" height="128" rx="10" class="proc"/>
+  <text x="236" y="380" class="h">One window = RGB</text>
+  <rect x="236" y="394" width="34" height="34" rx="3" fill="#fecaca" stroke="#dc2626"/>
+  <rect x="278" y="394" width="34" height="34" rx="3" fill="#bbf7d0" stroke="#16a34a"/>
+  <rect x="320" y="394" width="34" height="34" rx="3" fill="#bfdbfe" stroke="#2563eb"/>
+  <text x="253" y="416" text-anchor="middle" class="s">R</text>
+  <text x="295" y="416" text-anchor="middle" class="s">G</text>
+  <text x="337" y="416" text-anchor="middle" class="s">B</text>
+  <text x="236" y="452" class="s">slice i−1, i, i+1 as channels</text>
+  <text x="236" y="469" class="s">no left/right flips (medial ≠ lateral)</text>
+
+  <line x1="420" y1="420" x2="450" y2="420" class="arr"/>
+
+  <rect x="456" y="356" width="160" height="128" rx="10" class="proc"/>
+  <text x="472" y="380" class="h">Bag of K windows</text>
+  <text x="472" y="402" class="s">per study, from all slots</text>
+  <text x="472" y="425" class="s">k_train = 16</text>
+  <text x="472" y="442" class="s">k_eval = 48</text>
+  <text x="472" y="465" class="s">+ slot embedding</text>
+
+  <line x1="616" y1="420" x2="646" y2="420" class="arr"/>
+
+  <rect x="652" y="356" width="148" height="128" rx="10" class="model"/>
+  <text x="668" y="380" class="h">2D backbone</text>
+  <text x="668" y="402" class="s">per window, then</text>
+  <text x="668" y="419" class="s">per-finding</text>
+  <text x="668" y="436" class="s">attention-MIL</text>
+  <text x="668" y="459" class="b">→ 12 logits</text>
+
+  <!-- fold split -->
+  <rect x="832" y="318" width="344" height="210" rx="10" class="lab"/>
+  <text x="848" y="342" class="h">Fold split · configs/folds_5.csv</text>
+  <text x="848" y="362" class="s">one split for every run · 4,407 studies</text>
+  <g font-size="12">
+    <rect x="848" y="376" width="58" height="40" fill="#ffffff" stroke="#d97706"/>
+    <rect x="906" y="376" width="58" height="40" fill="#ffffff" stroke="#d97706"/>
+    <rect x="964" y="376" width="58" height="40" fill="#ffffff" stroke="#d97706"/>
+    <rect x="1022" y="376" width="58" height="40" fill="#ffffff" stroke="#d97706"/>
+    <rect x="1080" y="376" width="58" height="40" fill="#ffffff" stroke="#d97706"/>
+    <rect x="1138" y="376" width="22" height="40" fill="#dcfce7" stroke="#16a34a"/>
+    <text x="877" y="392" text-anchor="middle" class="s">fold 0</text><text x="877" y="408" text-anchor="middle" class="s">870</text>
+    <text x="935" y="392" text-anchor="middle" class="s">fold 1</text><text x="935" y="408" text-anchor="middle" class="s">869</text>
+    <text x="993" y="392" text-anchor="middle" class="s">fold 2</text><text x="993" y="408" text-anchor="middle" class="s">870</text>
+    <text x="1051" y="392" text-anchor="middle" class="s">fold 3</text><text x="1051" y="408" text-anchor="middle" class="s">870</text>
+    <text x="1109" y="392" text-anchor="middle" class="s">fold 4</text><text x="1109" y="408" text-anchor="middle" class="s">870</text>
+    <text x="1149" y="400" text-anchor="middle" class="s">58</text>
+  </g>
+  <text x="848" y="438" class="s">folds 0–4: multilabel-stratified K-fold on</text>
+  <text x="848" y="454" class="s">binarised report labels (4,349 studies)</text>
+  <text x="848" y="477" class="s">fold −1: the 58 gold studies (radiologist</text>
+  <text x="848" y="493" class="s">labels) — never trained on, scored by</text>
+  <text x="848" y="509" class="s">every model as an independent check</text>
+
+  <!-- ===== Row 3: caches ===== -->
+  <text x="24" y="566" class="sec">CACHES</text>
+
+  <!-- track 1 -->
+  <text x="24" y="590" class="h">Our slot-stack caches (ITER-01 … 13)</text>
+  <rect x="24" y="602" width="270" height="96" rx="10" class="proc"/>
+  <text x="40" y="626" class="h">Kaggle CPU notebooks</text>
+  <text x="40" y="647" class="s">competition DICOMs mounted read-only</text>
+  <text x="40" y="664" class="s">scripts/preprocess.py → one .npz</text>
+  <text x="40" y="681" class="s">per study (big caches in parts)</text>
+
+  <rect x="326" y="602" width="270" height="96" rx="10" class="data"/>
+  <text x="342" y="626" class="h">rsna-knee-cache-pack</text>
+  <text x="342" y="647" class="s">14 tar shards · 14.5 GiB (256 px)</text>
+  <text x="342" y="664" class="s">also: -dense-pack (88 slices),</text>
+  <text x="342" y="681" class="s">-cache-r96-p0..4 (96 slices, 384 px)</text>
+
+  <rect x="628" y="602" width="270" height="96" rx="10" class="proc"/>
+  <text x="644" y="626" class="h">vast.ai: get_data.sh</text>
+  <text x="644" y="647" class="s">fetch_cache.py: one shard per request,</text>
+  <text x="644" y="664" class="s">checksum-verified, resumable</text>
+  <text x="644" y="681" class="s">+ competition csvs + public label sets</text>
+
+  <rect x="930" y="602" width="246" height="96" rx="10" class="out"/>
+  <text x="946" y="626" class="h">data/processed/cache_256</text>
+  <text x="946" y="647" class="s">4,407 studies on the box</text>
+  <text x="946" y="664" class="s">→ scripts/vast/train.sh</text>
+  <text x="946" y="681" class="s">(no DICOM download)</text>
+
+  <line x1="294" y1="650" x2="324" y2="650" class="arr"/>
+  <line x1="596" y1="650" x2="626" y2="650" class="arr"/>
+  <line x1="898" y1="650" x2="928" y2="650" class="arr"/>
+
+  <!-- track 2 -->
+  <text x="24" y="730" class="h">ITER-14 S6 px cache (heliosli / nartaa S6 recipe)</text>
+  <rect x="24" y="742" width="210" height="118" rx="10" class="ext"/>
+  <text x="40" y="766" class="h">Anatomy V-Net</text>
+  <text x="40" y="787" class="s">heliosli, SKM-TEA-trained</text>
+  <text x="40" y="804" class="s">(public, not ours) places</text>
+  <text x="40" y="821" class="s">100 mm knee-centred crops</text>
+  <text x="40" y="838" class="s">(anchors, same pass)</text>
+
+  <rect x="262" y="742" width="290" height="118" rx="10" class="proc"/>
+  <text x="278" y="766" class="h">Kaggle T4 · rsna-knee-s6-cache-0..4</text>
+  <text x="278" y="787" class="s">render every study once (fly_data):</text>
+  <text x="278" y="804" class="s">views v4 = full FOV + knee crops</text>
+  <text x="278" y="821" class="s">320 px · 3 slices/window · 3.5 mm</text>
+  <text x="278" y="838" class="s">600 rows per study</text>
+
+  <rect x="580" y="742" width="290" height="118" rx="10" class="data"/>
+  <text x="596" y="766" class="h">5 JPEG q95 shards · 70.9 GB</text>
+  <text x="596" y="787" class="s">4,321 studies (4,263 train + 58 gold)</text>
+  <text x="596" y="804" class="s">0 errors · ~50 min per shard</text>
+  <text x="596" y="821" class="s">4.9 h of Kaggle GPU quota</text>
+  <text x="596" y="838" class="s">JPEG error: MAE 0.68 grey levels</text>
+
+  <rect x="898" y="742" width="278" height="118" rx="10" class="out"/>
+  <text x="914" y="766" class="h">vast.ai 1× RTX 4090</text>
+  <text x="914" y="787" class="s">fetch_kernel_output.py, 48 threads</text>
+  <text x="914" y="804" class="s">(~73 MB/s vs 2.8 MB/s single)</text>
+  <text x="914" y="821" class="s">unpack_px.py → trainer --px</text>
+  <text x="914" y="838" class="s">crop 320 → 288 px at train time</text>
+
+  <line x1="234" y1="801" x2="260" y2="801" class="arr"/>
+  <line x1="552" y1="801" x2="578" y2="801" class="arr"/>
+  <line x1="870" y1="801" x2="896" y2="801" class="arr"/>
+
+  <!-- legend -->
+  <g font-size="12">
+    <rect x="590" y="876" width="14" height="12" rx="3" class="data"/><text x="610" y="886" class="s">data / cache</text>
+    <rect x="700" y="876" width="14" height="12" rx="3" class="proc"/><text x="720" y="886" class="s">processing</text>
+    <rect x="800" y="876" width="14" height="12" rx="3" class="model"/><text x="820" y="886" class="s">model</text>
+    <rect x="870" y="876" width="14" height="12" rx="3" class="lab"/><text x="890" y="886" class="s">labels / split</text>
+    <rect x="990" y="876" width="14" height="12" rx="3" class="ext"/><text x="1010" y="886" class="s">external</text>
+    <rect x="1080" y="876" width="14" height="12" rx="3" class="out"/><text x="1100" y="886" class="s">ready to train</text>
+  </g>
+</svg>
