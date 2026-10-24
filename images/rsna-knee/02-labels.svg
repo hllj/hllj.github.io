@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <style>
+    .t { font-size: 22px; font-weight: 700; fill: #1f2937; }
+    .st { font-size: 14px; fill: #6b7280; }
+    .h { font-size: 14px; font-weight: 600; fill: #111827; }
+    .b { font-size: 14px; fill: #111827; }
+    .s { font-size: 12px; fill: #4b5563; }
+    .sb { font-size: 12px; font-weight: 600; fill: #111827; }
+    .al { font-size: 12px; font-style: italic; fill: #475569; }
+    .data { fill: #e0f2fe; stroke: #0284c7; stroke-width: 1.5; }
+    .proc { fill: #f1f5f9; stroke: #475569; stroke-width: 1.5; }
+    .model { fill: #ede9fe; stroke: #7c3aed; stroke-width: 1.5; }
+    .lab { fill: #fef3c7; stroke: #d97706; stroke-width: 1.5; }
+    .ext { fill: #fce7f3; stroke: #db2777; stroke-width: 1.5; stroke-dasharray: 6 4; }
+    .out { fill: #dcfce7; stroke: #16a34a; stroke-width: 1.5; }
+    .arr { stroke: #64748b; stroke-width: 1.5; fill: none; marker-end: url(#ah); }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1200" height="900" fill="#ffffff"/>
+
+  <text x="24" y="44" class="t">Labels: free-text reports → soft targets → pseudo-labels</text>
+  <text x="24" y="66" class="st">Only 58 of 4,407 training studies carry radiologist labels; everything else is learned from report-derived soft labels.</text>
+
+  <!-- ===== Row 1 ===== -->
+  <rect x="24" y="90" width="220" height="200" rx="10" class="data"/>
+  <text x="40" y="114" class="h">Free-text reports</text>
+  <text x="40" y="136" class="s">one per training study</text>
+  <text x="40" y="153" class="s">9+ languages</text>
+  <text x="40" y="176" class="s">58 gold studies also have</text>
+  <text x="40" y="193" class="s">radiologist labels (12 findings)</text>
+  <text x="40" y="216" class="s">test studies: images only,</text>
+  <text x="40" y="233" class="s">no report at inference</text>
+
+  <rect x="274" y="90" width="300" height="200" rx="10" class="proc"/>
+  <text x="290" y="114" class="h">LLM extraction (one prompt / report)</text>
+  <text x="290" y="136" class="s">prompt = the annotators' criteria</text>
+  <text x="290" y="153" class="s">(borderline → negative; effusion and</text>
+  <text x="290" y="170" class="s">Baker's: moderate/large only)</text>
+  <text x="290" y="193" class="s">per finding: present / absent /</text>
+  <text x="290" y="210" class="s">not_mentioned + probability p</text>
+  <text x="290" y="233" class="s">hedged ("probable") → p 0.5–0.8</text>
+  <text x="290" y="250" class="s">not_mentioned → 0.5 + verdict UNK</text>
+  <text x="290" y="273" class="s">LLM 0.878 vs regex 0.814 (forum)</text>
+
+  <rect x="604" y="90" width="572" height="200" rx="10" class="ext"/>
+  <text x="620" y="114" class="h">Public label sets · macro AUC vs gold-58 (scripts/eval_labels.py)</text>
+  <g>
+    <text x="620" y="140" class="s">stevenleehans llm_labels_v4_blend</text><text x="884" y="140" class="sb" text-anchor="end">0.893</text>
+    <text x="620" y="160" class="s">stevenleehans llm_labels_v2</text><text x="884" y="160" class="sb" text-anchor="end">0.887</text>
+    <text x="620" y="180" class="s">yunusgmsoy llm_labels</text><text x="884" y="180" class="sb" text-anchor="end">0.880</text>
+    <text x="620" y="200" class="s">stevenleehans llm_labels_full</text><text x="884" y="200" class="sb" text-anchor="end">0.878</text>
+    <text x="910" y="140" class="s">pilkwang report_labels_v2</text><text x="1160" y="140" class="sb" text-anchor="end">0.866</text>
+    <text x="910" y="160" class="s">laymond Qwen3-8B (label×conf)</text><text x="1160" y="160" class="sb" text-anchor="end">0.843</text>
+    <text x="910" y="180" class="s">lixin73 GPT-5.6-Sol</text><text x="1160" y="180" class="sb" text-anchor="end">0.835</text>
+    <text x="910" y="200" class="s">riadmohamed42 JEV (hybrid)</text><text x="1160" y="200" class="s" text-anchor="end">—</text>
+  </g>
+  <line x1="620" y1="218" x2="1160" y2="218" stroke="#f9a8d4" stroke-width="1"/>
+  <text x="620" y="240" class="s">Rule (host): commercial LLM APIs allowed. Gold-58 is used only to score label sets,</text>
+  <text x="620" y="257" class="s">never to tune prompts. Our own labeller, src/labeling/llm_label.py, implements</text>
+  <text x="620" y="274" class="s">the same single-prompt recipe (any OpenAI-compatible endpoint).</text>
+
+  <line x1="244" y1="190" x2="272" y2="190" class="arr"/>
+  <line x1="574" y1="190" x2="602" y2="190" class="arr"/>
+
+  <!-- ===== Row 2 ===== -->
+  <rect x="24" y="330" width="440" height="188" rx="10" class="lab"/>
+  <text x="40" y="354" class="h">Per-finding silence priors (fill "not mentioned")</text>
+  <text x="40" y="376" class="s">silence carries information, differently per finding (gold-58):</text>
+  <text x="40" y="393" class="s">silent → positive in 3 % (Baker's), 0 % (OA), 34 % (Synovitis)</text>
+  <g>
+    <text x="40" y="418" class="sb">Baker's · Medial OA</text><text x="250" y="418" class="s">0.03</text>
+    <text x="40" y="436" class="sb">default (other findings)</text><text x="250" y="436" class="s">0.10</text>
+    <text x="40" y="454" class="sb">Fracture</text><text x="250" y="454" class="s">0.20  (in 7 % of reports vs 31 % of gold)</text>
+    <text x="40" y="472" class="sb">PF OA</text><text x="250" y="472" class="s">0.25</text>
+    <text x="40" y="490" class="sb">Synovitis</text><text x="250" y="490" class="s">copy the Effusion cell</text>
+    <text x="40" y="508" class="s">P(synovitis | effusion) 0.63 vs 0.22 without effusion</text>
+  </g>
+
+  <rect x="500" y="330" width="320" height="188" rx="10" class="lab"/>
+  <text x="516" y="354" class="h">Blend → soft report labels y_report</text>
+  <text x="516" y="376" class="s">weighted mean over sources (blend.py)</text>
+  <text x="516" y="393" class="s">default: v4_blend + full + pilkwang</text>
+  <text x="516" y="410" class="b">0.891 vs gold-58</text>
+  <text x="516" y="433" class="s">kept soft — rounding to 0/1 hurts</text>
+  <text x="516" y="456" class="s">variants: + JEV ×2 (Raptor v2);</text>
+  <text x="516" y="473" class="s">reader: 4-table mean, clip 0.01–0.99</text>
+  <text x="516" y="496" class="s">same y_report scores OOF for every run</text>
+
+  <rect x="856" y="330" width="320" height="188" rx="10" class="model"/>
+  <text x="872" y="354" class="h">Teacher: 5 folds → OOF predictions</text>
+  <text x="872" y="376" class="s">each study predicted by the model of</text>
+  <text x="872" y="393" class="s">the fold that did NOT train on it</text>
+  <text x="872" y="416" class="s">in-fold predictions just echo the</text>
+  <text x="872" y="433" class="s">labels back → never used</text>
+  <text x="872" y="456" class="s">e.g. Raptor (CoAtNet) 5-fold OOF,</text>
+  <text x="872" y="473" class="s">quantile-mapped onto the label scale</text>
+  <text x="872" y="490" class="s">(make_pseudo_teacher.py)</text>
+
+  <line x1="890" y1="290" x2="890" y2="300" stroke="#64748b" stroke-width="1.5"/>
+  <path d="M 890 300 L 244 300 L 244 328" class="arr"/>
+  <line x1="464" y1="428" x2="498" y2="428" class="arr"/>
+  <line x1="820" y1="428" x2="854" y2="428" class="arr"/>
+  <text x="826" y="418" class="al">train</text>
+
+  <!-- ===== Row 3 ===== -->
+  <rect x="24" y="566" width="560" height="160" rx="10" class="lab"/>
+  <text x="40" y="590" class="h">Pseudo-label targets (labels.pseudo)</text>
+  <text x="40" y="618" class="b">y = (1 − w) · y_report + w · y_oof</text>
+  <text x="40" y="642" class="s">w = 0.5 by default; config allows per-finding w (Synovitis 0.7,</text>
+  <text x="40" y="659" class="s">PF OA 0.6, Lateral OA 0.6); EXP-079 used a plain 50/50 mix</text>
+  <text x="40" y="682" class="s">goodpjw: a 50/50 label + held-out-prediction mix scores 0.921</text>
+  <text x="40" y="699" class="s">vs 0.896 on gold-58 as a label set</text>
+
+  <rect x="620" y="566" width="556" height="160" rx="10" class="out"/>
+  <text x="636" y="590" class="h">Student training (soft-target BCE) — outcome</text>
+  <text x="636" y="614" class="s">EXP-010 (50/50 report + teacher OOF): worse than its teacher</text>
+  <text x="636" y="634" class="s">ConvNeXt student fold 0 (EXP-078): 0.929 vs dense fold 0 0.926</text>
+  <text x="636" y="654" class="s">Raptor v3 student (EXP-082): 0.941 = family without it</text>
+  <text x="636" y="674" class="s">final stack: EXP-094 0.953 vs EXP-093 0.954 → neutral</text>
+  <text x="636" y="700" class="sb">Score a student's OOF against report targets only</text>
+  <text x="636" y="716" class="s">(models/oof/report_targets.csv), never its own blended val AUC</text>
+
+  <path d="M 660 518 L 660 536 L 300 536 L 300 564" class="arr"/>
+  <text x="668" y="533" class="al">y_report</text>
+  <path d="M 1016 518 L 1016 552 L 440 552 L 440 564" class="arr"/>
+  <text x="1024" y="540" class="al">y_oof</text>
+  <line x1="584" y1="646" x2="618" y2="646" class="arr"/>
+
+  <!-- ===== Row 4: JEV / S6 ===== -->
+  <text x="24" y="762" class="h">Labels used by the S6 recipe (nartaa, retrained in ITER-14)</text>
+  <rect x="24" y="774" width="300" height="90" rx="10" class="ext"/>
+  <text x="40" y="798" class="h">JEV labels (CC0)</text>
+  <text x="40" y="818" class="s">riadmohamed42/jev-knee-labels</text>
+  <text x="40" y="835" class="s">HYBRID_labels_scores.csv</text>
+
+  <rect x="356" y="774" width="420" height="90" rx="10" class="ext"/>
+  <text x="372" y="798" class="h">labels_v1_blendjev.parquet</text>
+  <text x="372" y="818" class="s">cell-wise mean of nartaa's labels_v1_blend and JEV;</text>
+  <text x="372" y="835" class="s">where JEV is NaN the blend value is kept</text>
+  <text x="372" y="852" class="s">(rebuilt exactly by build_blendjev.py)</text>
+
+  <rect x="808" y="774" width="368" height="90" rx="10" class="lab"/>
+  <text x="824" y="798" class="h">S6 targets (arm E_prior)</text>
+  <text x="824" y="818" class="s">prior fill + weight-normalised BCE</text>
+  <text x="824" y="835" class="s">all non-gold studies; gold-58 excluded</text>
+
+  <line x1="324" y1="819" x2="354" y2="819" class="arr"/>
+  <line x1="776" y1="819" x2="806" y2="819" class="arr"/>
+
+  <!-- legend -->
+  <g font-size="12">
+    <rect x="580" y="878" width="14" height="12" rx="3" class="data"/><text x="600" y="888" class="s">input</text>
+    <rect x="650" y="878" width="14" height="12" rx="3" class="proc"/><text x="670" y="888" class="s">processing</text>
+    <rect x="756" y="878" width="14" height="12" rx="3" class="model"/><text x="776" y="888" class="s">model</text>
+    <rect x="830" y="878" width="14" height="12" rx="3" class="lab"/><text x="850" y="888" class="s">labels / targets</text>
+    <rect x="960" y="878" width="14" height="12" rx="3" class="ext"/><text x="980" y="888" class="s">public (not ours)</text>
+    <rect x="1100" y="878" width="14" height="12" rx="3" class="out"/><text x="1120" y="888" class="s">result</text>
+  </g>
+</svg>

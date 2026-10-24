@@ -1,0 +1,175 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b"/>
+    </marker>
+    <style>
+      .t { font-size: 14px; fill: #111827; font-weight: 600; }
+      .s { font-size: 12px; fill: #4b5563; }
+      .al { font-size: 12px; fill: #475569; font-style: italic; }
+      .proc { fill: #f1f5f9; stroke: #475569; stroke-width: 1.5; }
+      .model { fill: #ede9fe; stroke: #7c3aed; stroke-width: 1.5; }
+      .ext { fill: #fce7f3; stroke: #db2777; stroke-width: 1.5; stroke-dasharray: 6 4; }
+      .out { fill: #dcfce7; stroke: #16a34a; stroke-width: 1.5; }
+      .a { stroke: #64748b; stroke-width: 1.5; fill: none; marker-end: url(#arr); }
+      .td { font-size: 12px; fill: #111827; }
+      .th { font-size: 12px; fill: #111827; font-weight: 600; }
+    </style>
+  </defs>
+  <rect x="0" y="0" width="1200" height="800" fill="#ffffff"/>
+  <text x="24" y="44" font-size="22" font-weight="700" fill="#1f2937">Final submissions EXP-124 / EXP-127: per-finding rank fusion</text>
+  <text x="24" y="68" font-size="14" fill="#6b7280">Each stage's test predictions become per-finding percentile ranks (AUC only depends on order), are mixed with per-finding weights, then re-ranked.</text>
+  <text class="th" x="44" y="96">Public stages (verbatim, sha-checked)</text>
+  <text class="th" x="316" y="96">Slots (ours)</text>
+  <text class="th" x="578" y="96">Fusion (ours)</text>
+  <rect class="ext" x="44" y="104" width="240" height="64" rx="10"/>
+  <text class="t" x="164.0" y="131" text-anchor="middle">nartaa CoAtNet @384</text>
+  <text class="s" x="164.0" y="150" text-anchor="middle">public LB 0.949 · OAI-trained</text>
+  <rect class="ext" x="44" y="184" width="240" height="64" rx="10"/>
+  <text class="t" x="164.0" y="211" text-anchor="middle">nartaa 224-crop model</text>
+  <text class="s" x="164.0" y="230" text-anchor="middle">public LB 0.945 · OAI-trained</text>
+  <rect class="ext" x="44" y="284" width="240" height="64" rx="10"/>
+  <text class="t" x="164.0" y="311" text-anchor="middle">heliosli R6 + flip TTA</text>
+  <text class="s" x="164.0" y="330" text-anchor="middle">compact ConvNeXt-S</text>
+  <rect class="ext" x="44" y="364" width="240" height="64" rx="10"/>
+  <text class="t" x="164.0" y="391" text-anchor="middle">nartaa S6fall ConvNeXt-S</text>
+  <text class="s" x="164.0" y="410" text-anchor="middle">EXP-127 only · public 0.950</text>
+  <rect class="ext" x="44" y="464" width="240" height="64" rx="10"/>
+  <text class="t" x="164.0" y="491" text-anchor="middle">goodpjw 2.5D reader v11</text>
+  <text class="s" x="164.0" y="510" text-anchor="middle">ConvNeXt, 3 public folds</text>
+  <rect class="proc" x="316" y="144" width="230" height="64" rx="10"/>
+  <text class="t" x="431.0" y="171" text-anchor="middle">nartaa anchor  N</text>
+  <text class="s" x="431.0" y="190" text-anchor="middle">0.65 · r384 + 0.35 · r224</text>
+  <rect class="proc" x="316" y="316" width="230" height="80" rx="10"/>
+  <text class="t" x="431.0" y="342" text-anchor="middle">heliosli slot  H</text>
+  <text class="s" x="431.0" y="360" text-anchor="middle">EXP-124: R6 + flip only</text>
+  <text class="s" x="431.0" y="380" text-anchor="middle">EXP-127: 0.7 · R6 + 0.3 · S6fall</text>
+  <rect class="proc" x="316" y="464" width="230" height="64" rx="10"/>
+  <text class="t" x="431.0" y="491" text-anchor="middle">goodpjw  G</text>
+  <text class="s" x="431.0" y="510" text-anchor="middle">mean of its 3 folds</text>
+  <path class="a" d="M284,136 L300,136 L300,166 L314,166"/>
+  <path class="a" d="M284,216 L300,216 L300,186 L314,186"/>
+  <path class="a" d="M284,316 L300,316 L300,342 L314,342"/>
+  <path class="a" d="M284,396 L300,396 L300,370 L314,370"/>
+  <line class="a" x1="284" y1="496" x2="314" y2="496"/>
+  <text class="al" x="300" y="268" text-anchor="middle">rank</text>
+  <text class="al" x="300" y="448" text-anchor="middle">rank</text>
+  <rect class="model" x="578" y="220" width="230" height="210" rx="10"/>
+  <text class="t" x="693.0" y="252" text-anchor="middle">Per-finding fusion</text>
+  <text class="s" x="693.0" y="276" text-anchor="middle">for each finding c:</text>
+  <text class="s" x="693.0" y="298" text-anchor="middle">w_c (1 − g_c) · N</text>
+  <text class="s" x="693.0" y="320" text-anchor="middle">+ (1 − w_c)(1 − g_c) · H</text>
+  <text class="s" x="693.0" y="342" text-anchor="middle">+ g_c · G</text>
+  <text class="s" x="693.0" y="364" text-anchor="middle">→ re-rank per finding</text>
+  <text class="s" x="693.0" y="386" text-anchor="middle">(build_kernels.py)</text>
+  <path class="a" d="M546,176 L562,176 L562,260 L576,260"/>
+  <line class="a" x1="546" y1="356" x2="576" y2="356"/>
+  <path class="a" d="M546,496 L562,496 L562,410 L576,410"/>
+  <rect class="out" x="578" y="470" width="230" height="64" rx="10"/>
+  <text class="t" x="693.0" y="497" text-anchor="middle">submission.csv</text>
+  <text class="s" x="693.0" y="516" text-anchor="middle">12 finding columns per study</text>
+  <line class="a" x1="693" y1="430" x2="693" y2="468"/>
+  <text class="th" x="836" y="96">Per-finding weights (same in EXP-124 and EXP-127)</text>
+  <rect x="836" y="104" width="340" height="40" fill="#f1f5f9"/>
+  <text class="th" x="846" y="129">Finding</text>
+  <text class="th" x="1008.0" y="121" text-anchor="middle">nartaa</text>
+  <text class="s" x="1008.0" y="137" text-anchor="middle">w</text>
+  <text class="th" x="1074.0" y="121" text-anchor="middle">heliosli</text>
+  <text class="s" x="1074.0" y="137" text-anchor="middle">1 − w</text>
+  <text class="th" x="1142.0" y="121" text-anchor="middle">goodpjw</text>
+  <text class="s" x="1142.0" y="137" text-anchor="middle">g</text>
+  <rect x="836" y="144" width="340" height="24" fill="#ede9fe"/>
+  <text class="td" x="846" y="160">ACL</text>
+  <text class="td" x="1008.0" y="160" text-anchor="middle">0.35</text>
+  <text class="td" x="1074.0" y="160" text-anchor="middle">0.65</text>
+  <text class="td" x="1142.0" y="160" text-anchor="middle">0.025</text>
+  <rect x="836" y="168" width="340" height="24" fill="#ffffff"/>
+  <text class="td" x="846" y="184">MCL</text>
+  <text class="td" x="1008.0" y="184" text-anchor="middle">0.50</text>
+  <text class="td" x="1074.0" y="184" text-anchor="middle">0.50</text>
+  <text class="td" x="1142.0" y="184" text-anchor="middle">0.020</text>
+  <rect x="836" y="192" width="340" height="24" fill="#ede9fe"/>
+  <text class="td" x="846" y="208">Medial Meniscus</text>
+  <text class="td" x="1008.0" y="208" text-anchor="middle">0.65</text>
+  <text class="td" x="1074.0" y="208" text-anchor="middle">0.35</text>
+  <text class="td" x="1142.0" y="208" text-anchor="middle">0.020</text>
+  <rect x="836" y="216" width="340" height="24" fill="#ede9fe"/>
+  <text class="td" x="846" y="232">Lateral Meniscus</text>
+  <text class="td" x="1008.0" y="232" text-anchor="middle">0.35</text>
+  <text class="td" x="1074.0" y="232" text-anchor="middle">0.65</text>
+  <text class="td" x="1142.0" y="232" text-anchor="middle">0.008</text>
+  <rect x="836" y="240" width="340" height="24" fill="#ffffff"/>
+  <text class="td" x="846" y="256">Medial OA</text>
+  <text class="td" x="1008.0" y="256" text-anchor="middle">0.50</text>
+  <text class="td" x="1074.0" y="256" text-anchor="middle">0.50</text>
+  <text class="td" x="1142.0" y="256" text-anchor="middle">0.025</text>
+  <rect x="836" y="264" width="340" height="24" fill="#fce7f3"/>
+  <text class="td" x="846" y="280">Lateral OA</text>
+  <text class="td" x="1008.0" y="280" text-anchor="middle">0.15</text>
+  <text class="td" x="1074.0" y="280" text-anchor="middle">0.85</text>
+  <text class="td" x="1142.0" y="280" text-anchor="middle">0.008</text>
+  <rect x="836" y="288" width="340" height="24" fill="#fce7f3"/>
+  <text class="td" x="846" y="304">PF OA</text>
+  <text class="td" x="1008.0" y="304" text-anchor="middle">0.65</text>
+  <text class="td" x="1074.0" y="304" text-anchor="middle">0.35</text>
+  <text class="td" x="1142.0" y="304" text-anchor="middle">0.008</text>
+  <rect x="836" y="312" width="340" height="24" fill="#ede9fe"/>
+  <text class="td" x="846" y="328">Effusion</text>
+  <text class="td" x="1008.0" y="328" text-anchor="middle">0.65</text>
+  <text class="td" x="1074.0" y="328" text-anchor="middle">0.35</text>
+  <text class="td" x="1142.0" y="328" text-anchor="middle">0.004</text>
+  <rect x="836" y="336" width="340" height="24" fill="#fce7f3"/>
+  <text class="td" x="846" y="352">Synovitis</text>
+  <text class="td" x="1008.0" y="352" text-anchor="middle">0.85</text>
+  <text class="td" x="1074.0" y="352" text-anchor="middle">0.15</text>
+  <text class="td" x="1142.0" y="352" text-anchor="middle">0.003</text>
+  <rect x="836" y="360" width="340" height="24" fill="#fce7f3"/>
+  <text class="td" x="846" y="376">Baker&#8217;s</text>
+  <text class="td" x="1008.0" y="376" text-anchor="middle">0.30</text>
+  <text class="td" x="1074.0" y="376" text-anchor="middle">0.70</text>
+  <text class="td" x="1142.0" y="376" text-anchor="middle">0.035</text>
+  <rect x="836" y="384" width="340" height="24" fill="#ffffff"/>
+  <text class="td" x="846" y="400">Contusion</text>
+  <text class="td" x="1008.0" y="400" text-anchor="middle">0.50</text>
+  <text class="td" x="1074.0" y="400" text-anchor="middle">0.50</text>
+  <text class="td" x="1142.0" y="400" text-anchor="middle">0.030</text>
+  <rect x="836" y="408" width="340" height="24" fill="#ede9fe"/>
+  <text class="td" x="846" y="424">Fracture</text>
+  <text class="td" x="1008.0" y="424" text-anchor="middle">0.65</text>
+  <text class="td" x="1074.0" y="424" text-anchor="middle">0.35</text>
+  <text class="td" x="1142.0" y="424" text-anchor="middle">0.008</text>
+  <rect x="836" y="104" width="340" height="328" fill="none" stroke="#94a3b8" stroke-width="1"/>
+  <line x1="976" y1="104" x2="976" y2="432" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="1040" y1="104" x2="1040" y2="432" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="1108" y1="104" x2="1108" y2="432" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="836" y1="144" x2="1176" y2="144" stroke="#94a3b8" stroke-width="1"/>
+  <rect x="836" y="443" width="14" height="14" fill="#fce7f3" stroke="#db2777" stroke-width="1"/>
+  <text class="s" x="858" y="455">heliosli V2 weights (public LB-derived)</text>
+  <rect x="836" y="465" width="14" height="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="1"/>
+  <text class="s" x="858" y="477">our routing (findings heliosli left at 0.5)</text>
+  <text class="s" x="836" y="499">g = goodpjw v11 per-finding weights</text>
+  <line class="a" x1="834" y1="330" x2="810" y2="330"/>
+  <rect class="out" x="44" y="600" width="360" height="96" rx="10"/>
+  <text class="t" x="224.0" y="634" text-anchor="middle">EXP-124 · final pick 1</text>
+  <text class="s" x="224.0" y="652" text-anchor="middle">public 0.958 · private 0.942</text>
+  <text class="s" x="224.0" y="672" text-anchor="middle">hidden-test runtime ≈ 5 h of the 9 h limit</text>
+  <rect class="out" x="420" y="600" width="360" height="96" rx="10"/>
+  <text class="t" x="600.0" y="634" text-anchor="middle">EXP-127 · final pick 2</text>
+  <text class="s" x="600.0" y="652" text-anchor="middle">public 0.958 · private 0.942</text>
+  <text class="s" x="600.0" y="672" text-anchor="middle">finished inside 9 h (exact time not exposed)</text>
+  <rect class="proc" x="796" y="600" width="380" height="96" rx="10"/>
+  <text class="t" x="986.0" y="634" text-anchor="middle">EXP-126 · not scored</text>
+  <text class="s" x="986.0" y="652" text-anchor="middle">+ heliosli compact-v1 S6 (4 folds @352 + side model)</text>
+  <text class="s" x="986.0" y="672" text-anchor="middle">timed out (> 9 h)</text>
+  <path d="M693,534 L693,566 M224,566 L600,566" stroke="#64748b" stroke-width="1.5" fill="none"/>
+  <line class="a" x1="224" y1="566" x2="224" y2="598"/>
+  <line class="a" x1="600" y1="566" x2="600" y2="598"/>
+  <rect class="ext" x="44" y="738" width="22" height="14" rx="3"/>
+  <text x="74" y="750" font-size="12" fill="#374151">public model / stage (not ours)</text>
+  <rect class="proc" x="321" y="738" width="22" height="14" rx="3"/>
+  <text x="351" y="750" font-size="12" fill="#374151">processing (ours)</text>
+  <rect class="model" x="500" y="738" width="22" height="14" rx="3"/>
+  <text x="530" y="750" font-size="12" fill="#374151">fusion (ours)</text>
+  <rect class="out" x="651" y="738" width="22" height="14" rx="3"/>
+  <text x="681" y="750" font-size="12" fill="#374151">output / score</text>
+</svg>
