@@ -19,9 +19,11 @@ header:
   overlay_color: "#005eff"
 ---
 
-Cuộc thi **RSNA Knee Abnormality Detection 2026** trên Kaggle đóng cửa ngày 22/10. Mình tham gia một mình (account `hlly34`), commit đầu tiên ngày 28/09, và kết thúc với **public 0.958 / private 0.942, không có medal**. Bài này là bản wrap-up: mình đã làm gì, pipeline trông như thế nào, final solution được ghép từ những gì, và quan trọng nhất là **tại sao không có medal** — mình cố trả lời câu này thật cụ thể, bằng số, thay vì "do xui".
+Cuộc thi **[RSNA Knee Abnormality Detection 2026](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection)** trên Kaggle kết thúc vào ngày 22/10. Mình tham gia một mình, bắt đầu khá muộn và làm việc với Claude trong khoảng gần 1 tháng, và kết thúc với **public 0.958 / private 0.942, không có medal**. Bài này là bản wrap-up: mình đã làm gì, pipeline trông như thế nào, final solution được ghép từ những gì, và quan trọng nhất là **tại sao không có medal** — thử coi mình sai ở chỗ nào và ngu ở chỗ nào :))
 
-Một điều cần nói ngay từ đầu: **toàn bộ model weights trong hai final pick đều là public weights của người khác** (nartaa, heliosli, goodpjw2008). Phần của mình là cách ghép (per-finding routing và rank fusion), phần "ống nước" để chạy các stage public một cách an toàn, và một lần retrain recipe S6 ở tuần cuối. Model của chính mình dừng ở public 0.941 (EXP-074) và private 0.925 (EXP-071 / 076). Phần lớn bài này xoay quanh khoảng cách đó.
+Một điều cần nói trước tiên là **toàn bộ model weights trong hai final pick đều là public weights của người khác** (nartaa, heliosli, goodpjw2008) vì mình đã cố train những model của riêng mình nhưng không đạt nhiều kết quả tốt. Phần của mình là cách ghép (per-finding routing và rank fusion) và pipeline để chạy các stage public một cách an toàn, và một lần retrain recipe S6 ở tuần cuối. Model của chính mình dừng ở public 0.941 (EXP-074) và private 0.925 (EXP-071 / 076). Phần lớn bài này xoay quanh khoảng cách đó.
+
+Các bạn có thể xem qua thử code của mình trên GitHub [tại đây](https://github.com/hllj/rsna-knee-abnormality-detection); toàn bộ notebook, model và weights trên Kaggle cũng đã để public (danh sách ở [cuối bài](#credits--links)).
 
 # Tổng quan kết quả
 
@@ -32,20 +34,20 @@ Một điều cần nói ngay từ đầu: **toàn bộ model weights trong hai 
 | Best rule-safe (chỉ dữ liệu cuộc thi + public labels + ImageNet backbone): EXP-104 | 0.943 | 0.927 |
 | Best chỉ dùng model của mình: EXP-076 / EXP-071 | 0.940 | 0.925 |
 | Best public chỉ dùng model của mình: EXP-074 | 0.941 | 0.923 |
-| Public rank | **571 / 6,425** | không xem được qua CLI |
+| Rank | **571 / 6,425** | **722 / 6,425** |
 | Top public LB | 0.970 | |
 
 - **99 experiment id** (EXP-000 … EXP-128), **66 submission**, 64 được chấm.
-- **Chín submission cùng hoà ở private 0.942** (EXP-106, 117, 118, 119, 123, 124, 125, 127, 128): cả tuần cuối làm recipe không đổi được gì trên private.
-- Theo final report, **ngưỡng silver và bronze trên public lúc kết thúc cũng đúng bằng 0.958**, tức điểm của mình.
+- **9 submission cùng hoà ở private 0.942** (EXP-106, 117, 118, 119, 123, 124, 125, 127, 128): cả tuần cuối làm recipe không đổi được gì trên private.
+- Theo final report cho Public Leaderboard (LB), **ngưỡng silver và bronze trên public lúc kết thúc cũng đúng bằng 0.958**, tức điểm của mình.
 
-> **TL;DR** — Pipeline của mình đi từ 0.914 lên 0.941 bằng model tự train, rồi lên 0.958 nhờ ghép các model public mạnh nhất. Nhưng cú nhảy ~+0.02 đó cũng là thứ hàng trăm đội khác có (khoảng 940 đội in ra 0.956 từ cùng bộ weights). Model của mình không đủ mạnh và không đủ khác để thêm tín hiệu vào stack public, và từ 15/10 trở đi mọi khác biệt recipe đều nhỏ hơn nhiễu của public split (~0.003). Không có medal vì mình không có "thứ riêng" nào đủ mạnh — không phải vì thiếu experiment.
+> **TL;DR** — Pipeline của mình đi từ 0.914 lên 0.941 bằng model tự train, rồi lên 0.958 nhờ ghép các model public lúc đó. Nhưng những lần boost ~+0.02 đó cũng là thứ hàng trăm đội khác có (khoảng 940 đội in ra 0.956 từ cùng bộ weights). Model của mình không đủ mạnh và không đủ khác để thêm đóng góp vào stack public, và từ 15/10 trở đi mọi khác biệt recipe đều nhỏ hơn nhiễu của public split (~0.003). Không có medal vì mình không có "thứ riêng" nào đủ mạnh — không phải vì thiếu experiment.
 
 # Bài toán
 
 ## 12 findings, macro AUC
 
-Mỗi study là một ca MRI gối, cần dự đoán xác suất cho **12 finding nhị phân**: ACL tear, MCL tear, Medial / Lateral Meniscus tear, Medial / Lateral / Patellofemoral OA, Effusion, Synovitis, Baker's cyst, Contusion, Fracture. Metric là **trung bình 12 ROC AUC** (macro AUC), nên finding hiếm cũng nặng như finding phổ biến.
+Mỗi study là một ca MRI đầu gối, cần dự đoán xác suất cho **12 finding nhị phân**: ACL tear, MCL tear, Medial / Lateral Meniscus tear, Medial / Lateral / Patellofemoral OA, Effusion, Synovitis, Baker's cyst, Contusion, Fracture. Metric là **trung bình 12 ROC AUC** (macro AUC), nên finding hiếm cũng nặng như finding phổ biến.
 
 | | |
 | --- | --- |
@@ -53,9 +55,9 @@ Mỗi study là một ca MRI gối, cần dự đoán xác suất cho **12 findi
 | Test (ẩn) | ~1,300 study, chỉ có ảnh |
 | Metadata series | plane (Sag / Cor / Ax), fluid-sensitive, fat-suppression |
 
-## Vấn đề nhãn: chỉ có 58 study có nhãn bác sĩ
+## Vấn đề label: chỉ có 58 study có real label từ bác sĩ
 
-Đây là điểm đặc biệt nhất của cuộc thi. **Chỉ 58 study có nhãn radiologist** (mình gọi là "gold-58": hai bác sĩ MSK đọc, người thứ ba phân xử, trường hợp borderline tính là âm tính). Mọi study còn lại chỉ có **report dạng free-text** (9+ ngôn ngữ), nên cả field đều train trên **soft label rút ra từ report**, phần lớn bằng LLM.
+Đây là điểm đặc biệt nhất của cuộc thi. **Chỉ 58 study có nhãn radiologist** (mình gọi là "gold-58": hai bác sĩ MSK đọc, người thứ ba phân xử, trường hợp borderline tính là âm tính). Mọi study còn lại chỉ có **report dạng free-text** (9+ ngôn ngữ), nên cả field đều train trên **soft label rút ra từ report**, phần lớn bằng LLM đưa ra dự đoán.
 
 Gold-58 còn không phải mẫu ngẫu nhiên: ACL prevalence 41% so với ~20% trong toàn bộ corpus, mọi study gold đều có ít nhất một finding dương, và vài finding có rất ít ca dương (MCL 9, Lateral OA 11, Baker's 12). Với 9–35 ca dương mỗi finding, gold-58 **không xếp hạng được recipe** — nhiễu cỡ ±0.02. Chuyện này sẽ quay lại nhiều lần trong bài.
 
@@ -63,9 +65,7 @@ Gold-58 còn không phải mẫu ngẫu nhiên: ACL prevalence 41% so với ~20%
 
 - Notebook chạy tối đa **9 giờ**, tắt internet, output `submission.csv`.
 - **5 submission/ngày**, chọn **2 final pick**.
-- Giải thưởng $77k cho top-10 main LB và 3 giải efficiency; winner phải công bố code + weights + video dưới CC-BY-NC 4.0.
-- Luật quan trọng: được dùng LLM API thương mại để rút nhãn (discussion 733965); dữ liệu ngoài được dùng nếu miễn phí và truy cập được mà không cần ký duyệt của tổ chức (host ruling, discussion 741819, ngày 21/09); KneeCoT bị cấm rõ ràng.
-- Hạn merge team / đăng ký: 15/10; kết thúc: 22/10.
+- Luật quan trọng: được dùng LLM API thương mại để rút nhãn ([discussion 733965](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/discussion/733965)); dữ liệu ngoài được dùng nếu miễn phí và truy cập được mà không cần ký duyệt của tổ chức (host ruling, [discussion 741819](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/discussion/741819), ngày 21/09); KneeCoT bị cấm rõ ràng.
 
 Leaderboard là một "mục tiêu di động": ngày 28/09 top 1 đã là 0.960 và khoảng 200 đội đứng ở 0.941 nhờ fork cùng một public ensemble; ngày 11/10 có 5,726 đội, bronze (top 10%, hạng 572) là 0.950 và silver (hạng 286) là 0.954; ngày 14/10 cả hai vạch silver và bronze cùng ở 0.956, với 719 đội hiện 0.956.
 
@@ -98,11 +98,11 @@ Leaderboard là một "mục tiêu di động": ngày 28/09 top 1 đã là 0.960
 
 **Giai đoạn 1 (28/09 → 11/10) — pipeline của mình, 0.914 → 0.941.** Baseline EfficientNet-B0, tăng tốc inference, chuyển sang ConvNeXt-S @288, cache dày hơn, rồi reproduce hai recipe public (Raptor của dreaddevelopment và reader của goodpjw2008) để có đa dạng family, cuối cùng là recipe non-OAI của nartaa trên cache 96 slice. Song song là vài vòng pseudo-label.
 
-**Giai đoạn 2 (09/10 → 18/10) — kỷ nguyên public model, 0.948 → 0.958.** Ngày 09/10 mình quyết định làm "option B — OAI fallback blend": EXP-069 = 0.65 × CoAtNet 0.949 của nartaa (train có OAI; source đã được chấm chạy nguyên văn, checkpoint kiểm sha256) + 0.35 × blend EXP-055 của mình. Lúc đó host chưa trả lời về weights dẫn xuất từ OAI (thread 743416), nên plan là chỉ dùng nó làm final pick dự phòng nếu host cho phép, và giữ blend tốt nhất của mình làm pick rule-safe còn lại. Ngày 11/10 (ITER-12) mình kết luận OAI hợp lệ theo host ruling 741819 — vẫn còn rủi ro vì host chưa nói "yes" rõ ràng cho chính OAI. Từ đó: blend neo vào nartaa (12/10), thêm heliosli (13/10), R7 có fastMRI auxiliary (14/10, mình chấp nhận rủi ro luật), routing (15/10), R6 + flip (16/10), per-finding weights của heliosli (17/10). Hai family mới của mình (DINOv2, RadImageNet) fail trong 16–17/10.
+**Giai đoạn 2 (09/10 → 18/10) — thử sửa public model, 0.948 → 0.958.** Ngày 09/10 mình quyết định làm "option B — OAI fallback blend": EXP-069 = 0.65 × [CoAtNet 0.949 của nartaa](https://www.kaggle.com/code/nartaa/rsna-knee-0949-anatomical-mirror) (train có OAI; source đã được kiểm tra, checkpoint kiểm sha256) + 0.35 × blend EXP-055 của mình. Lúc đó host chưa trả lời về weights dẫn xuất từ OAI ([thread 743416](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/discussion/743416)), nên plan là chỉ dùng nó làm final pick dự phòng nếu host cho phép, và giữ blend tốt nhất của mình làm pick rule-safe còn lại. Ngày 11/10 (ITER-12) mình kết luận OAI hợp lệ theo host ruling 741819 — vẫn còn rủi ro vì host chưa nói "yes" rõ ràng cho chính OAI. Từ đó: blend neo vào nartaa (12/10), thêm heliosli (13/10), R7 có fastMRI auxiliary (14/10, mình chấp nhận rủi ro luật), routing (15/10), R6 + flip (16/10), per-finding weights của heliosli (17/10). Hai family mới của mình (DINOv2, RadImageNet) không đem lại kết quả tốt trong 16–17/10.
 
 **Giai đoạn 3 (18/10 → 19/10) — ITER-14.** Build px cache S6 trên Kaggle, retrain ConvNeXt-S seed 43 trên một RTX 4090. Kết quả: giữ nguyên 0.958 / 0.942.
 
-Thứ hạng public đi theo đúng câu chuyện đó: ~2,600 / 5,550 (09/10) → ~2,300 / 5,726 (11/10) → 282 / 5,953 (14/10) → 240 / 6,013 (15/10, lúc đó vạch silver là hạng 300) → **571 / 6,425** lúc kết thúc.
+Thứ hạng LB theo thời gian: ~2,600 / 5,550 (09/10) → ~2,300 / 5,726 (11/10) → 282 / 5,953 (14/10) → 240 / 6,013 (15/10, lúc đó vạch silver là hạng 300) → **571 / 6,425** lúc kết thúc. À mình đã nghĩ ra một vài trò có thể blend hoặc fusion một vài prediction cuối cùng (và chắc mẩm là nó đủ tốt :( )
 
 # Pipeline của mình
 
@@ -131,7 +131,7 @@ Qua thời gian mình build tổng cộng sáu loại cache:
 | `cache_384_d96` (EXP-066) | 96 slice (26/22/18/12/18), native 384 px | ~44 GB, 5 phần | Kaggle CPU |
 | S6 px cache (ITER-14) | renderer của heliosli, 320 px, + SKM-TEA anatomy V-Net | 70.9 GB JPEG q95, 5 shard, 4,321 study, 0 lỗi | Kaggle T4, 4.9 h quota |
 
-Khi đo lại cache, mình thấy những artefact ban đầu không để ý: 33% study có slice trùng liên tiếp trong sag-FS, 44% study có slot với ≥ 2 series ứng viên (mình lấy series đầu tiên theo thứ tự CSV), và 223 study (5%) dùng chung một report template giống hệt nhau.
+Khi đo lại cache, mình thấy những kết quả mà mình ban đầu không để ý: 33% study có slice trùng liên tiếp trong sag-FS, 44% study có slot với ≥ 2 series ứng viên (mình lấy series đầu tiên theo thứ tự CSV), và 223 study (5%) dùng chung một report template giống hệt nhau. À mà thật ra mình cũng bỏ qua không nghĩ tới nhiều :))
 
 ## Labels: report → LLM → soft labels
 
@@ -142,9 +142,9 @@ Mình **không tự chạy LLM để rút nhãn** — registry không có run n�
 
 | Nguồn | AUC so với gold-58 |
 | --- | ---: |
-| `stevenleehans` v4_blend | 0.893 |
-| `stevenleehans` full | 0.878 |
-| `pilkwang` report_labels_v2 | 0.866 |
+| [`stevenleehans`](https://www.kaggle.com/datasets/stevenleehans/rsna-knee-llm-report-labels) v4_blend | 0.893 |
+| [`stevenleehans`](https://www.kaggle.com/datasets/stevenleehans/rsna-knee-llm-report-labels) full | 0.878 |
+| [`pilkwang`](https://www.kaggle.com/datasets/pilkwang/rsna-knee-llm-labels) report_labels_v2 | 0.866 |
 | **Blend đều (default)** | **0.8911** |
 
 Report thường "không nhắc tới" một finding nào đó (giá trị 0.5). Mình điền bằng **silence prior** riêng cho từng finding: mặc định 0.10; Synovitis lấy theo Effusion (P(syn \| eff) = 0.63 so với 0.22); PF OA 0.25; Fracture 0.20; Baker's 0.03; Medial OA 0.03. Nhãn giữ dạng soft. Recipe Raptor v2 thêm bảng JEV của riadmohamed42 với weight 2; recipe reader dùng trung bình 4 bảng public, clip 0.01–0.99.
@@ -180,11 +180,11 @@ Các family mình đã train:
 ![Training loop](/images/rsna-knee/03-training-loop.svg)
 *Hình 3. Vòng lặp iteration: train fold 0 trên vast.ai → gate so với fold 0 của best → submit trên Kaggle → cập nhật registry và CV–LB → backup model → report. Nhánh dưới: ITER-14 retrain S6.*
 
-Mọi run dùng **một fold split duy nhất** (`configs/folds_5.csv`), gold-58 là fold −1 và không bao giờ được train. Default: batch 8, 15 epoch, lr 3e-4 (backbone ×0.1), wd 0.02, cosine + 1 epoch warm-up, 16-mixed, gradient clip 1, và **average weights của top-3 epoch** mỗi fold. Lúc inference rank-average tất cả model của các fold.
+Mọi run dùng **một fold split duy nhất** (`configs/folds_5.csv`), gold-58 là fold −1 (tức tách riêng làm holdout, không thuộc fold nào) và không bao giờ được train. Các run "all-data" thì train trên cả 5 fold, và chỉ còn gold-58 để chấm. Default: batch 8, 15 epoch, lr 3e-4 (backbone ×0.1), wd 0.02, cosine + 1 epoch warm-up, 16-mixed, gradient clip 1, và **average weights của top-3 epoch** mỗi fold. Lúc inference rank-average tất cả model của các fold.
 
 Mỗi thay đổi đi qua vòng lặp ở Hình 3. Gate của bước 1: fold-0 OOF ≥ best − 0.003 và gold không giảm quá ~0.02; không qua thì ghi NEGATIVE và đi thẳng tới report. Spread giữa các fold là ±0.008 OOF / ±0.011 gold, nên chỉ so cùng fold hoặc pooled OOF. Mỗi submission message bắt đầu bằng `EXP-NNN` để `track.py lb` match LB về registry.
 
-Phần cứng: phần lớn run trên vast.ai 1× RTX 3090 (≥ 16 core — data loading mới là nút thắt), có lúc 2× 3090 chạy song song, ITER-14 dùng 1× RTX 4090. Kaggle T4 cho một số run fold 0 và toàn bộ inference. Thời gian train mỗi fold trên 3090: EffNet-B0 ~37 phút, ConvNeXt-S @288 87–107 phút, CoAtNet 177 phút, reader 145 phút, Raptor repro ~258 phút, Raptor v2 d96 all-data ~255 phút.
+Phần cứng: phần lớn run trên vast.ai 1× RTX 3090 (≥ 16 core — data loading (CPU decode + augment cache) mới là bottleneck lúc train, không phải GPU), có lúc 2× 3090 chạy song song, ITER-14 dùng 1× RTX 4090. Kaggle T4 cho một số run fold 0 và toàn bộ inference. Thời gian train mỗi fold trên 3090: EffNet-B0 ~37 phút, ConvNeXt-S @288 87–107 phút, CoAtNet 177 phút, reader 145 phút, Raptor repro ~258 phút, Raptor v2 d96 all-data ~255 phút.
 
 **Inference** là chỗ mình đầu tư sớm và đáng: stream mode (chỉ decode pixel của slice được sample, đọc header cho tất cả; đọc thread; overlap CPU/GPU; một lần duyệt dữ liệu cho mọi checkpoint) đưa thời gian từ 1.23 xuống 0.34 s/study, ~7.3 phút preprocessing cho 1,300 study. EXP-012 chấm xong trong ~11 phút. Nhưng khi stack lớn dần, runtime phình theo: EXP-071 ~8.75 h (bảy member có mirror TTA), EXP-118 7 h 16 phút, EXP-124 ≈ 5 h, và EXP-126 vượt 9 h.
 
@@ -221,35 +221,37 @@ rồi re-rank lại. Ở EXP-123/124, share là nartaa = wr(1 − g), heliosli R
 
 Bảng weight đầy đủ nằm trong Hình 5. Tóm tắt share của nartaa (wr): heliosli V2 đặt Synovitis 0.85, Lateral OA 0.15, PF OA 0.65, Baker's 0.30; routing của mình (từ EXP-117) đặt ACL / Lateral Meniscus 0.35 và Medial Meniscus / Effusion / Fracture 0.65; MCL, Medial OA, Contusion giữ 0.5. Share g của goodpjw chỉ từ 0.003 (Synovitis) đến 0.035 (Baker's).
 
-Hai chi tiết đáng nói. Thứ nhất, ở PF OA và Baker's, routing của mình và của heliosli **ngược chiều nhau**; mình giữ của heliosli vì nó rút từ LB, còn của mình rút từ gold-58 in-sample. Thứ hai, gold sanity check: để tất cả 0.5 → 0.935; EXP-117 0.940; EXP-119/123 0.937; EXP-124 0.939 — các khác biệt đều nhỏ hơn bootstrap SD ±0.014 của gold, tức là gold không phân biệt được chúng. Ngày 17/10, cả bốn EXP-119/123/124/125 đều hiện 0.958; trên điểm chưa làm tròn ở trang submission thì EXP-124 > EXP-125, nên lúc đó pick 1 là EXP-124 (backup EXP-125).
+Hai cái mình muốn nói. Thứ nhất, ở PF OA và Baker's, routing của mình và của heliosli **ngược chiều nhau**; mình giữ của heliosli vì nó rút từ LB, còn của mình rút từ gold-58 in-sample. Thứ hai, gold sanity check: để tất cả 0.5 → 0.935; EXP-117 0.940; EXP-119/123 0.937; EXP-124 0.939 — các khác biệt đều nhỏ hơn bootstrap SD ±0.014 của gold, tức là gold không phân biệt được chúng. Ngày 17/10, cả bốn EXP-119/123/124/125 đều hiện 0.958; trên điểm chưa làm tròn ở trang submission thì EXP-124 > EXP-125, nên lúc đó pick 1 là EXP-124 (backup EXP-125).
 
 ## Pick 2: từ rule-safe sang EXP-127
 
-Luật chọn pick mình đặt ngày 14/10: pick 1 lấy điểm cao nhất với bất kỳ public weights nào, pick 2 lấy bản chỉ dùng dữ liệu cuộc thi + public labels + ImageNet backbone, để phòng trường hợp OAI/fastMRI bị loại. Đến 17/10, pick 2 vẫn là **EXP-104 rule-safe** (0.943 / 0.927). Hai final pick cuối cùng là EXP-124 và EXP-127; report không ghi lại lý do cho lựa chọn này. Về kết quả: EXP-104 private 0.927, cả hai pick đều 0.942.
+Luật chọn pick mình đặt ngày 14/10: pick 1 lấy điểm cao nhất với bất kỳ public weights nào, pick 2 lấy bản chỉ dùng dữ liệu cuộc thi + public labels + ImageNet backbone, để phòng trường hợp OAI/fastMRI bị loại. Đến 17/10, pick 2 vẫn là **EXP-104 rule-safe** (0.943 / 0.927). Hai final pick cuối cùng là EXP-124 và EXP-127; Lý do mình chọn là vì tới ngày cuối mà ban tổ chức vẫn im ắng thì mình liều thôi :)). Về kết quả: EXP-104 private 0.927, cả hai pick đều 0.942.
 
 ## ITER-14: retrain S6 của nartaa
 
-Tuần cuối, nartaa chia sẻ trong discussion 749359 rằng S6 ConvNeXt của heliosli, retrain trên label của họ, cho 0.950 khi đứng riêng, kèm trainer Apache-2.0. Plan ban đầu (18/10) là train DINOv2 ViT-B với trainer đó; cùng ngày mình đổi sang ConvNeXt-S, đúng argv của nartaa, seed 43, để reproduce kết quả ConvNeXt-S all-data tốt nhất trong discussion post. Mình vendor trainer vào repo và làm lại:
+Tuần cuối, nartaa chia sẻ trong [discussion 749359](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/discussion/749359) rằng S6 ConvNeXt của heliosli, retrain trên label của họ, cho 0.950 khi đứng riêng, kèm trainer Apache-2.0. Plan ban đầu (18/10) là train DINOv2 ViT-B với trainer đó; cùng ngày mình đổi sang ConvNeXt-S, đúng argv của nartaa, seed 43, để reproduce kết quả ConvNeXt-S all-data tốt nhất trong discussion post. Mình vendor trainer vào repo và làm lại:
 
 - **S6** = `convnext_small.fb_in22k_ft_in1k`, spatial attention theo finding + window-attention MIL; view = full FOV + crop 100 mm quanh gối do SKM-TEA anatomy V-Net định vị; 320 px → crop 288; 64 window/study, 16 epoch, AdamW lr 1e-4 / head 1e-3, batch 2, bf16.
 - **Cache**: pilot 50 study 0 lỗi, nhưng dự kiến 71.7 GB thay vì 15–25 GB mình ước tính, vì các row ảnh MRI chỉ nén được ~3.4× (không phải ~10×). Full 4,321 study: 70.9 GB, 5 shard, 0 lỗi, 4.9 h quota T4. Sai số JPEG MAE 0.68 mức xám.
 - **Train**: 1× RTX 4090, 16 epoch, 34,096 step, **3.6 h** (nartaa chạy 15.0 h trên RTX 5060 laptop), loss bám sát run của nartaa (epoch 16: 0.3923 so với 0.3911). Tải output Kaggle bằng `kaggle kernels output` chỉ 2.8 MB/s; fetcher 48 thread tự viết lên ~73 MB/s. Chi phí ≈ $3.4.
-- **Gold-58**: s43 của mình 0.929, s42 của nartaa 0.932, rank mean cả hai 0.934. Weights để ở dataset Kaggle `hlly34/rsna-knee-s6-cnx-s43` (CC BY-NC 4.0).
+- **Gold-58**: s43 của mình 0.929, s42 của nartaa 0.932, rank mean cả hai 0.934. Weights để ở dataset Kaggle [`hlly34/rsna-knee-s6-cnx-s43`](https://www.kaggle.com/datasets/hlly34/rsna-knee-s6-cnx-s43) (CC BY-NC 4.0).
 - **Kết quả**: EXP-128 = 0.958 / 0.942, **giống hệt EXP-127**, dù output S6 với s43 khác EXP-127 tới 0.11 ở một số prediction.
 
 # Tại sao không có medal
 
-Đây là phần mình muốn viết thật thẳng. Mỗi mục tách rõ phần có số liệu đứng sau và phần là cách mình đọc.
+Đây là phần mình muốn share có thể là cho sau này mình tránh gặp lại.
 
-## 1. Cú nhảy quyết định là thứ ai cũng có — và mình đến muộn
+## 1. Sử dụng public model và tinh chỉnh nó không đem lại nhiều cơ hội cho mình - vì ai cũng có thể làm và có khi tốt hơn
 
-Từ 0.941 (model của mình) lên 0.958, gần như toàn bộ ~+0.02 đến từ public models — nartaa 0.949, heliosli, goodpjw. Đó cũng chính là bộ mà mọi đội top dùng: ITER-12 ghi nhận cả 50 public notebook top (0.950–0.954) đều gắn weights OAI của nartaa, và theo phân tích của leoprovorov, **khoảng 940 đội in ra 0.956 từ cùng bộ weights**.
+Từ 0.941 (model của mình) lên 0.958, gần như toàn bộ ~+0.02 đến từ public models — nartaa 0.949, heliosli, goodpjw. Đó cũng chính là bộ mà mọi đội top dùng: ITER-12 ghi nhận cả 50 public notebook top (0.950–0.954) đều gắn weights OAI của nartaa, và theo phân tích của [leoprovorov](https://www.kaggle.com/leoprovorov), **khoảng 940 đội in ra 0.956 từ cùng bộ weights**.
 
-Mình vào stack này khá muộn: blend nartaa đầu tiên 10/10, heliosli 13/10, R7 14/10. Cách mình đọc: tới lúc đó hàng trăm đội đã có cùng nguyên liệu, và thứ duy nhất còn khác nhau là per-finding weights — nằm trong nhiễu (mục 3). Nếu đến sớm hơn, mình có thêm thời gian để tìm thứ thật sự khác thay vì tinh chỉnh.
+Mình vào stack này khá muộn: blend nartaa đầu tiên 10/10, heliosli 13/10, R7 14/10. Cách mình đọc: tới lúc đó hàng trăm đội đã có cùng nguyên liệu, và thứ duy nhất còn khác nhau là per-finding weights — nằm trong nhiễu (mục 3). Nên nếu không ngoan hơn mình nên reproduce lại public model và đi tiếp với những thứ khác, thay vì chỉ blend và mong chờ 1-2 thứ phép màu không có thật.
 
 ## 2. Model của mình không thêm gì vào stack public
 
-Một medal cần một tín hiệu mà stack public không có. Model của mình đỉnh ở **0.941 public / 0.925 private** — còn thấp hơn **một** model public đơn lẻ (CoAtNet 0.949 của nartaa). Và khi thêm vào stack, chúng trung tính hoặc làm giảm nhẹ:
+Đây có thể là vấn đề về sự đa dạng trong solution, nếu dùng stack public model thì chúng ta nên đưa vào stack đó những solution mới hơn: model, backbone, approach training khác hẳn, ...
+
+Model của mình đỉnh ở **0.941 public / 0.925 private** — còn thấp hơn **một** model public đơn lẻ (CoAtNet 0.949 của nartaa). Và khi thêm vào stack, chúng trung tính hoặc làm giảm nhẹ:
 
 | Thử nghiệm | Public | So với |
 | --- | ---: | ---: |
@@ -259,15 +261,13 @@ Một medal cần một tín hiệu mà stack public không có. Model của mì
 | EXP-093: nartaa + heliosli | 0.954 | — |
 | EXP-094..096: + model của mình | 0.953 | 0.954 |
 
-Như final report viết: public partner models làm điểm di chuyển; model của mình thì không, một khi đã có nartaa. Lý do khá rõ: family 96-slice tốt nhất của mình **chính là recipe của nartaa, chỉ thiếu OAI**, nên nó tương quan rất cao với anchor. Mình đã copy recipe tốt nhất — và vì copy, nó không đem lại gì khác. Khoảng cách non-OAI cũng chưa bao giờ đóng được: recipe non-OAI của nartaa đạt 0.942 (không mirror), bản replica của mình 0.938 (có mirror). Mình quy cho label và chi tiết training, nhưng không tìm ra chính xác.
+Như final report viết: public partner models làm điểm di chuyển; model của mình thì không, một khi đã có model của nartaa. Lý do khá rõ: family 96-slice tốt nhất của mình **chính là recipe của nartaa, chỉ thiếu OAI**, nên nó tương quan rất cao với anchor. Mình đã copy recipe tốt nhất — và vì copy, nó không đem lại gì khác. Khoảng cách non-OAI cũng chưa bao giờ thu hẹp được: recipe non-OAI của nartaa đạt 0.942 không mirror TTA (test time augmentation), bản replica của mình 0.938 có mirror TTA. Mình đã nghĩ là do label của họ có OAI dataset và chi tiết training, nhưng không tìm ra chính xác lý do để cải thiện.
 
-## 3. Từ 15/10, mọi khác biệt nằm dưới nhiễu — và mình đứng đúng trên vạch
+## 3. Từ 15/10, mọi khác biệt nằm dưới nhiễu — và mình stuck ở đây
 
 Public split có khoảng 640 study, nên **SD của score chỉ do sampling đã là ~0.003** — lớn hơn cả spread của top 400 đội (0.0022). Mọi thay đổi recipe mình thử từ 15/10 đều nhỏ hơn con số này: routing +0.001, flip TTA, per-finding weights, S6fall, S6 retrain. Theo lời final report: từ lúc đó công việc **bị giới hạn bởi nhiễu, không phải bởi ý tưởng**.
 
-Ngày 15/10 mình ở hạng 240, trên vạch silver (hạng 300). Sau đó mình đứng yên ở 0.957–0.958, còn kết thúc ở hạng 571 / 6,425 — khoảng 330 đội đã vượt lên trong một tuần. Hạng 571 vẫn trong top 10% theo số lượng, và vạch silver/bronze public lúc kết thúc **đúng bằng 0.958**. Cách mình đọc: mình ngồi *trên* vạch trong một khối rất nhiều đội cùng điểm, và private quyết định phần còn lại. Mình không có private rank và không có ngưỡng medal private (không lấy được qua CLI), nên phần này chưa kiểm chứng.
-
-Điều mình chắc chắn là **private không "phản bội" mình**: trên 64 submission, public và private có Pearson r = 0.996, Spearman 0.992, private thấp hơn đều khoảng 0.016. Public board xếp hạng recipe của mình đúng; private chỉ khó hơn với tất cả mọi người.
+Ngày 15/10 mình ở hạng 240, trên vạch silver (hạng 300). Sau đó mình đứng yên ở 0.957–0.958, còn kết thúc ở hạng 571 / 6,425 — khoảng 330 đội đã vượt lên trong một tuần. Hạng 571 vẫn trong top 10% theo số lượng, và vạch silver/bronze public lúc kết thúc **đúng bằng 0.958**. Cách mình đọc: mình ngồi *trên* vạch trong một khối rất nhiều đội cùng điểm, và private quyết định phần còn lại. Với Private Leaderboard thì hoàn toàn tụt xa khoảng >150 rank và ra khỏi top có huy chương đồng.
 
 ## 4. Gold-58 quá nhỏ để làm thước đo cuối
 
@@ -278,19 +278,21 @@ Ngày 15/10 mình ở hạng 240, trên vạch silver (hạng 300). Sau đó mì
 
 Gold-58 tốt để loại một thứ hỏng (DINOv2 0.841 so với 0.914 là quá rõ), nhưng vô dụng để chọn giữa hai blend sát nhau. EXP-076 tune weights trên gold đạt gold 0.9259 nhưng LB 0.940 — bằng EXP-071 không tune. Gold cũng không xếp hạng được các blend neo vào nartaa, và weights tune trên gold của goodpjw cũng thua trên board (0.957 / 0.955 so với 0.958). Vậy mà routing của mình trong final pick (ACL, meniscus, Effusion, Fracture) vẫn được chọn trên gold-58 in-sample — một phần lý do nó chỉ đáng +0.001.
 
+Mình cũng nghĩ chúng ta nên chỉ sử dụng Gold-58 để đánh giá tính khả thi của 1 model LLM để tạo soft-label; tức là dùng nó để dự đoán population từ sample; thay vì đánh giá cả một model huấn luyện cho dù nó có correlation với các kết quả trên LB khá tốt.
+
 ## 5. Thời gian đổ vào chỗ không tạo khác biệt
 
-Field nói rằng **label là nút thắt** của cuộc thi này. Nhìn lại, mình gần như không đầu tư trực tiếp vào label: không có run LLM label riêng, không có run lọc label noise. Các mục trong queue ITER-05 như MixUp, flip kèm hoán đổi nhãn medial/lateral, noise filtering, sequence head (EXP-030..036) **không xuất hiện trong registry** — tức là chưa từng chạy. Phần lớn tăng trưởng của model mình đến từ việc copy recipe public (Raptor, reader, hình học 96 slice của nartaa).
+Mình có thể kết luận rằng **label là nút thắt** của cuộc thi này. Nhìn lại, mình gần như không đầu tư trực tiếp vào label: không có run LLM label riêng, không có run lọc label noise. Các mục trong queue ITER-05 như MixUp, flip kèm hoán đổi nhãn medial/lateral, noise filtering, sequence head (EXP-030..036) **không xuất hiện trong registry**, tức là chưa từng chạy. Phần lớn tăng trưởng của model mình đến từ việc copy recipe public (Raptor, reader, data 96 slice của nartaa).
 
-Trong khi đó, khá nhiều thời gian và GPU đi vào các nhánh negative: DINOv2 / RadImageNet (~$2.3), vài vòng pseudo-label, reader v2 / v3, ConvNeXt-d96, kiểm tra all-windows / forced mirror. Mỗi cái đều nhỏ, nhưng gộp lại chúng rải suốt 10/10 → 17/10 — đúng giai đoạn mà, nhìn lại, cần dành cho một nguồn tín hiệu độc lập.
+Trong khi đó, khá nhiều thời gian và GPU đi vào các nhánh negative: DINOv2 / RadImageNet, vài vòng pseudo-label không cải thiện được vì teacher model đã kém, reader v2 / v3 thay đổi architecture, ConvNeXt-d96, kiểm tra all-windows / forced mirror TTA. Mỗi cái đều nhỏ, nhưng gộp lại chúng rải suốt 10/10 → 17/10 — đúng giai đoạn mà, nhìn lại, cần dành cho một solution mới hơn để bứt phá và có thể blend với các public model.
 
-## 6. Những đòn bẩy còn lại mà mình không kéo
+## 6. Những thứ còn lại mà mình không làm để cải thiện
 
-- Train một model OAI của riêng mình (ước tính 4–6 ngày) — không làm.
-- **Merge team** trước hạn 15/10 — đã cân nhắc, không làm.
+- Train một model OAI của riêng mình (ước tính 4–6 ngày) — không làm. Vì mình nghĩ dữ liệu này cần thêm rất nhiều thời gian để phân tích.
+- **Merge team** trước hạn 15/10 — đã cân nhắc, không làm. Chắc model base mình tự train cùi quá không dám đi năn nỉ ai cho vô team :))
 - Thêm seed / label set khác cho recipe S6 trên cache đã build, flip TTA cho S6, một backbone mạnh hơn trên cache 96 slice — hết thời gian.
 
-Tóm lại, theo mình: **không có medal không phải vì thiếu experiment, mà vì không có một thành phần riêng nào đủ mạnh và đủ khác để vượt khối đội dùng chung public weights.** 99 experiment chủ yếu là tinh chỉnh quanh cùng một nguồn tín hiệu.
+Tóm lại, theo mình: **không có medal không phải vì thiếu experiment, mà vì không có một thành phần riêng nào đủ mạnh và đủ khác để vượt đa số các đội chung public weights.** 99 experiment chủ yếu là tinh chỉnh quanh cùng một nguồn tín hiệu duy nhất và nó không có thay đổi được kết quả.
 
 # Những gì work / không work
 
@@ -303,7 +305,7 @@ Ngoài backbone (EffNet-B0 → ConvNeXt-S, +0.012 LB), stream inference và per-
 | Dense cache 88 slice | +0.0017 OOF, +0.010 gold, LB 0.926 → 0.930; Lateral Meniscus gold fold 0 0.808 → 0.842 |
 | Đa dạng family (ConvNeXt + Raptor + reader, fold 0) | +0.008 CV / +0.012 gold, LB 0.934 so với single tốt nhất 0.928; EXP-049 0.936 |
 | Recipe non-OAI của nartaa + cache 96 slice native-384 | all-data Raptor 0.930 → 0.933 (recipe) → 0.938 (cache); 2 seed 0.941 |
-| Mirror TTA giải phẫu | 9/9 family đủ điều kiện tăng trên gold (+0.0006 đến +0.0032); ~+0.0002 trong blend |
+| Mirror TTA | 9/9 family đủ điều kiện tăng trên gold (+0.0006 đến +0.0032); ~+0.0002 trong blend |
 
 ## Không work
 
@@ -329,15 +331,13 @@ Ngoài những thứ đã nói ở trên (model của mình trong stack public, 
 
 - **Một fold split, một holdout cố định, một registry.** Nhờ vậy 99 experiment so được với nhau. `EXP-NNN` là id toàn cục, không tái sử dụng, prefix mọi submission message; `registry.csv` sinh ra `EXPERIMENTS.md`. Đây là thứ mình sẽ giữ nguyên cho cuộc thi sau.
 - **Gate fold 0 trước khi tốn tiền 5 fold.** Rẻ và loại được phần lớn nhánh hỏng.
-- **Biết thước đo của mình nhiễu bao nhiêu — và tính nó trước khi tune.** Mình biết gold-58 có SD ±0.014 từ 09/10; EXP-076 là một bài test cố ý và nó xác nhận tune trên gold không chuyển sang LB. Vậy mà routing trong final pick vẫn được chọn trên gold in-sample. Biết là một chuyện, dừng lại là chuyện khác.
-- **Ghi lại quyết định và chi phí, không chỉ kết quả.** Lựa chọn final pick cuối cùng không có dòng nào trong report, và chi phí vast.ai chỉ có số thực của vài iteration.
+- **Biết threshold của mình nhiễu bao nhiêu — và tính nó trước khi tune.** Mình biết gold-58 có SD ±0.014 từ 09/10; EXP-076 là một bài test và nó xác nhận tune trên gold không chuyển sang LB. Vậy mà routing trong final pick vẫn được chọn trên gold in-sample. Biết là một chuyện, chấp nhận dừng lại là chuyện khác vì lúc đó điểm trên Public Leaderboard vẫn đang tăng :)
 
 ## Tooling
 
 - **Kaggle là "nhà máy dữ liệu" miễn phí** (xem phần Data). Fetcher song song (`fetch_kernel_output.py`) đưa tốc độ tải output từ 2.8 lên 73 MB/s.
-- **Notebook được sinh bằng code** (`submission/build_kernels.py`), không sửa trên kaggle.com. Code đẩy lên dataset `hlly34/rsna-knee-code`.
+- **Notebook được sinh bằng code** (`submission/build_kernels.py`), không sửa trên kaggle.com. Code đẩy lên dataset [`hlly34/rsna-knee-code`](https://www.kaggle.com/datasets/hlly34/rsna-knee-code).
 - **`submit.sh` có upload marker duy nhất** và kiểm danh sách checkpoint — đã bắt được một notebook chỉ có 4/5 checkpoint trước khi submit.
-- **vast.ai**: 1× 3090, ≥ 16 core, ≥ 64 GB RAM, ≥ 100 GB disk; job chạy trong tmux; destroy sau mỗi run. Phí download khác nhau tới 15× giữa các host ($0.0026/GB ở Ba Lan so với $0.039/GB ở Estonia) — giá GPU theo giờ trên search che mất phần này.
 
 ## Những lỗi mình đã mắc
 
@@ -355,21 +355,17 @@ Ngoài những thứ đã nói ở trên (model của mình trong stack public, 
 
 Bài học từ bảng này: **phần lớn sự cố nằm ở đường ống, không nằm ở model**. Weights cũ, version dataset, timeout, JSON `null` — đều là những thứ một check tự động rẻ tiền bắt được. Và ở code competition, mỗi lỗi kiểu này tốn nguyên một lượt chạy 5–9 giờ cộng một submission trong ngày.
 
-## Chi phí
-
-Kaggle (~30 GPU-h/tuần miễn phí) gánh cache, inference, test run và cả 66 submission: $0. Phần vast.ai có số thực trong report: ITER-01 ≈ $0.8 (3.5 GPU-h), ITER-03 ≈ $3.3 (~8.3 h), ITER-06 ≈ $1.9 (~7.5 h), ITER-13 ≈ $2.3 (2× 3090, 2.16 h), ITER-14 ≈ $3.4 (1× 4090, ~4.9 h) — cộng lại **≈ $11.7**. Các iteration khác (ITER-04, 07, 08, 09, 10–12) chỉ có chi phí dự kiến ($1–6 mỗi cái), **tổng thực tế không được ghi lại**. Không có chi phí LLM API vì mình không tự rút nhãn. Dù cộng thêm phần chưa ghi, đây vẫn là một cuộc thi rẻ.
-
 # Nếu làm lại
 
-1. **Bắt đầu từ stack public mạnh nhất ngay khi nó xuất hiện**, reproduce nó, rồi dành phần lớn thời gian còn lại để tìm *một* nguồn tín hiệu độc lập — thay vì tự xây lên 0.941 rồi mới thấy một model public đơn lẻ đã là 0.949.
-2. **Đầu tư vào label.** Đây là chỗ field nói là nút thắt, và là chỗ mình làm ít nhất: tự rút nhãn bằng LLM, lọc label noise, xử lý medial/lateral cẩn thận.
+1. **Bắt đầu từ stack public mạnh nhất ngay khi nó xuất hiện**, reproduce nó, rồi dành phần lớn thời gian còn lại để tìm *một* solution độc lập — thay vì tự xây lên 0.941 rồi mới thấy một model public đơn lẻ đã là 0.949.
+2. **Đầu tư vào label.** Đây là chỗ mình thấy nút thắt, và là chỗ mình làm ít nhất: tự rút nhãn bằng LLM, lọc label noise, xử lý medial/lateral cẩn thận. Tốn thêm tiền và sẽ có phép màu nhiều hơn :)
 3. **Đo độ đa dạng trước khi train.** Copy recipe tốt nhất cho ra model tương quan cao với chính recipe đó. Một family mới chỉ đáng giá nếu nó khác.
 4. **Đặt "noise budget" cứng.** Khi SD của public split (~0.003) lớn hơn khác biệt mình đang theo đuổi, dừng tinh chỉnh và chuyển sang việc khác.
-5. **Cân nhắc merge team nghiêm túc hơn** trước hạn — một người khác với pipeline khác là cách rẻ nhất để có tín hiệu độc lập.
+5. **Cân nhắc merge team nghiêm túc hơn** — một người khác với pipeline khác là cách rẻ nhất để có một solution độc lập với mình hiện tại.
 
 # Kết luận
 
-Mình không thất vọng với hệ thống đã xây: pipeline từ DICOM đến submission chạy ổn định, vòng lặp experiment có kỷ luật, 99 experiment so được với nhau, chi phí rất thấp. Nhưng hệ thống tốt không thay thế được việc có **một thứ riêng**. Medal ở cuộc thi này không đến từ việc ghép public weights khéo hơn người khác 0.001, mà từ tín hiệu mà khối đội dùng chung public weights không có. Mình đã không tìm ra tín hiệu đó; bài viết này là để lần sau tìm nó sớm hơn.
+Mình không thất vọng với hệ thống đã xây: pipeline từ DICOM đến submission chạy ổn định, vòng lặp experiment có kỷ luật, 99 experiment so được với nhau, chi phí rất thấp. Nhưng hệ thống tốt không thay thế được việc có **một thứ riêng**. Medal ở cuộc thi này không đến từ việc ghép public weights khéo hơn người khác 0.001, mà tìm ra dữ liệu soft-label tốt hơn, chiến lược để verify solution tốt hơn; đặc biệt là cần sự đa dạng trong solution.
 
 # Credits & links
 
@@ -377,17 +373,21 @@ Cảm ơn những người đã công bố model, code và nhãn — final solut
 
 | Ai | Mình đã dùng gì |
 | --- | --- |
-| **nartaa** | CoAtNet 0.949 (OAI) + 0.945 224-crop; S6fall weights + training code (Apache-2.0); recipe non-OAI |
-| **heliosli** | Compact ConvNeXt-S, R6 / R7 (+ flip TTA), kiến trúc S6, `compact_train.py`, SKM-TEA anatomy checkpoint, per-finding weights |
-| **goodpjw2008** | 2.5D ConvNeXt reader (weights + code; mình cũng reproduce recipe) |
-| **dreaddevelopment** | Recipe Raptor (CoAtNet trainer) |
-| **stevenleehans, pilkwang, lixin73, laymond, yunusgmsoy** | Các bảng nhãn rút từ report |
-| **riadmohamed42** | JEV labels |
-| **rabari9999** | Notebook gốc của các cell reader goodpjw |
-| **leoprovorov** | Phân tích nhiễu public split |
+| **[nartaa](https://www.kaggle.com/nartaa)** | [CoAtNet 0.949 (OAI)](https://www.kaggle.com/code/nartaa/rsna-knee-0949-anatomical-mirror) + [0.945 224-crop](https://www.kaggle.com/code/nartaa/rsna-knee-0945-efficient-224crop); [S6fall weights + training code](https://www.kaggle.com/datasets/nartaa/rsna-knee-s6fall-weights) (Apache-2.0) và [notebook inference S6fall](https://www.kaggle.com/code/nartaa/rsna-knee-s6fall-solo); recipe non-OAI ([discussion 749359](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/discussion/749359)) |
+| **[heliosli](https://www.kaggle.com/heliosli)** | [Notebook 0.957 one-click](https://www.kaggle.com/code/heliosli/0-957-latest-dataset-score-in-one-click) (per-finding weights), [compact ConvNeXt-S](https://www.kaggle.com/datasets/heliosli/rsna-knee-compact-v1), [R6](https://www.kaggle.com/datasets/heliosli/rsna-knee-r6-frozen-fe055406-w1) / R7 (+ flip TTA), kiến trúc S6, `compact_train.py`, [SKM-TEA anatomy checkpoint](https://www.kaggle.com/datasets/heliosli/rsna-orthofoundation-fold0-epoch7-20261004) |
+| **[goodpjw2008](https://www.kaggle.com/goodpjw2008)** | [2.5D ConvNeXt reader](https://www.kaggle.com/datasets/goodpjw2008/rsna-knee-2-5d-convnext-reader) (weights + code; mình cũng reproduce recipe) |
+| **[dreaddevelopment](https://www.kaggle.com/dreaddevelopment)** | Recipe Raptor ([CoAtNet trainer](https://www.kaggle.com/code/dreaddevelopment/knee-mri-training-the-twelve-finding-model), [knee-raptor-corpus](https://www.kaggle.com/datasets/dreaddevelopment/knee-raptor-corpus)) |
+| **[stevenleehans](https://www.kaggle.com/datasets/stevenleehans/rsna-knee-llm-report-labels), [pilkwang](https://www.kaggle.com/datasets/pilkwang/rsna-knee-llm-labels), [lixin73](https://www.kaggle.com/datasets/lixin73/rsna-knee-llm-report-labels-sol56), [laymond](https://www.kaggle.com/datasets/laymond/rsna-knee-abnormality-qwen3-8b-weak-labels), [yunusgmsoy](https://www.kaggle.com/datasets/yunusgmsoy/rsna-knee-llm-report-labels)** | Các bảng nhãn rút từ report |
+| **[riadmohamed42](https://www.kaggle.com/datasets/riadmohamed42/jev-knee-labels)** | JEV labels |
+| **[rabari9999](https://www.kaggle.com/rabari9999)** | Notebook gốc của các cell reader goodpjw |
+| **[leoprovorov](https://www.kaggle.com/leoprovorov)** | Phân tích nhiễu public split |
 | SKM-TEA, OAI, fastMRI, RSNA | Dữ liệu đằng sau các model public và cuộc thi |
 
-Phần của mình:
+Phần của mình — tất cả đều đã để public:
 
-- Weights ConvNeXt-S S6 seed 43 nằm ở dataset Kaggle `hlly34/rsna-knee-s6-cnx-s43` (CC BY-NC 4.0); các Kaggle Model `hlly34/rsna-knee-*` khác phần lớn để private.
-- Code của toàn bộ pipeline (cache, training, submission builder, registry) nằm trong một repo private, xây trên template `hllj/kaggle-boilerplate`. Nếu bạn quan tâm phần nào cụ thể, cứ hỏi mình.
+- **Code**: toàn bộ pipeline (cache, training, submission builder, registry, report từng iteration) ở GitHub [hllj/rsna-knee-abnormality-detection](https://github.com/hllj/rsna-knee-abnormality-detection), xây trên template [hllj/kaggle-boilerplate](https://github.com/hllj/kaggle-boilerplate). Bản đóng gói cho Kaggle: dataset [`hlly34/rsna-knee-code`](https://www.kaggle.com/datasets/hlly34/rsna-knee-code).
+- **Notebook final**: [`hlly34/rsna-knee-inference`](https://www.kaggle.com/code/hlly34/rsna-knee-inference) (sinh bởi `submission/build_kernels.py`; các version cũ là từng submission).
+- **Model**: 17 Kaggle Model [`hlly34/rsna-knee-*`](https://www.kaggle.com/hlly34/models) — mỗi family một model, mỗi fold một variation (EfficientNet-B0, ConvNeXt-S, CoAtNet-2, Raptor / reader repro, Raptor v2 d96, DINOv2, RadImageNet...).
+- **Weights**: [`hlly34/rsna-knee-s6-cnx-s43`](https://www.kaggle.com/datasets/hlly34/rsna-knee-s6-cnx-s43) (S6 ConvNeXt-S seed 43, CC BY-NC 4.0), [`hlly34/rsna-knee-weights`](https://www.kaggle.com/datasets/hlly34/rsna-knee-weights) (ConvNeXt-S @288, 5 fold).
+
+Nếu bạn quan tâm phần nào cụ thể, cứ hỏi mình.
