@@ -2147,8 +2147,16 @@
       ],
       "id": "F058",
       "passes": false,
-      "status": "todo",
-      "source": "proposal:P007"
+      "status": "claimed",
+      "source": "proposal:P007",
+      "updated_at": "2026-11-18T12:54:01Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T12:54:01Z",
+          "event": "claim",
+          "note": ""
+        }
+      ]
     },
     {
       "category": "functional",
