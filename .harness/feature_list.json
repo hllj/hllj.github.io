@@ -2036,9 +2036,22 @@
         "post-css"
       ],
       "id": "F055",
-      "passes": false,
-      "status": "todo",
-      "source": "proposal:P004"
+      "passes": true,
+      "status": "passing",
+      "source": "proposal:P004",
+      "updated_at": "2026-11-18T12:06:30Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T12:05:19Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T12:06:30Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "category": "functional",
