@@ -89,3 +89,6 @@ Added copy button to every `.highlighter-rouge` block (post-ux.js appends button
 
 ## F012 Test report (tester, session 13)
 init ok, rebuilt. pi-coding-agent-setup: 4 .highlighter-rouge blocks, exactly 1 button.code-copy each. Real clicks (not synthetic): text "Copied" at 0.5s and 1.5s, back to "Copy" by ~2.7s; navigator.clipboard.writeText received text equal to block text (multi-line, backslash continuations) for blocks 1 and 4. Probe: synthetic JS click without user activation gave "Failed" and reset to "Copy" (error path works, expected in unfocused pane). Button hidden (opacity 0) until hover/focus by design. Real paste check not possible in pane (cmd+v no-op). Result: pass.
+
+## 2026-11-18 - F013 (coder, session 14)
+Code blocks already scrolled internally (pre overflow-x auto from F011). Added to _post-ux.scss: inline code `overflow-wrap:anywhere` + `pre{max-width:100%}`. Verified at 375px on pi-coding-agent-setup: documentElement scrollWidth 375; 3 of 4 pre blocks have scrollWidth > clientWidth (scroll internally) and none exceed viewport; an injected 300-char inline code wraps (right edge 361px). Known issues: none.

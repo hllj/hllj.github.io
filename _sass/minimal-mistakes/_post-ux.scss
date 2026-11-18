@@ -281,3 +281,10 @@ html { scroll-behavior: smooth; }
 .page__content div.highlighter-rouge:hover .code-copy,
 .page__content div.highlighter-rouge .code-copy:focus { opacity: 1; }
 @media (hover: none) { .page__content div.highlighter-rouge .code-copy { opacity: .85; } }
+
+// Long inline code (paths, URLs, identifiers) wraps instead of widening the page.
+.page__content :not(pre) > code {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.page__content pre { max-width: 100%; }
