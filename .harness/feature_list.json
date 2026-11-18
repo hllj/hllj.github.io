@@ -2294,14 +2294,19 @@
         "post-css"
       ],
       "id": "F061",
-      "passes": false,
-      "status": "claimed",
+      "passes": true,
+      "status": "passing",
       "source": "proposal:P010",
-      "updated_at": "2026-11-18T13:23:18Z",
+      "updated_at": "2026-11-18T13:24:38Z",
       "attempts": [
         {
           "at": "2026-11-18T13:23:18Z",
           "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T13:24:38Z",
+          "event": "pass",
           "note": ""
         }
       ]

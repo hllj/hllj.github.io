@@ -222,3 +222,6 @@ init ok, rebuilt. Iframe measurements (data-theme set) at 375/768/1280/1900 x li
 
 ## Session 75 - F061 (coder)
 TOC wrapper now position:sticky (top = --pux-mast-h + 8px; 8px when html.masthead-hidden), set in post-ux.js autohide block, fit-content width. Headless Chrome iframe (instant scroll) at 1280/375: button left constant (318/12), sticks at ~85/73px after 1500px scroll, returns to normal place at top, scrollWidth==viewport. Known: CSS transitions stall in virtual time so hidden-state top (8px) and 768/1900/dark not measured; masthead-hidden class toggles correctly.
+
+## F061 Test report (tester, session 75)
+init ok. Real scrolling in browser pane (1024x768, real transitions) on rsna post: button left constant (216), top 625 at y=0; masthead hidden on scroll down -> top 8px; scroll up -> masthead shown, top 81 = masthead bottom 73 + 8 (no overlap); leaves viewport past end of .page__content (top -161, no overlap with share/post-nav/related); returns to 625 at y=0; bg transparent, scrollWidth==viewport. Iframes (data-theme set) at 375/768/1900 x light/dark on rsna and how-i-setup: left constant, down top 8 (hidden), up top == masthead bottom + 8, no overflow. Not exercised: open menu while stuck, prefers-reduced-motion. Result: pass.
