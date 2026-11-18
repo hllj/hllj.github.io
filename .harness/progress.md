@@ -50,3 +50,6 @@ init ok; rebuilt. Browser on pi-bench-harness-iterations (hero overlay) and pi-c
 
 ## 2026-11-18 - F006 (coder, session 7)
 Added fixed #reading-progress bar (only when page.date, i.e. posts) in _layouts/single.html, styles in _post-ux.scss, scroll logic (rAF, scaleX) in assets/js/post-ux.js. Verified in browser: scroll 0/50/100% gives scaleX 0/0.5/1, position fixed top 0; not in home page HTML; verify grep passes. Known issues: none.
+
+## F006 Test report (tester, session 7)
+init ok, rebuilt. Browser on pi-bench-harness-iterations: scroll 0/50/75/100% gives scaleX 0/0.5/0.75/1, bar fixed top 0, 3px, accent color, aria-valuenow updates. Reload at scrollY 5000 restores bar to 0.333. Not present on home or categories (and only 4 post pages include it). Note: rAF updates lag under very short waits in the pane; fine with 1s waits. Result: pass.
