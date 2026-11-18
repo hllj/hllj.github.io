@@ -156,3 +156,6 @@ init ok. Real headless Chrome 1280 screenshots of post (1300px tall) and /: Foll
 
 ## 2026-11-18 session 63 - F054 (coder)
 Cause confirmed on built pages: _config.yml author.links had an Email item and author.email is also set, so author-profile.html rendered Email first (links loop) and last (email block). Removed the links Email item. Before: Email, Twitter, Facebook, GitHub, Instagram, Email. After on /, /categories/, a post: Twitter, Facebook, GitHub, Instagram, Email (single mailto:vanhop3499@gmail.com link; Website has no url so is not rendered). /blog/ has no author sidebar, /about/ is not a page. Headless Chrome screenshot of / shows Email once at the end. Email now sits last instead of first. Known: none.
+
+## 2026-11-18 session 64 - F054
+- No code change (fix already committed). Rebuilt; ran amended verify commands: pass. /, /categories/, /tags/, pi-bench post each show Email once (fa-envelope x1) plus Twitter, Facebook, GitHub, Instagram. Headless Chrome screenshot of / sidebar viewed: 5 links, Email once, no empty entry.
