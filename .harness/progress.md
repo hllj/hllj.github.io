@@ -68,3 +68,6 @@ init ok. Browser 1280x800 on pi-bench-harness-iterations (17 TOC entries). Swept
 
 ## 2026-11-18 - F009 (coder, session 10)
 Mobile TOC collapsible: post-ux.js adds a toggle button + .toc--js/.is-open (click title toggles; link click collapses on <1024px); _post-ux.scss (max-width 1023px) makes the TOC static full-width, menu hidden unless open (max-height 60vh scroll). Verified at 375px on pi-bench-harness-iterations: collapsed by default (31px high, menu display none), tap expands (448px, aria-expanded true), no horizontal overflow; desktop 1024 keeps menu visible and toggle hidden. Known issues: without JS the TOC stays expanded. TOC sits at top of content (below hero teaser/meta).
+
+## F009 Test report (tester, session 10)
+init ok, rebuilt. 375px on pi-bench-harness-iterations and how-i-setup-this-blog: TOC collapsed by default (31px, menu display none, aria-expanded false), toggle button or title click expands (448px capped / 156px, aria-expanded true), TOC link click collapses, re-toggle works, no horizontal overflow (scrollWidth 375). TOC sits at y~390-600, within first viewport. Screenshot pane blank so DOM measurements used. Result: pass.
