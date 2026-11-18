@@ -62,3 +62,6 @@ init ok, rebuilt. Built HTML: toc present on how-i-setup-this-blog, pi-bench-har
 
 ## 2026-11-18 - F008 (coder, session 9)
 Added TOC scroll-spy in assets/js/post-ux.js (rAF scroll handler; active = last heading whose top is within 120px of viewport top; last entry at page bottom; sets .is-active + aria-current) and .is-active styles (accent color, bold, left border, tint) in _post-ux.scss. Verified at 1280px on pi-bench-harness-iterations: exactly one active entry at all tested scroll positions, matching heading positions (e.g. scrollY 3244 -> "Những thay đổi chính", 5976 -> "Mình đã đổi gì từ v2 sang"). Note: html smooth scroll makes scrollTo animate, so wait/read scrollY after. Known issues: none.
+
+## F008 Test report (tester, session 9)
+init ok. Browser 1280x800 on pi-bench-harness-iterations (17 TOC entries). Swept scrollY 0..max step 700 (24 positions, 1.2s settle): exactly one .is-active entry, always equal to last TOC heading with top<=140px. Clicked TOC entry #10: after smooth scroll settles, that entry is the single active one, aria-current=true, 3px left border, weight 600, accent color; screenshot confirms. Notes: with <=250ms waits the pane lagged (rAF in hidden pane), not a product bug. At bottom of page the sticky TOC (818px) is taller than an 800px viewport so last entries may be cut off; minor, out of scope. Result: pass.
