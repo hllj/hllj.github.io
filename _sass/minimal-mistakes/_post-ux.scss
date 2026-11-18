@@ -360,3 +360,32 @@ html { scroll-behavior: smooth; }
   tbody td { border-right: 1px solid #e1e4e8; &:first-child { border-left: 1px solid #e1e4e8; } }
   tbody tr:nth-child(even) { background: #f8f9fa; }
 }
+
+/* Blockquotes and notice callouts: accent border, tint, high-contrast text */
+.page__content blockquote {
+  margin: 1.5em 0;
+  padding: 0.8em 1.2em;
+  border-left: 4px solid #3b82a0;
+  border-radius: 0 6px 6px 0;
+  background: #eef6fa;
+  color: #1f2933;
+  font-style: normal;
+  p:last-child { margin-bottom: 0; }
+  p:first-child { margin-top: 0; }
+  cite, footer { color: #4a5560; }
+}
+.page__content .notice,
+.page__content [class*="notice--"] {
+  margin: 1.5em 0;
+  padding: 0.8em 1.2em;
+  border-left: 4px solid #3b82a0;
+  border-radius: 0 6px 6px 0;
+  background: #eef6fa;
+  color: #1f2933;
+  font-size: 1em;
+  p:last-child { margin-bottom: 0; }
+  a { color: #0b5a7a; text-decoration: underline; }
+}
+.page__content .notice--warning { border-left-color: #b86e00; background: #fff6e5; }
+.page__content .notice--danger  { border-left-color: #b3261e; background: #fdecea; }
+.page__content .notice--success { border-left-color: #2e7d32; background: #eaf6eb; }

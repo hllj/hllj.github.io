@@ -125,3 +125,6 @@ post-ux.js wraps every .page__content table in div.table-wrap (overflow-x auto, 
 
 ## F017 Test report (tester, session 19)
 init ok. pi-bench-harness-iterations at 375px: 5 tables, each wrapped once in div.table-wrap (overflow-x auto, tabindex 0); page scrollWidth 375. Probe: forced 900px min-width on a table: wrapper scrollWidth 900 vs client 351, scrollLeft settable to 200, page stays 375. Zebra: even tbody rows rgb(248,249,250), odd transparent; th sticky, 2px bottom and 1px side borders, bg rgb(241,243,245). Source HTML has no wrapper (JS only, no double wrapping on load). Result: pass.
+
+## 2026-11-18 session 20 - F018 (coder)
+Added blockquote and .notice/.notice--* styles to _post-ux.scss: 4px accent left border, tinted background, dark text (#1f2933, ~13:1 contrast), warning/danger/success variants. Verified on pi-coding-agent-setup (5 blockquotes): computed border 4px rgb(59,130,160), bg rgb(238,246,250); injected notice--warning styled. Run .harness/build.sh after edits. Known: none.
