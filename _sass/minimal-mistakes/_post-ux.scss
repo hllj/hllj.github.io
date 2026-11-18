@@ -962,3 +962,15 @@ html[data-theme="dark"] .archive__back-top { color: #9aa7b4; &:hover { color: #e
   .list__item { float: none; clear: none; width: auto; margin: 0; padding: 0; min-width: 0; display: flex; }
   .list__item > .archive__item { width: 100%; height: auto; }
 }
+
+/* F057: home Recent posts heading, spacing and view-all link match the blog index */
+.layout--home .archive__subtitle { margin: 2rem 0 1.5rem; padding-bottom: .4rem; border-bottom: 2px solid #c3ccd5; font-size: 1.25rem; }
+.layout--home .entries-list { margin-bottom: 0; }
+.layout--home .entries-list .archive__item { margin: 0; }
+.home__all-posts { text-align: center; margin: 0 0 1.5rem; clear: both;
+  a { display: inline-flex; align-items: center; min-height: 40px; padding: 0 18px; border: 1px solid #c3ccd5; border-radius: 999px; background: #fff; color: #1f2933; font-size: .9rem; font-weight: 600; text-decoration: none;
+    &:hover { background: #eef3f8; border-color: #8aa0b4; }
+    &:focus-visible { outline: 2px solid #3b82c4; outline-offset: 2px; } } }
+html[data-theme="dark"] .layout--home .archive__subtitle, :root.dark .layout--home .archive__subtitle { border-color: #30363d; }
+html[data-theme="dark"] .home__all-posts a, :root.dark .home__all-posts a { background: #161b22; border-color: #30363d; color: #e6edf3; }
+@media print { .home__all-posts { display: none; } }
