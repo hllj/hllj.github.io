@@ -196,3 +196,6 @@ init ok, rebuilt (CSS contains calc(100% - 230px - 2rem)). rsna wrap-up at 1280:
 
 ## 2026-11-18 session 31 - F027 (coder)
 Tag chips at post bottom (.page__taxonomy-item) restyled to pill chips matching header chips (_post-ux.scss, hidden in print). /tags/ archive page was missing (404): added _pages/tags.md (layout tags) so tag links resolve to /tags/#tag; /categories/ already existed. Verified at 1024: 5 chips with 999px radius, /tags/ 200 with anchors, scrollWidth ok; verify cmd passes. Known: none.
+
+## F027 Test report (tester, session 31)
+init ok. pi-bench post at 1024: 5 tag chips (.page__taxonomy-item), radius 999px, 1px border, 2px 10px padding, hrefs /tags/#x. Click "pi" -> /tags/#pi, anchor exists. /tags/ and /categories/ both 200 with anchors for benchmark, swe-bench, blog. Comma separators hidden; at 375 chips wrap to 2 rows, scrollWidth 375. Note: post footer has only tags (post has no front-matter category; header category chip links /categories/#blog). Result: pass.
