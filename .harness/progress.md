@@ -255,3 +255,6 @@ Fixed contrast failures: accent/link color #2a6df4 -> #1c55c4 (5.7:1 on #eee), m
 
 ## 2026-11-18 session 41 - F035 (coder, claim)
 Rebuilt and re-audited contrast in-browser (text nodes, effective bg walked through ancestors, 4.5:1 / 3:1 large) on pi-bench, pi-coding-agent-setup, rsna wrap-up and /blog/: 0 failures except the visually-hidden "Toggle search" label (clipped, not visible). Verify cmd passes. Session 40 fix (link #1c55c4, footer/TOC #00688f, muted #565e66) holds. Claimed F035. Known: dark mode contrast unchecked until F020.
+
+## F035 Test report (tester, session 41)
+init ok. pi-bench at 1024: real Tab -> "Skip to primary navigation" fixed 249x53, 3px outline; Enter -> #site-nav. 92 focusables, 0 without a focus ring. Own contrast audit over all visible text nodes (effective bg walked up ancestors, AA 4.5/3): 0 failures (image-bg nodes skipped). Landmarks labelled (Skip links, Primary, Breadcrumb, TOC sidebar, On this page, More posts, Site footer). CSS has prefers-reduced-motion:reduce rules (scroll-behavior auto, animation/transition ~0); media emulation not possible in pane, CSS only. Dark mode unchecked (F020). Result: pass.
