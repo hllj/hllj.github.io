@@ -226,3 +226,6 @@ init.sh builds dev (comments only render in production), so rebuilt with JEKYLL_
 
 ## 2026-11-18 session 36 - F032 (coder)
 Blog index cards: archive-single.html now outputs tag chips (.archive__item-tags; hidden in related posts and print); card styling with hover lift/shadow/border, dark variant, appended to _post-ux.scss scoped to `.layout--posts .entries-grid`. Verified at 1024: 19 cards with title, date, read time, excerpt, tags, radius 10px, hover transition, scrollWidth ok; verify cmd passes. Known: none.
+
+## F032 Test report (tester, session 36)
+init ok. /blog/ at 1024: 19 cards, each with title, excerpt, date, read time; tags chips (pill, 999px) on all 14 posts; the 5 entries without tags are projects/reading items with no tags in source (not a defect). Hover on card: translateY(-3px), shadow 0 8px 20px, border color change (0.15s transition). scrollWidth 1024; at 375 cards 351px, scrollWidth 375. Dark mode not checked. Result: pass.
