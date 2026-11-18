@@ -181,3 +181,6 @@ Compact author sidebar on posts: new block at end of _post-ux.scss scoped to `.l
 
 ## F025 Test report (tester, session 28)
 init ok, rebuilt. pi-bench post at 1280: sidebar 282x294 (avatar 72, bio 2 lines, 6 links), scrollWidth 1280. At 375: sidebar is a 50px inline author line (avatar 36, name, 1-line bio, 32px Follow button), sits just before content, scrollWidth 375; Follow dropdown opens as popup (no layout shift, sidebar stays 50px) and toggles closed. At 768 on rsna wrap-up: 52px line, scrollWidth 768. Dark mode: name/bio rgb(230,237,243), transparent bg, fine. Screenshots blank (known), DOM measurements used. Result: pass.
+
+## 2026-11-18 session 29 - F026 (coder)
+Wide posts: appended `.wide .page__content` block to _post-ux.scss so paragraphs containing images (incl. captions), figures, tables, pre lift the 50ch cap. Verified on rsna wrap-up at 1280: text paragraphs 603px, images 944px (full column), code 942, TOC sticky at right with 33 links, scrollWidth 1280. At 375: images 351, scrollWidth 375, TOC link click sets hash. Known: none.

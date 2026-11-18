@@ -525,3 +525,17 @@ html[data-theme="dark"] .post-breadcrumbs { color: #9ba7b4; }
   }
 }
 @media print { .layout--single .sidebar { display: none; } }
+
+/* Wide posts (classes: wide): keep ~50ch text measure, let figures and tables use the full column */
+.wide .page__content {
+  > p:has(img),
+  > figure,
+  > .table-wrap,
+  > table,
+  > pre,
+  > div.highlighter-rouge {
+    max-width: none;
+  }
+  > p:has(img) > img,
+  > figure img { display: block; max-width: 100%; height: auto; margin-left: auto; margin-right: auto; }
+}
