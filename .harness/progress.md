@@ -366,3 +366,6 @@ init ok. Iframes at 375/768/1280 x light/dark, all 5 year sections: h2 2px botto
 
 ## 2026-11-18 session 59 - F050 (coder)
 Blog index grid: .entries-grid used floated .grid__item with span() widths (3 of 12 etc.) leaving the right third empty. Replaced with CSS grid at end of _post-ux.scss (minmax(0,1fr) columns: 1 <600px, 2 >=600, 3 >=1000), floats/margins reset. Verified real headless Chrome screenshots at 768/1280/1600 (cards flush to rule, 3 cols) plus iframe measurement at 375/768/1280/1600 x light/dark: cols 1/2/3, last card right edge gap 0, single-card year (2022) left aligned at normal card width, scrollWidth==viewport. Note: headless Chrome screenshot at 375 renders at a wider min layout width (looks cropped); use iframe measurement there. Known: none.
+
+## F050 Test report (tester, session 59)
+init ok. Iframes at 375/768/1280/1600 x light/dark, all 5 year sections: .entries-grid columns 1/2/3/3, last-row-agnostic check: rightmost card right edge equals year heading rule right edge (gap 0) for every section with >=2 cards; cards left-aligned (left offset 0); single-card 2022 stays normal width (351/363/303px) left aligned; scrollWidth==viewport everywhere. Content area caps at 1280 so 1600 matches. Real headless Chrome screenshot at 1280: 3 cards flush to rule, no empty third. Result: pass.
