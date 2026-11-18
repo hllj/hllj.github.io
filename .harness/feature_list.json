@@ -89,13 +89,18 @@
       "depends_on": [
         "F002"
       ],
-      "status": "claimed",
-      "passes": false,
-      "updated_at": "2026-11-18T06:39:43Z",
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T06:40:51Z",
       "attempts": [
         {
           "at": "2026-11-18T06:39:43Z",
           "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T06:40:51Z",
+          "event": "pass",
           "note": ""
         }
       ]

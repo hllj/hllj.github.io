@@ -26,3 +26,6 @@ Ran init.sh (ok). Post page HTML includes defer post-ux.js; script served 200; m
 
 ## 2026-11-18 - F003 (coder)
 Defined --pux-* tokens (type scale, spacing scale, accent, text/muted/border colors, content width) in _sass/minimal-mistakes/_post-ux.scss and applied them to .page__title, .page__content headings/body/links and .page__meta. Verified: verify command passes (--pux-accent in main.css), post page 200. Not visually checked in browser. Known issues: --pux-content-width is defined but not yet applied to layout (later width feature). Next: F004.
+
+## 2026-11-18 - F003 (tester)
+Rebuilt; --pux-accent in main.css. Browser (1024px) on /blog/pi-coding-agent-setup/ and pi-bench-harness-iterations: body 17px (token base), h2 30px, link color rgb(42,109,244)=accent, text rgb(36,41,47), meta 13px (xs), line-heights per tokens. Note: hero-overlay posts keep white title/meta and the overlay rule (1.953em) wins over the title token (~39px vs 38px); minor, out of scope (hero styling). --pux-bg/--pux-content-width not yet applied (coder noted). Result: pass.
