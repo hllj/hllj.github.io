@@ -824,8 +824,16 @@
       "depends_on": [
         "F002"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "claimed",
+      "passes": false,
+      "updated_at": "2026-11-18T07:24:31Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T07:24:31Z",
+          "event": "claim",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F024",

@@ -284,3 +284,32 @@
   });
   update();
 })();
+
+// Masthead auto-hide: slides away on scroll down, returns on scroll up (post pages only)
+(function () {
+  "use strict";
+  var mast = document.querySelector(".masthead");
+  if (!mast || !document.getElementById("reading-progress")) return;
+  var root = document.documentElement;
+  root.classList.add("masthead-autohide");
+  var last = window.pageYOffset || 0, ticking = false;
+  var update = function () {
+    ticking = false;
+    var y = Math.max(0, window.pageYOffset || root.scrollTop || 0);
+    var dy = y - last;
+    var h = mast.offsetHeight || 60;
+    if (y <= h || dy < -4) {
+      mast.classList.remove("is-hidden");
+    } else if (dy > 4 && !mast.contains(document.activeElement)) {
+      mast.classList.add("is-hidden");
+    }
+    if (Math.abs(dy) > 4 || y <= h) last = y;
+  };
+  window.addEventListener("scroll", function () {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(update);
+  }, { passive: true });
+  // keyboard focus inside the masthead always reveals it
+  mast.addEventListener("focusin", function () { mast.classList.remove("is-hidden"); });
+})();

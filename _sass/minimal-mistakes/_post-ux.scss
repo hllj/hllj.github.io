@@ -130,7 +130,7 @@
 
 /* Table of contents: smooth scroll + anchor offset */
 html { scroll-behavior: smooth; }
-.page__content :is(h1, h2, h3, h4, h5, h6)[id] { scroll-margin-top: 4.5rem; }
+.page__content :is(h1, h2, h3, h4, h5, h6)[id] { scroll-margin-top: 5.5rem; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 /* Sticky TOC on the right for wide posts (MM disables the right sidebar there) */
@@ -467,3 +467,18 @@ html { scroll-behavior: smooth; }
 @keyframes pux-btt-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 html[data-theme="dark"] .back-to-top { background: #e6edf3; color: #0d1117; &:hover { background: #fff; } }
 @media print { .back-to-top { display: none !important; } }
+
+/* Masthead auto-hide on post pages (class set by post-ux.js) */
+html.masthead-autohide .masthead {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  transition: transform 0.25s ease;
+  will-change: transform;
+  &.is-hidden { transform: translateY(-100%); }
+}
+html[data-theme="dark"].masthead-autohide .masthead { background-color: #0d1117; }
+@media (prefers-reduced-motion: reduce) {
+  html.masthead-autohide .masthead { transition: none; }
+}
+@media print { html.masthead-autohide .masthead { position: static; transform: none; } }
