@@ -1969,7 +1969,7 @@
       "verify": [
         "bash .harness/build.sh",
         "python3 -c \"import re,sys;h=open('_site/blog/pi-bench-harness-iterations/index.html').read();m=re.search(r'<ul class=\\\"author__urls.*?</ul>',h,re.S);sys.exit(0 if m and m.group(0).count('fa-envelope')==1 else 1)\"",
-        "python3 -c \"import re\nfor p in ['index.html','categories/index.html','tags/index.html','blog/pi-bench-harness-iterations/index.html']:\n h=open('_site/'+p).read();m=re.search(r'<ul class=\\\"author__urls.*?</ul>',h,re.S);assert m and m.group(0).count('fa-envelope')==1,p\""
+        "python3 -c \"import re,sys; ps=['index.html','categories/index.html','tags/index.html','blog/pi-bench-harness-iterations/index.html']; [sys.exit('author__urls envelope count != 1 in '+p) for p in ps if not ((m:=re.search(r'<ul class=\\\"author__urls.*?</ul>',open('_site/'+p).read(),re.S)) and m.group(0).count('fa-envelope')==1)]\""
       ],
       "depends_on": [],
       "tags": [
@@ -1980,7 +1980,7 @@
       "passes": false,
       "status": "todo",
       "source": "proposal:P003",
-      "updated_at": "2026-11-18T11:58:23Z",
+      "updated_at": "2026-11-18T12:00:03Z",
       "attempts": [
         {
           "at": "2026-11-18T11:58:11Z",
@@ -1991,9 +1991,19 @@
           "at": "2026-11-18T11:58:23Z",
           "event": "fail",
           "note": "verify command failed: python3 -c \"import re,sys | $ bash .harness/build.sh $ python3 -c \"import re,sys;h=open('_site/blog/pi-bench-harness-iterations/index.html').read();m=re.search(r'<ul class=\\\"author__urls.*?</ul>',h,re.S);sys.exit(0 if m and m.group(0).count('fa-envelope')==1 else 1)\"  (log: .harness/sessions/063-verify-F054.log)"
+        },
+        {
+          "at": "2026-11-18T11:59:55Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T12:00:03Z",
+          "event": "fail",
+          "note": "verify command failed: python3 -c \"import re | $ bash .harness/build.sh $ python3 -c \"import re,sys;h=open('_site/blog/pi-bench-harness-iterations/index.html').read();m=re.search(r'<ul class=\\\"author__urls.*?</ul>',h,re.S);sys.exit(0 if m and m.group(0).count('fa-envelope')==1 else 1)\"  (log: .harness/sessions/064-verify-F054.log)"
         }
       ],
-      "notes": "verify command failed: python3 -c \"import re,sys | $ bash .harness/build.sh $ python3 -c \"import re,sys;h=open('_site/blog/pi-bench-harness-iterations/index.html').read();m=re.search(r'<ul class=\\\"author__urls.*?</ul>',h,re.S);sys.exit(0 if m and m.group(0).count('fa-envelope')==1 else 1)\"  (log: .harness/sessions/063-verify-F054.log)"
+      "notes": "verify command failed: python3 -c \"import re | $ bash .harness/build.sh $ python3 -c \"import re,sys;h=open('_site/blog/pi-bench-harness-iterations/index.html').read();m=re.search(r'<ul class=\\\"author__urls.*?</ul>',h,re.S);sys.exit(0 if m and m.group(0).count('fa-envelope')==1 else 1)\"  (log: .harness/sessions/064-verify-F054.log)"
     },
     {
       "category": "functional",
@@ -2008,7 +2018,7 @@
       ],
       "verify": [
         "bash .harness/build.sh",
-        "python3 - <<'PY'\nimport re\nh=open('_site/index.html').read()\nassert 'archive__item' in h\ns=open('_sass/minimal-mistakes/_post-ux.scss').read()\nassert re.search(r'layout--home|post-card',s),'home/shared card selector missing'\nPY"
+        "python3 -c \"import re,sys; h=open('_site/index.html').read(); s=open('_sass/minimal-mistakes/_post-ux.scss').read(); 'archive__item' in h or sys.exit('no archive__item on home'); re.search(r'layout--home|post-card',s) or sys.exit('home/shared card selector missing')\""
       ],
       "depends_on": [],
       "tags": [
@@ -2032,7 +2042,7 @@
       ],
       "verify": [
         "bash .harness/build.sh",
-        "python3 - <<'PY'\nimport re\nh=open('_site/index.html').read()\nm=re.search(r'<ul class=\"archive__item-tags\".*?</ul>',h,re.S)\nassert m,'no tag list on home'\nassert re.search(r'<li><a href=\"[^\"]*/tags/#[^\"]+\"',m.group(0)),'tags not linked to /tags/#slug'\nPY"
+        "python3 -c \"import re,sys; h=open('_site/index.html').read(); m=re.search(r'<ul class=\\\"archive__item-tags\\\".*?</ul>',h,re.S); m or sys.exit('no tag list on home'); re.search(r'<li><a href=\\\"[^\\\"]*/tags/#[^\\\"]+\\\"',m.group(0)) or sys.exit('tags not linked to /tags/#slug')\""
       ],
       "depends_on": [],
       "tags": [
@@ -2057,7 +2067,7 @@
       ],
       "verify": [
         "bash .harness/build.sh",
-        "python3 - <<'PY'\nh=open('_site/index.html').read()\nassert 'Recent' in h and 'archive__item' in h\nassert 'class=\"pagination\"' in h or '/blog/' in h\nPY"
+        "python3 -c \"import sys; h=open('_site/index.html').read(); ('Recent' in h and 'archive__item' in h) or sys.exit('Recent heading or archive__item missing'); ('class=\\\"pagination\\\"' in h or '/blog/' in h) or sys.exit('no pagination or /blog/ link')\""
       ],
       "depends_on": [],
       "tags": [

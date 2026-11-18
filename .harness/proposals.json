@@ -361,6 +361,49 @@
         ]
       },
       "decided_at": "2026-11-18T11:59:30Z"
+    },
+    {
+      "id": "P006",
+      "status": "approved",
+      "by": "planner",
+      "reason": "Make verify commands for F054-F057 single-line (gate splits multi-line entries)",
+      "at": "2026-11-18T12:00:49Z",
+      "payload": {
+        "add": [],
+        "amend": [
+          {
+            "id": "F054",
+            "verify": [
+              "bash .harness/build.sh",
+              "python3 -c \"import re,sys;h=open('_site/blog/pi-bench-harness-iterations/index.html').read();m=re.search(r'<ul class=\\\"author__urls.*?</ul>',h,re.S);sys.exit(0 if m and m.group(0).count('fa-envelope')==1 else 1)\"",
+              "python3 -c \"import re,sys; ps=['index.html','categories/index.html','tags/index.html','blog/pi-bench-harness-iterations/index.html']; [sys.exit('author__urls envelope count != 1 in '+p) for p in ps if not ((m:=re.search(r'<ul class=\\\"author__urls.*?</ul>',open('_site/'+p).read(),re.S)) and m.group(0).count('fa-envelope')==1)]\""
+            ]
+          },
+          {
+            "id": "F055",
+            "verify": [
+              "bash .harness/build.sh",
+              "python3 -c \"import re,sys; h=open('_site/index.html').read(); s=open('_sass/minimal-mistakes/_post-ux.scss').read(); 'archive__item' in h or sys.exit('no archive__item on home'); re.search(r'layout--home|post-card',s) or sys.exit('home/shared card selector missing')\""
+            ]
+          },
+          {
+            "id": "F056",
+            "verify": [
+              "bash .harness/build.sh",
+              "python3 -c \"import re,sys; h=open('_site/index.html').read(); m=re.search(r'<ul class=\\\"archive__item-tags\\\".*?</ul>',h,re.S); m or sys.exit('no tag list on home'); re.search(r'<li><a href=\\\"[^\\\"]*/tags/#[^\\\"]+\\\"',m.group(0)) or sys.exit('tags not linked to /tags/#slug')\""
+            ]
+          },
+          {
+            "id": "F057",
+            "verify": [
+              "bash .harness/build.sh",
+              "python3 -c \"import sys; h=open('_site/index.html').read(); ('Recent' in h and 'archive__item' in h) or sys.exit('Recent heading or archive__item missing'); ('class=\\\"pagination\\\"' in h or '/blog/' in h) or sys.exit('no pagination or /blog/ link')\""
+            ]
+          }
+        ],
+        "drop": []
+      },
+      "decided_at": "2026-11-18T12:02:34Z"
     }
   ]
 }
