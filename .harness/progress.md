@@ -160,3 +160,6 @@ init ok, rebuilt. Dark-mode audit (transitions off) on rsna wrap-up (TOC): 0 lig
 
 ## 2026-11-18 session 25 - F022 (coder)
 Back-to-top: static `button.back-to-top[hidden]` in _layouts/single.html (dated pages), wired in post-ux.js (shows when scrollY>600, click -> scrollTo top, behavior auto if prefers-reduced-motion, focuses h1), styled in _post-ux.scss (fixed 44px round, dark-mode variant, hidden in print). Verified on pi-bench: hidden/display none at top, displayed after 1200px scroll, click gives intermediate scroll positions (1072,559,274) then 0 and hides; scrollWidth ok; verify cmd passes. Reduced-motion path not exercised in browser. Known: none.
+
+## F022 Test report (tester, session 25)
+init ok. pi-bench post at 375px: hidden at scrollY 0 and 500, shown at 700 and 4000 (44x44 fixed, right edge 359, aria-label Back to top). Click from 4000: intermediate positions 3969,3846,3535,...,84 then 0 (smooth), button hides, focus moves to H1. Rapid double click ok; scrollWidth 375. Reduced motion: JS uses auto and CSS sets scroll-behavior auto under prefers-reduced-motion (code-inspected; real OS emulation not run). Note: right after viewport resize first measurements lagged (rAF), re-run was fine. Result: pass.
