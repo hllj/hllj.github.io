@@ -886,3 +886,9 @@ html[data-theme="dark"] :where(a, button, input, select, textarea, summary, [tab
 .toc .toc__menu a.is-active { font-weight: 500; }
 .page__content .toc .toc__menu li a,
 .page__content .toc .toc__menu li a:hover { text-decoration: none; }
+
+/* F047: post footer vertical rhythm (tags -> share -> cards all 24px) */
+.layout--single .page__meta .page__taxonomy { margin-bottom: 0; }
+.layout--single .page .page__inner-wrap .page__share, .layout--single .page__inner-wrap > .page__share { float: none; clear: both; width: 100%; margin: 24px 0 0; }
+.layout--single .post-nav.pagination { clear: both; margin-top: 24px; gap: 16px; }
+.layout--single .page .page__inner-wrap .page__meta { float: none; }

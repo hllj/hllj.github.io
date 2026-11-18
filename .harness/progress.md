@@ -345,3 +345,6 @@ TOC collapse now at all widths: CSS collapse rules moved out of the max-width me
 
 ## F046 Test report (tester, session 55)
 init ok. pi-bench-harness-iterations at 1280: default open (aria-expanded true, menu 540px), real click collapses (aria false, menu display none, localStorage toc-open=0), reload keeps collapsed, re-expand persists open (toc-open=1) across reload. 375 (storage cleared): default collapsed, toggle cycles open/closed/open with aria-expanded and menu height 0/487, scrollWidth==375. Dark (data-theme) toggle color rgb(230,237,243) on #0d1117. Console errors only livereload websocket and unrelated 404s (not from TOC). Screenshot right after dark navigation was unpainted (known capture lag). Result: pass.
+
+## 2026-11-18 session 56 - F047 (coder)
+Post footer rhythm (end of _post-ux.scss): .page__meta and .page__share were floated left (clear both), which swallowed the share/post-nav margins (cards touched share row). Set float:none on both (higher-specificity selectors), tags margin-bottom 0, share margin-top 24px, post-nav margin-top 24px, gap 16px. Measured via iframes at 375/768/1280 x light/dark: tags->share 24, share->card 25 (incl. 1px nav border-top), card gap 16 (side-by-side and stacked), scrollWidth==viewport. Verify cmd passes. Known: none.
