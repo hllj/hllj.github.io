@@ -199,3 +199,6 @@ Tag chips at post bottom (.page__taxonomy-item) restyled to pill chips matching 
 
 ## F027 Test report (tester, session 31)
 init ok. pi-bench post at 1024: 5 tag chips (.page__taxonomy-item), radius 999px, 1px border, 2px 10px padding, hrefs /tags/#x. Click "pi" -> /tags/#pi, anchor exists. /tags/ and /categories/ both 200 with anchors for benchmark, swe-bench, blog. Comma separators hidden; at 375 chips wrap to 2 rows, scrollWidth 375. Note: post footer has only tags (post has no front-matter category; header category chip links /categories/#blog). Result: pass.
+
+## 2026-11-18 session 32 - F028 (coder)
+Share row: added `button.copy-link` to _includes/social-share.html; handler at end of assets/js/post-ux.js copies the canonical URL (link[rel=canonical] href with the existing double slash after host collapsed; fallback execCommand), label flips to "Copied" for 2s plus aria-live status. Share row restyled (pill buttons, 40px, flex wrap, hidden in print) in _post-ux.scss. Verified on pi-bench at 1024 with stubbed clipboard: wrote https://hllj.github.io/blog/pi-bench-harness-iterations/, label Copied then reverted, scrollWidth ok; verify cmd passes. Known: pre-existing canonical tag has `//` (F038 SEO); browser may cache old JS (hard reload).

@@ -313,3 +313,39 @@
   // keyboard focus inside the masthead always reveals it
   mast.addEventListener("focusin", function () { mast.classList.remove("is-hidden"); });
 })();
+
+// Copy link button in the share row
+(function () {
+  "use strict";
+  var btn = document.querySelector(".copy-link");
+  if (!btn) return;
+  var label = btn.querySelector(".copy-link__label"), status = btn.querySelector(".copy-link__status");
+  var orig = label.textContent, timer;
+  function url() {
+    var c = document.querySelector('link[rel="canonical"]');
+    var u = (c && c.href) || btn.getAttribute("data-url") || location.href;
+    return u.replace(/([^:])\/\/+/g, "$1/");
+  }
+  function done() {
+    label.textContent = " Copied";
+    status.textContent = "Link copied";
+    btn.classList.add("is-copied");
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      label.textContent = orig; status.textContent = ""; btn.classList.remove("is-copied");
+    }, 2000);
+  }
+  function fallback(t) {
+    var ta = document.createElement("textarea");
+    ta.value = t; ta.setAttribute("readonly", ""); ta.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); done(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+  btn.addEventListener("click", function () {
+    var t = url();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(t).then(done, function () { fallback(t); });
+    } else fallback(t);
+  });
+})();
