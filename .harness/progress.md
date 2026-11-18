@@ -301,3 +301,6 @@ Footer template already skipped links without url; removed the empty GitLab/Bitb
 
 ## F041 Test report (tester, session 48)
 init ok. Live post footer: links Twitter, Facebook, GitHub, Instagram, Feed (all with hrefs, same row, 40px high), then Jekyll/Minimal Mistakes row, copyright line present; no gitlab/bitbucket on post, /, /blog/, 404. At 320px: no overflow, icons wrap to 2 rows. Result: pass.
+
+## 2026-11-18 session 49 - F042 (coder)
+Review only, no code changes. Posts: CNN-Architecture-Part-2 (long Vietnamese), pi-coding-agent-setup (code), rsna wrap-up (images). In 375/768/1280 x light/dark (iframe + data-theme): documentElement scrollWidth == viewport in all 18 combos, no content element overflowing outside pre/table-wrap, dark bg #0d1117 / text #e6edf3, light text #24292f. Fresh-tab console on all 3 posts: no errors; no broken images. (Console errors seen earlier came from my iframe probe/stale buffer, not fresh loads.) Verify cmd passes. Known: none.
