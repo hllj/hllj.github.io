@@ -77,3 +77,6 @@ Added _includes/anchor-headings.html (Liquid; appends a server-rendered "#" a.he
 
 ## F010 Test report (tester, session 11)
 init ok. pi-bench-harness-iterations: 17 content headings (h1/h2 in body) each have exactly 1 a.header-link ("#", href=#id, aria-label); no duplicates (theme runtime links removed); only id-less h4 is the TOC title (no anchor needed). Clicking a link sets location.hash to the heading's (unicode, percent-encoded) id. Opacity 0 by default, focus -> opacity 1; hover rule and hover:none 0.5 rule present in built CSS. Real mouse hover not reproducible in the pane (:hover never matched), so hover verified via CSS rules only. Other posts: link counts match id'd headings; home page has none. Result: pass.
+
+## 2026-11-18 - F011 (coder, session 12)
+Code blocks restyled in _post-ux.scss: dark theme (#161b22, text #e6edf3, token colors), 8px radius, 16/24px padding, mono stack 14px, language label bar via ::before per language class (bash/json/python/js/ts/yaml/etc; hidden for plaintext). Verified in browser on pi-coding-agent-setup: 4 blocks (json, bash x3) with radius 8px, padding, mono font, labels shown, no overflow. Known issues: languages outside the CSS list get no label.

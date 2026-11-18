@@ -185,3 +185,74 @@ html { scroll-behavior: smooth; }
 .page__content :is(h1, h2, h3, h4):hover .header-link,
 .page__content :is(h1, h2, h3, h4) .header-link:focus { opacity: 1; }
 @media (hover: none) { .page__content :is(h1, h2, h3, h4) .header-link { opacity: .5; } }
+
+/* Code blocks (F011) */
+.page__content div.highlighter-rouge {
+  position: relative;
+  margin: var(--pux-space-5) 0;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  background: #161b22;
+  color: #e6edf3;
+  overflow: hidden;
+
+  .highlight {
+    background: transparent;
+    color: inherit;
+  }
+
+  pre.highlight {
+    margin: 0;
+    padding: var(--pux-space-4) var(--pux-space-5);
+    background: transparent;
+    color: #e6edf3;
+    font-family: var(--pux-font-mono);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: var(--pux-font-mono);
+    color: inherit;
+    background: transparent;
+  }
+
+  /* high-contrast token colors on dark background */
+  .highlight .c, .highlight .c1, .highlight .cm, .highlight .cs { color: #9aa4b2; }
+  .highlight .k, .highlight .kd, .highlight .kn, .highlight .kr, .highlight .kc { color: #ff9bb0; }
+  .highlight .s, .highlight .s1, .highlight .s2, .highlight .sb, .highlight .se, .highlight .sh { color: #a5d6ff; }
+  .highlight .nb, .highlight .nf, .highlight .nx { color: #d2a8ff; }
+  .highlight .m, .highlight .mi, .highlight .mf, .highlight .mh { color: #79c0ff; }
+  .highlight .nt, .highlight .na, .highlight .nc { color: #7ee787; }
+  .highlight .o, .highlight .p, .highlight .w, .highlight .n { color: #e6edf3; }
+  .highlight .err { color: #ffa198; background: transparent; }
+
+  /* language label (only when the language is known) */
+  &[class*="language-"]::before {
+    display: block;
+    padding: var(--pux-space-1) var(--pux-space-5);
+    background: #21262d;
+    border-bottom: 1px solid #30363d;
+    color: #c9d1d9;
+    font-family: var(--pux-font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.8;
+  }
+  &.language-bash::before { content: "bash"; }
+  &.language-json::before { content: "json"; }
+  &.language-python::before { content: "python"; }
+  &.language-javascript::before { content: "javascript"; }
+  &.language-typescript::before { content: "typescript"; }
+  &.language-yaml::before { content: "yaml"; }
+  &.language-html::before { content: "html"; }
+  &.language-css::before { content: "css"; }
+  &.language-ruby::before { content: "ruby"; }
+  &.language-shell::before { content: "shell"; }
+  &.language-sh::before { content: "sh"; }
+  &.language-toml::before { content: "toml"; }
+  &.language-markdown::before { content: "markdown"; }
+  &.language-plaintext::before { display: none; }
+}
