@@ -264,7 +264,7 @@
     },
     {
       "id": "P004",
-      "status": "pending",
+      "status": "approved",
       "by": "planner",
       "reason": "Home Recent posts section does not follow blog index card/chip style",
       "at": "2026-11-18T10:46:03Z",
@@ -332,7 +332,8 @@
         ],
         "amend": [],
         "drop": []
-      }
+      },
+      "decided_at": "2026-11-18T10:46:39Z"
     }
   ]
 }

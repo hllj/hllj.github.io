@@ -1821,6 +1821,80 @@
       "passes": false,
       "status": "todo",
       "source": "proposal:P003"
+    },
+    {
+      "category": "functional",
+      "priority": 55,
+      "description": "Home page Recent posts entries use the same card markup and styles as the /blog/ cards (shared class, one set of CSS), in a clean single-column card list",
+      "steps": [
+        "Coder: refactor the F032 card block at the end of _sass/minimal-mistakes/_post-ux.scss so the card rules apply to a shared selector (e.g. `.layout--posts, .layout--home` scope, or a shared `.post-card` class added in _includes/archive-single.html) instead of only `.layout--posts .entries-grid`; keep dark-mode and print rules covering both scopes. Do not duplicate the CSS block.",
+        "Home (_layouts/home.html) renders entries as a single-column list of cards with a consistent vertical gap (about 1rem to 1.5rem) and no empty gaps; keep entries_layout list on home and do not change /blog/ grid",
+        "Open / and /blog/ at 375, 768 and 1280px in light and dark; with JS compare getBoundingClientRect and getComputedStyle of the first .archive__item on / versus the first card on /blog/: title font-size and text-decoration (none, underline on hover), border-radius 10px, border width/color, background, meta font-size, excerpt font-size and line clamp, padding/margins; the title must no longer be heavy/huge and underlined",
+        "Hover and keyboard focus (focus-within) on a home card show the same lift and shadow as /blog/",
+        "No horizontal overflow (scrollWidth == viewport) at 375/768/1280; /blog/ and single-post related cards look unchanged"
+      ],
+      "verify": [
+        "bash .harness/build.sh",
+        "python3 - <<'PY'\nimport re\nh=open('_site/index.html').read()\nassert 'archive__item' in h\ns=open('_sass/minimal-mistakes/_post-ux.scss').read()\nassert re.search(r'layout--home|post-card',s),'home/shared card selector missing'\nPY"
+      ],
+      "depends_on": [],
+      "tags": [
+        "home",
+        "post-css"
+      ],
+      "id": "F055",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P004"
+    },
+    {
+      "category": "functional",
+      "priority": 56,
+      "description": "Tags on home page post entries render as pill chips (not a bulleted list), wrap neatly and link to /tags/#slug",
+      "steps": [
+        "Coder: make the chip styling (.archive__item-tags li) apply on the home layout too, and in _includes/archive-single.html render each tag as a link `<a href=\"/tags/#slug\">` (use site.baseurl via relative_url and slugify) inside the li, keeping the chips hidden in single-post related cards and print; reuse the existing chip CSS, no duplicate rules",
+        "On / at 375, 768, 1280 px in light and dark: each tag is a pill (computed display of li not list-item, list-style-type none, border-radius 999px, same font-size, padding and colors as /blog/ chips), laid out horizontally with flex-wrap and 6px gap, no bullet markers, no overflow",
+        "Compare computed styles of a home chip and a /blog/ chip: they must match; link text color keeps AA contrast in light and dark; clicking a chip goes to /tags/#slug and the anchor exists on the tags page",
+        "Focus ring is visible when tabbing to a chip link"
+      ],
+      "verify": [
+        "bash .harness/build.sh",
+        "python3 - <<'PY'\nimport re\nh=open('_site/index.html').read()\nm=re.search(r'<ul class=\"archive__item-tags\".*?</ul>',h,re.S)\nassert m,'no tag list on home'\nassert re.search(r'<li><a href=\"[^\"]*/tags/#[^\"]+\"',m.group(0)),'tags not linked to /tags/#slug'\nPY"
+      ],
+      "depends_on": [],
+      "tags": [
+        "home",
+        "post-css",
+        "tags"
+      ],
+      "id": "F056",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P004"
+    },
+    {
+      "category": "functional",
+      "priority": 57,
+      "description": "Home page Recent posts heading, card list spacing and pagination are styled consistently with the blog index",
+      "steps": [
+        "Coder: style the 'Recent posts' heading (.archive__subtitle in home layout) like the blog index section headings (size, weight, spacing, bottom border if used there) and ensure the .pagination block under the list uses the F033 styles with proper top margin; if a 'view all posts' link is absent add a simple link to /blog/ styled as the existing pill/back-to-top link",
+        "Open / at 375, 768, 1280 px in light and dark: heading, cards and pagination are aligned to the same content width with no big empty gaps between entries (measure gap between consecutive card rects, expect equal gap within 1px) and no horizontal overflow",
+        "Compare heading computed font-size/weight/margins and pagination computed styles with /blog/ equivalents; verify page 2 (/page2/) renders cards with chips identically",
+        "No console errors"
+      ],
+      "verify": [
+        "bash .harness/build.sh",
+        "python3 - <<'PY'\nh=open('_site/index.html').read()\nassert 'Recent' in h and 'archive__item' in h\nassert 'class=\"pagination\"' in h or '/blog/' in h\nPY"
+      ],
+      "depends_on": [],
+      "tags": [
+        "home",
+        "post-css"
+      ],
+      "id": "F057",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P004"
     }
   ]
 }
