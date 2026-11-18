@@ -122,3 +122,6 @@ Rebuilt; rsna wrap-up built HTML: 6/6 content imgs loading=lazy, decoding=async,
 
 ## 2026-11-18 session 19 - F017 (coder)
 post-ux.js wraps every .page__content table in div.table-wrap (overflow-x auto, focusable); _post-ux.scss adds zebra rows, bordered sticky thead cells. Verified on pi-bench-harness-iterations at 375px: 5 tables wrapped, page scrollWidth 375; forcing a 700px cell makes wrapper scrollWidth 858 vs client 351 while page stays 375. Verify cmd passes. Known: none.
+
+## F017 Test report (tester, session 19)
+init ok. pi-bench-harness-iterations at 375px: 5 tables, each wrapped once in div.table-wrap (overflow-x auto, tabindex 0); page scrollWidth 375. Probe: forced 900px min-width on a table: wrapper scrollWidth 900 vs client 351, scrollLeft settable to 200, page stays 375. Zebra: even tbody rows rgb(248,249,250), odd transparent; th sticky, 2px bottom and 1px side borders, bg rgb(241,243,245). Source HTML has no wrapper (JS only, no double wrapping on load). Result: pass.
