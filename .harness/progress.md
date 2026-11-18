@@ -223,3 +223,6 @@ Disqus now lazy: comments.html shows heading ("Leave a comment"), intro text and
 
 ## F031 Test report (tester, session 35)
 init.sh builds dev (comments only render in production), so rebuilt with JEKYLL_ENV=production. pi-bench at 1024: section heading "Leave a comment" (h4, 20px, uppercase), intro text, "Load comments" button 45px, 1px top border, 48px margin-top, 24px padding. Before click and after scrolling to page bottom: 0 disqus scripts, 0 disqus resource requests, #disqus_thread empty. Clicked twice rapidly (Disqus append stubbed, real service not hit): exactly one embed.js script added, button -> "Loading comments...", disabled; onload hides button+intro. scrollWidth 1024 and 375. Result: pass. Note: _site left as production build.
+
+## 2026-11-18 session 36 - F032 (coder)
+Blog index cards: archive-single.html now outputs tag chips (.archive__item-tags; hidden in related posts and print); card styling with hover lift/shadow/border, dark variant, appended to _post-ux.scss scoped to `.layout--posts .entries-grid`. Verified at 1024: 19 cards with title, date, read time, excerpt, tags, radius 10px, hover transition, scrollWidth ok; verify cmd passes. Known: none.
