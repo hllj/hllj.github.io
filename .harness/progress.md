@@ -342,3 +342,6 @@ init ok, rebuilt. pi-bench-harness-iterations: 17 TOC links, gap between consecu
 
 ## 2026-11-18 session 55 - F046 (coder)
 TOC collapse now at all widths: CSS collapse rules moved out of the max-width media query in _post-ux.scss, desktop toggle-hide rules removed. post-ux.js: state in localStorage key `toc-open` (try/catch), default open >=1024 / closed <1024 unless saved; only manual toggles persist (link-click auto-close on mobile does not). Verified at 1024 and 375: toggle/aria-expanded/display, persistence across reload, scrollWidth==viewport. Dark mode uses currentColor only. Known: none.
+
+## F046 Test report (tester, session 55)
+init ok. pi-bench-harness-iterations at 1280: default open (aria-expanded true, menu 540px), real click collapses (aria false, menu display none, localStorage toc-open=0), reload keeps collapsed, re-expand persists open (toc-open=1) across reload. 375 (storage cleared): default collapsed, toggle cycles open/closed/open with aria-expanded and menu height 0/487, scrollWidth==375. Dark (data-theme) toggle color rgb(230,237,243) on #0d1117. Console errors only livereload websocket and unrelated 404s (not from TOC). Screenshot right after dark navigation was unpainted (known capture lag). Result: pass.
