@@ -389,3 +389,52 @@ html { scroll-behavior: smooth; }
 .page__content .notice--warning { border-left-color: #b86e00; background: #fff6e5; }
 .page__content .notice--danger  { border-left-color: #b3261e; background: #fdecea; }
 .page__content .notice--success { border-left-color: #2e7d32; background: #eaf6eb; }
+
+/* F019: inline links and footnotes */
+.page__content p a:not(.header-link):not(.footnote):not(.reversefootnote),
+.page__content li a:not(.header-link):not(.reversefootnote),
+.page__content td a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition: color .15s, text-decoration-thickness .15s, background-color .15s;
+  &:hover { text-decoration-thickness: 2px; }
+}
+.page__content a:focus-visible {
+  outline: 3px solid var(--pux-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+  text-decoration-thickness: 2px;
+}
+.page__content a.footnote {
+  display: inline-block;
+  min-width: 24px;
+  min-height: 24px;
+  line-height: 24px;
+  text-align: center;
+  vertical-align: super;
+  line-height: 1;
+  padding: 6px 4px;
+  margin: -6px 0;
+  color: var(--pux-accent);
+  text-decoration: none;
+  font-weight: 600;
+  &:hover { text-decoration: underline; color: var(--pux-accent-hover); }
+}
+.page__content .footnotes {
+  color: var(--pux-text);
+  border-top: 1px solid var(--pux-border);
+  margin-top: var(--pux-space-6);
+  li { padding: 2px 0; }
+  li:target { background: #fff8c5; color: #1f2933; }
+}
+.page__content a.reversefootnote {
+  display: inline-block;
+  min-width: 24px;
+  min-height: 24px;
+  text-align: center;
+  line-height: 24px;
+  color: var(--pux-accent);
+  text-decoration: none;
+  &:hover { text-decoration: underline; }
+}
