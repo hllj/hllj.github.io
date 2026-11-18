@@ -1656,6 +1656,98 @@
       "passes": false,
       "status": "todo",
       "source": "proposal:P001"
+    },
+    {
+      "category": "functional",
+      "priority": 48,
+      "description": "Blog index year pills (/blog/): each pill scrolls to its own year section and lands with the year h2 fully visible below the masthead (scroll-margin-top/scroll-padding-top), also when arriving with #YYYY in the URL, with smooth scrolling and reduced motion honored",
+      "steps": [
+        "Open /blog/ at 375, 768 and 1280px in light and dark",
+        "Check each pill href equals the id of exactly one element (section or h2) and ids are unique; prefer a non-numeric id such as year-2026 if numeric ids cause trouble, updating _layouts/posts.html pills and sections together",
+        "Click each pill and via getBoundingClientRect confirm the year h2 top >= masthead bottom (masthead visible or hidden state noted) and h2 bottom within the viewport",
+        "Load /blog/#2021 and /blog/#2026 directly and confirm the same landing position",
+        "Confirm CSS has html{scroll-behavior:smooth} only inside @media (prefers-reduced-motion:no-preference) and scroll-behavior:auto otherwise (reduced motion cannot be emulated in the pane; inspect the CSS)",
+        "Confirm pill :target section is not hidden under auto-hiding masthead and the focus ring on pills is visible"
+      ],
+      "verify": [
+        "bash .harness/build.sh && python3 -c \"import re,sys;h=open('_site/blog/index.html').read();hs=re.findall(r'class=\\\"taxonomy__index\\\".*?</ul>',h,re.S)[0];hr=re.findall(r'href=\\\"#([^\\\"]+)\\\"',hs);assert len(hr)>=4,hr;[sys.exit('missing id '+x) for x in hr if h.count('id=\\\"'+x+'\\\"')!=1]\"",
+        "grep -rq 'scroll-margin-top' _sass/minimal-mistakes/_post-ux.scss"
+      ],
+      "depends_on": [],
+      "tags": [
+        "blog-index"
+      ],
+      "id": "F048",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P002"
+    },
+    {
+      "category": "functional",
+      "priority": 49,
+      "description": "Blog index year sections: post cards no longer overlap the horizontal rule under the year heading (single rule, clear gap between rule and first card row) in light and dark",
+      "steps": [
+        "Open /blog/ at 375, 768 and 1280px in light and dark",
+        "For each year section compare getBoundingClientRect: h2 bottom (incl. its border) <= first .archive__item top, gap >= 12px",
+        "Confirm only one rule appears between heading and cards (no second rule at card top; check border/hr/::before/::after on .archive__subtitle, .entries-grid, .archive__item) and take a screenshot to verify visually",
+        "Check the 2026 section especially (first section)"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'archive__subtitle' _site/blog/index.html"
+      ],
+      "depends_on": [],
+      "tags": [
+        "blog-index"
+      ],
+      "id": "F049",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P002"
+    },
+    {
+      "category": "functional",
+      "priority": 50,
+      "description": "Blog index card grid fills the available width at wide viewports: no empty rightmost column; columns are responsive (1 at 375, 2 at 768, 3 at 1280) and the grid is as wide as the page content area",
+      "steps": [
+        "Open /blog/ at 375, 768 and 1280px (and 1600px) in light and dark",
+        "Inspect getComputedStyle(.entries-grid .grid__wrapper or equivalent).gridTemplateColumns and confirm the number of columns and that the last column right edge is within ~16px of the content container's right edge (no empty third of the row, no float/width:33% leftovers from .archive__item or .list__item)",
+        "Confirm the year with one or two posts (2022, 2023) lays out left aligned without stretching a single card to absurd width",
+        "Confirm documentElement scrollWidth == viewport"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'entries-grid' _site/blog/index.html"
+      ],
+      "depends_on": [],
+      "tags": [
+        "blog-index"
+      ],
+      "id": "F050",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P002"
+    },
+    {
+      "category": "functional",
+      "priority": 51,
+      "description": "Blog index 'Back to top' link under each year section is a properly sized control: label fits inside its box (no text overflowing a circle, arrow not clipped), stays readable in light and dark and does not collide with cards. Note: the floating .back-to-top on post pages (single.html) is a separate element and must keep working",
+      "steps": [
+        "Open /blog/ at 375, 768 and 1280px in light and dark, scroll to the end of a year section",
+        "Via getBoundingClientRect/scrollWidth vs clientWidth confirm the .back-to-top text and arrow are fully inside the element box (scrollWidth <= clientWidth) with min 40px tap target",
+        "Verify the selector for the archive link in _layouts/posts.html does not inherit the circular floating-button styles from _post-ux.scss (.back-to-top at ~line 443) or give it a distinct class like .archive__back-top",
+        "Open a post page and confirm the floating circular button there is unchanged and still appears after scrolling",
+        "Screenshot check"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'href=\"#page-title\"' _site/blog/index.html"
+      ],
+      "depends_on": [],
+      "tags": [
+        "blog-index"
+      ],
+      "id": "F051",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P002"
     }
   ]
 }
