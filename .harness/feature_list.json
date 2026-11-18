@@ -2185,8 +2185,16 @@
         "post-css"
       ],
       "passes": false,
-      "status": "todo",
-      "source": "proposal:P008"
+      "status": "claimed",
+      "source": "proposal:P008",
+      "updated_at": "2026-11-18T12:54:59Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T12:54:59Z",
+          "event": "claim",
+          "note": ""
+        }
+      ]
     },
     {
       "category": "functional",

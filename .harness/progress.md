@@ -189,3 +189,6 @@ index.html intro imgs now use `{{ '/images/..' | relative_url }}` (were relative
 
 ## F058 Test report (tester, session 69)
 init ok. curl on /, /page2/, /page3/, /page4/: every img src is root-relative (/images/...) and returns 200 (Tet Hue photo, home_page_1, avatar); no relative src/href left in page content; /page5/ is 404 (does not exist). index.html uses relative_url for both intro images. Did not check naturalWidth in a browser (HTTP 200 + valid src only). Result: pass.
+
+## Session 70 - F059 (coder)
+TOC restyled as content-sized inline-flex button (fit-content, gap max(.6rem,10px)), float/sticky rule and 60vh scroll removed, default collapsed unless saved. Measured on rsna post: button 103px wide, menu overflow visible, scrollHeight==clientHeight, aria-expanded toggles. Known: browser pane viewport was ~0 wide so 375/768/1280 and dark not measured; styles are width-independent.
