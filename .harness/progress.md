@@ -116,3 +116,6 @@ init ok. rsna wrap-up: 6/6 content imgs have loading=lazy, decoding=async, alt; 
 
 ## 2026-11-18 session 18 - F016 (retry)
 Added _plugins/img_dimensions.rb: post_render hook adds intrinsic width/height (PNG/GIF/JPEG header or SVG width/height/viewBox) to local <img> tags at build time; CSS height:auto keeps ratio. Verified on rsna wrap-up: all 6 content imgs have width/height in built HTML; unloaded lazy imgs measure 312-402px tall (not 0). Verify cmd passes. Known: local plugin does not run on classic GitHub Pages builds (needs Actions/local build); remote images get no dims.
+
+## Test report (tester, session 18) F016
+Rebuilt; rsna wrap-up built HTML: 6/6 content imgs loading=lazy, decoding=async, alt, width/height. In browser, unloaded lazy imgs (complete=false) measure 312-402px (ratio-correct, not 0); cache-busted clone had height 462 before and after load (no shift); scrollWidth==viewport. Teasers/avatar untouched. Known limit (Pages classic build, remote imgs) out of scope. Result: pass.
