@@ -240,3 +240,18 @@
     if (img.complete) reserve(); else img.addEventListener("load", reserve, { once: true });
   });
 })();
+
+// Tables: wrap in a horizontally scrollable container
+(function () {
+  "use strict";
+  document.querySelectorAll(".page__content table").forEach(function (t) {
+    if (t.parentNode && t.parentNode.classList.contains("table-wrap")) return;
+    var w = document.createElement("div");
+    w.className = "table-wrap";
+    w.setAttribute("tabindex", "0");
+    w.setAttribute("role", "region");
+    w.setAttribute("aria-label", "Scrollable table");
+    t.parentNode.insertBefore(w, t);
+    w.appendChild(t);
+  });
+})();

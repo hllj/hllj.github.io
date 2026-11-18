@@ -119,3 +119,6 @@ Added _plugins/img_dimensions.rb: post_render hook adds intrinsic width/height (
 
 ## Test report (tester, session 18) F016
 Rebuilt; rsna wrap-up built HTML: 6/6 content imgs loading=lazy, decoding=async, alt, width/height. In browser, unloaded lazy imgs (complete=false) measure 312-402px (ratio-correct, not 0); cache-busted clone had height 462 before and after load (no shift); scrollWidth==viewport. Teasers/avatar untouched. Known limit (Pages classic build, remote imgs) out of scope. Result: pass.
+
+## 2026-11-18 session 19 - F017 (coder)
+post-ux.js wraps every .page__content table in div.table-wrap (overflow-x auto, focusable); _post-ux.scss adds zebra rows, bordered sticky thead cells. Verified on pi-bench-harness-iterations at 375px: 5 tables wrapped, page scrollWidth 375; forcing a 700px cell makes wrapper scrollWidth 858 vs client 351 while page stays 375. Verify cmd passes. Known: none.
