@@ -198,3 +198,6 @@ init ok. Iframe measurements (data-theme set) at 375/768/1280 x light/dark on rs
 
 ## Session 71 - F060 (coder)
 _post-ux.scss: text measure cap now `min(100%, 60ch)` (was 50ch), removed the 230px floated-TOC calc rule, and added `.layout--single .page/.page__related { padding-right: 0 }` at large breakpoints so non-wide posts (how-i-setup-this-blog) match wide ones. Headless Chrome iframe: p width 720px at 1280 on both posts (was ~402), 562 at 768 (cap), 351 at 375; scrollWidth==viewport; ~65-70 chars/line. Known: dark not re-measured (no colour changes).
+
+## F060 Test report (tester, session 71)
+init ok. Iframe measurements (data-theme set) at 375/768/1280 x light/dark on pi-coding-agent-setup, pi-bench-harness-iterations, rsna-knee wrap-up (wide) and how-i-setup-this-blog (non-wide): p/ul/ol/blockquote widths identical across posts: 351/563/724px (was ~402 at 1280); ~72 chars/line at 1280 (under 80); no pre/table/img/figure extends past .page; scrollWidth==viewport everywhere. Result: pass.

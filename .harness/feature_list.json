@@ -2222,14 +2222,19 @@
         "post-css",
         "layout"
       ],
-      "passes": false,
-      "status": "claimed",
+      "passes": true,
+      "status": "passing",
       "source": "proposal:P008",
-      "updated_at": "2026-11-18T12:57:30Z",
+      "updated_at": "2026-11-18T12:58:17Z",
       "attempts": [
         {
           "at": "2026-11-18T12:57:30Z",
           "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T12:58:17Z",
+          "event": "pass",
           "note": ""
         }
       ]
