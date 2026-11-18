@@ -1860,9 +1860,22 @@
         "blog-index"
       ],
       "id": "F051",
-      "passes": false,
-      "status": "todo",
-      "source": "proposal:P002"
+      "passes": true,
+      "status": "passing",
+      "source": "proposal:P002",
+      "updated_at": "2026-11-18T11:51:34Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T11:50:48Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T11:51:34Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "category": "functional",
