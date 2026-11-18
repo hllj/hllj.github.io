@@ -158,6 +158,27 @@ html.masthead-autohide.masthead-hidden .page__content > .sidebar__right.sticky {
 }
 @media print { .page__content > .sidebar__right.sticky { position: static; } }
 
+/* F063: on desktop the TOC button lives in the left author sidebar, below the author card */
+@media (min-width: 1024px) {
+  .sidebar.sidebar--has-toc { overflow: visible; max-height: none; }
+  .sidebar > .sidebar__right.sticky {
+    position: sticky;
+    right: auto; left: auto;
+    top: calc(var(--pux-mast-h, 60px) + 8px);
+    z-index: 15;
+    float: none;
+    width: fit-content; max-width: 100%;
+    margin: 0.5em 0 0;
+    padding: 0; background: transparent; border: 0; box-shadow: none;
+    transition: top 0.25s ease;
+  }
+  html:not(.masthead-autohide) .sidebar > .sidebar__right.sticky { top: 8px; }
+  html.masthead-autohide.masthead-hidden .sidebar > .sidebar__right.sticky { top: 8px; }
+}
+@media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
+  .sidebar > .sidebar__right.sticky { transition: none; }
+}
+
 /* Active TOC entry (scroll-spy) */
 .toc .toc__menu a { border-left: 3px solid transparent; transition: background-color .15s, color .15s, border-color .15s; }
 .toc .toc__menu a.is-active {

@@ -69,6 +69,33 @@
   "use strict";
   var toc = document.querySelector(".page__content .toc");
   if (!toc) return;
+  // F063: on desktop (>= 1024px) move the TOC wrapper (same node) into the left author sidebar
+  var wrap = toc.closest(".sidebar__right");
+  var side = document.querySelector("#main > .sidebar");
+  var article = document.querySelector("#main > article.page");
+  var content = document.querySelector(".page__content");
+  if (wrap && side && article && content && window.matchMedia) {
+    var mq = window.matchMedia("(min-width: 1024px)");
+    var sync = function () { side.style.minHeight = article.offsetHeight + "px"; };
+    var ro = window.ResizeObserver ? new ResizeObserver(sync) : null;
+    var place = function () {
+      if (mq.matches) {
+        if (wrap.parentNode !== side) side.appendChild(wrap);
+        side.classList.add("sidebar--has-toc");
+        sync();
+        if (ro) ro.observe(article);
+        window.addEventListener("resize", sync);
+      } else {
+        if (wrap.parentNode !== content) content.insertBefore(wrap, content.firstChild);
+        side.classList.remove("sidebar--has-toc");
+        side.style.minHeight = "";
+        if (ro) ro.disconnect();
+        window.removeEventListener("resize", sync);
+      }
+    };
+    place();
+    if (mq.addEventListener) mq.addEventListener("change", place); else if (mq.addListener) mq.addListener(place);
+  }
   var title = toc.querySelector(".nav__title");
   var menu = toc.querySelector(".toc__menu");
   if (!title || !menu) return;
