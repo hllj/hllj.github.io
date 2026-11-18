@@ -92,3 +92,6 @@ init ok, rebuilt. pi-coding-agent-setup: 4 .highlighter-rouge blocks, exactly 1 
 
 ## 2026-11-18 - F013 (coder, session 14)
 Code blocks already scrolled internally (pre overflow-x auto from F011). Added to _post-ux.scss: inline code `overflow-wrap:anywhere` + `pre{max-width:100%}`. Verified at 375px on pi-coding-agent-setup: documentElement scrollWidth 375; 3 of 4 pre blocks have scrollWidth > clientWidth (scroll internally) and none exceed viewport; an injected 300-char inline code wraps (right edge 361px). Known issues: none.
+
+## F013 Test report (tester, session 14)
+init ok. 375px on pi-coding-agent-setup, pi-bench-harness-iterations, how-i-setup-this-blog: documentElement scrollWidth 375 on all, no element (outside pre) extends past viewport; pre overflow-x auto, long ones scroll internally (scrollWidth 447/441/415 > clientWidth 349). Probes: injected 400-char and long-path inline code (wrap, right edge 361px), 3800px-wide pre with CJK (scrollLeft works, page width stays 375), 300-char inline code in a table (right 363). Result: pass.
