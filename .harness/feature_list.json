@@ -2185,10 +2185,10 @@
         "toc",
         "post-css"
       ],
-      "passes": false,
-      "status": "claimed",
+      "passes": true,
+      "status": "passing",
       "source": "proposal:P008",
-      "updated_at": "2026-11-18T13:11:34Z",
+      "updated_at": "2026-11-18T13:12:21Z",
       "attempts": [
         {
           "at": "2026-11-18T12:54:59Z",
@@ -2213,6 +2213,11 @@
         {
           "at": "2026-11-18T13:11:34Z",
           "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T13:12:21Z",
+          "event": "pass",
           "note": ""
         }
       ],

@@ -210,3 +210,6 @@ init ok. Iframe measurements (data-theme set) at 375/768/1280/1900 x light/dark 
 
 ## F059 rework 2 (session 73)
 - Dark rule `.toc{background:#161b22}` in _dark.scss overrode transparency; changed to transparent, open menu gets own dark bg. Verified compiled CSS + verify cmds; no browser run.
+
+## F059 rework 2 Test report (tester, session 73)
+init ok. Iframe measurements (data-theme set) at 375/768/1280/1900 x light/dark on rsna, pi-bench, how-i-setup posts, collapsed and open: nav.toc border 0, shadow none, bg rgba(0,0,0,0) in BOTH themes and both states, static/no float, aside wrapper transparent/no border/shadow; collapsed nav width == button width (143/171/187); open menu overflow visible, scrollHeight==clientHeight, aria-expanded toggles, no horizontal overflow. (Open state persists via localStorage so dark runs started open; both states measured anyway.) Author sidebar verify passes. Not exercised: real key events, scroll-spy, screenshots. Result: pass.
