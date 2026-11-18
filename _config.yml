@@ -100,9 +100,6 @@ author:
   location         : "Ho Chi Minh"
   email            : "vanhop3499@gmail.com"
   links:
-    - label: "Email"
-      icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:vanhop3499@gmail.com"
     - label: "Website"
       icon: "fas fa-fw fa-link"
       # url: "https://your-website.com"
