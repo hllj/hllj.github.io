@@ -438,7 +438,7 @@
     },
     {
       "id": "P008",
-      "status": "pending",
+      "status": "approved",
       "by": "planner",
       "reason": "Restyle TOC as content-sized collapsible button with no inner scroll, and widen post text for all posts",
       "at": "2026-11-18T12:51:38Z",
@@ -489,7 +489,8 @@
         ],
         "amend": [],
         "drop": []
-      }
+      },
+      "decided_at": "2026-11-18T12:53:11Z"
     }
   ]
 }

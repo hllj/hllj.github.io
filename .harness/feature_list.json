@@ -2149,6 +2149,56 @@
       "passes": false,
       "status": "todo",
       "source": "proposal:P007"
+    },
+    {
+      "category": "functional",
+      "priority": 59,
+      "id": "F059",
+      "description": "Post 'On this page' TOC becomes a compact button sized to its content (not a full-width/floated 230px box): the icon and label have a clear gap (at least 8px), clicking toggles the full table of contents open/closed with no inner vertical scroll (all entries visible, page scrolls instead), on every post that shows a TOC, in light and dark",
+      "steps": [
+        "Coder: in _layouts/single.html keep the aside/nav.toc markup but restyle in _sass/minimal-mistakes/_post-ux.scss and assets/js/post-ux.js: the .toc header/.nav__title becomes an inline-flex button-like control with width fit-content, gap >= .6rem between .fa-list icon and the 'On this page' text, and the chevron; remove the desktop float/sticky 230px column rule (.wide .page__content > .sidebar__right.sticky) so the TOC sits above the content as a button; default state collapsed at all widths unless saved in localStorage (existing toc-open key, try/catch guarded)",
+        "Expanded state: .toc__menu shows ALL entries; remove max-height:60vh and overflow-y:auto (no internal scrollbar, scrollHeight == clientHeight); the expanded list may be a block beneath the button with the same indentation/active-link styling as F045",
+        "Keep accessibility: toggle has aria-expanded, is keyboard operable (Enter/Space), focus ring visible, tap target >= 40px; scroll-spy and click-to-jump still work (on mobile clicking an entry still collapses it)",
+        "Open /blog/pi-coding-agent-setup/ and /blog/rsna-knee-abnormality-detection-wrap-up/ at 375, 768, 1280 px in light and dark: button width is content-sized (measure rect width well below the column width), icon-to-text gap >= 8px, click shows every heading, getComputedStyle(.toc__menu).overflowY is not auto/scroll and no max-height, no horizontal overflow",
+        "Check a post without classes: wide (/blog/how-i-setup-this-blog/) and a post with a long TOC render the same"
+      ],
+      "verify": [
+        "bash .harness/build.sh",
+        "python3 -c \"import sys; s=open('_sass/minimal-mistakes/_post-ux.scss').read(); ('60vh' not in s) or sys.exit('60vh max-height still present'); ('fit-content' in s or 'inline-flex' in s) or sys.exit('no content-sized toc control')\""
+      ],
+      "depends_on": [],
+      "tags": [
+        "toc",
+        "post-css"
+      ],
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P008"
+    },
+    {
+      "category": "functional",
+      "priority": 60,
+      "id": "F060",
+      "description": "Post body text column is wider: the 50ch measure cap and the space reserved beside the old floated TOC are removed so paragraphs, lists and blockquotes use the available content width, consistently on every post (including posts without classes: wide)",
+      "steps": [
+        "Coder: in _sass/minimal-mistakes/_post-ux.scss raise or remove the 'max-width: 50ch' on .page__content > p, ul, ol, blockquote, headings, dl (e.g. use max-width: min(100%, 72ch) or none) and remove the 'Beside the floated TOC' calc(100% - 230px - 2rem) rule since the TOC is no longer floated; ensure the rule applies whether or not the post has classes: wide (compare _posts/blog/2021-04-17-how-i-setup-this-blog.md, which lacks it, with a wide post); do not edit individual post files",
+        "Open /blog/pi-coding-agent-setup/ and /blog/how-i-setup-this-blog/ at 1280 px: measure .page__content > p rect width and confirm it is clearly wider than before (was about 402px) and both posts have the same text width; at 768 and 375 the text fills the content area",
+        "Confirm tables, code blocks and images are not wider than the text container's page, scrollWidth == viewport at 375/768/1280, light and dark; line length stays readable (not more than about 80 characters per line at 1280)"
+      ],
+      "verify": [
+        "bash .harness/build.sh",
+        "python3 -c \"import sys; s=open('_sass/minimal-mistakes/_post-ux.scss').read(); ('max-width: 50ch' not in s) or sys.exit('50ch cap still present'); ('230px - 2rem' not in s) or sys.exit('TOC-reserved width rule still present')\""
+      ],
+      "depends_on": [
+        "F058"
+      ],
+      "tags": [
+        "post-css",
+        "layout"
+      ],
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P008"
     }
   ]
 }
