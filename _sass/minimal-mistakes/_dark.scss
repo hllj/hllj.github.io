@@ -32,7 +32,17 @@ html[data-theme="dark"] {
   a { color: #7aa7ff; }
   a:hover { color: #a9c5ff; }
   .masthead a, .page__footer a, .archive__item-title a { color: inherit; }
-  .page__footer { color: #fff; }
+  .page__footer { background-color: #010409; color: #9aa5b1; border-top: 1px solid #30363d; }
+  .page__footer-copyright, .page__footer-copyright a, .page__footer-follow li, .page__footer a { color: #9aa5b1; }
+  .page__footer a:hover { color: #e6edf3; }
+  .btn, .btn:visited, .btn:hover, .btn span { color: #fff; }
+  .btn--twitter { background-color: #1a6fa8; }
+  .btn--inverse,.btn--light-outline { color: #e6edf3; }
+  .page__hero--overlay .page__title, .page__hero--overlay .page__lead, .page__hero--overlay a,
+  .page__hero--overlay .page__meta, .page__hero--overlay .page__meta a, .page__hero--overlay time,
+  .page__hero--overlay .page__meta-readtime, .page__hero--overlay .page__chip { color: #fff; }
+  .page__share, .page__share-title { color: #e6edf3; }
+  .pagination--pager { background: #161b22; border-color: #30363d; color: #e6edf3; }
   hr, .page__content table, .page__content th, .page__content td, .page__related { border-color: #30363d; }
   .sidebar, .author__content, .author__name, .author__bio { color: #e6edf3; }
   .archive__item, .archive__item-teaser { background: transparent; }
@@ -43,6 +53,7 @@ html[data-theme="dark"] {
   .toc__menu a { color: #9aa5b1; }
 
   .page__content {
+    table thead { background: #21262d; }
     .table-wrap table {
       thead th { background: #21262d; color: #e6edf3; border-color: #30363d; }
       tbody td { border-color: #30363d; color: #e6edf3; }

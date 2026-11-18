@@ -144,3 +144,6 @@ Dark mode: head inline script sets html[data-theme] from localStorage 'theme' or
 
 ## F020 Test report (tester, session 22)
 init ok. pi-bench post: cleared storage, light by default, masthead .theme-toggle click -> data-theme dark, body bg rgb(13,17,23), localStorage dark, aria-pressed true. Reload: stays dark, text rgb(230,237,243), no contrast problems; theme script is in head before body (no flash by construction; paint not captured). Emulated OS dark with empty storage: starts dark. Probe: toggle to light under OS dark, reload -> stays light (stored choice beats OS). Result: pass.
+
+## 2026-11-18 session 23 - F021 (coder)
+Extended _dark.scss: dark footer (bg #010409, muted links), hero overlay text forced white, share buttons keep white text (twitter darkened for contrast), pager, thead bg. Verified with a JS audit on pi-coding-agent-setup in dark (transitions disabled): 0 light backgrounds, 0 text elements under 4.5:1, incl. code, tables, blockquotes, TOC, related, footer, share. Note: background pane tabs do not run CSS transitions, so computed colors lag; disable transitions when auditing. Known: none.
