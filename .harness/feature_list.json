@@ -1936,8 +1936,21 @@
       ],
       "id": "F053",
       "passes": false,
-      "status": "todo",
-      "source": "proposal:P003"
+      "status": "claimed",
+      "source": "proposal:P003",
+      "updated_at": "2026-11-18T11:56:38Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T11:56:38Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T11:56:38Z",
+          "event": "claim",
+          "note": ""
+        }
+      ]
     },
     {
       "category": "bug",
