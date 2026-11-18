@@ -262,3 +262,6 @@ No code change: the F059 rework 2 commit already implements F062 (open .toc__men
 
 ## F062 Test report (tester, session 81)
 init ok, tests/toc_css_check.py passes. Iframes on pi-bench at 375/768/1280/1900 x light/dark: open menu absolute, top 4-6px below nav, left == nav left, overflow-y auto, max-height 70vh (480/490px at 700 high), scrollHeight>clientHeight, scrollTop settable, opaque bg (#fff / rgb(22,27,34)) + 1px border, z 20/30, page scrollHeight and first p top unchanged, no horizontal overflow, aria true on open; Escape closes + focus returns to button; outside click and entry click close. Sticky state (scroll 1500, 375/768/1280): panel bottom <= viewport. Note: at scroll 0 the button sits near/below the fold so the panel extends below the viewport (static 70vh, page scroll reveals it); judged acceptable. Not exercised: real Enter/Space key events (native button). Result: pass.
+
+## Session 82 - F064 (coder)
+No code change: the F059 rework 2 commit already replaced the right-opening rule (sidebar rule is now top:100%; left:0; z 30; max-width min(28rem,100vw-2rem); base max-height min(70vh,40rem), overflow-y auto, opaque bg+border). No `calc(100% +` rule remains. Re-ran all 4 verify cmds (build, toc_css_check, Escape grep, sidebar git diff): pass. Claimed. Not re-measured in browser this session (tester covered below-button panel in session 80).
