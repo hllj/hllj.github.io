@@ -336,3 +336,6 @@ init ok. Browser at 1280 and 375 on pi-bench-harness-iterations: desktop toggle 
 ## 2026-11-18 F045 retry
 - Fix: `.toc .toc__menu ul { margin: 0; }` in _post-ux.scss (nested ul had 18px margin-bottom causing 58px gap).
 - Verified in browser: for every TOC link, top-to-next-top delta equals its own height (zero extra gap; 40px single-line, 49px two-line wrap) on pi-bench-harness-iterations (nested, 17 links) at 1280 light and 375 dark, and rsna-knee-abnormality-detection-wrap-up (33 links) at 375 dark and 1280 light. scrollWidth == viewport.
+
+## F045 Test report (tester, session 54)
+init ok, rebuilt. pi-bench-harness-iterations: 17 TOC links, gap between consecutive links 0 everywhere (even spacing, nested group gap fixed) at 1024 light; weights 500 active/400 others, underline none, padding 9/21px; desktop toggle hidden. 375 dark: chevron toggle flex 40x40 transparent bg, expands, gaps uniform, scrollWidth==375. Active highlight tracks real wheel scroll (Tong quan -> Viec tiep theo), exactly one active. Result: pass.

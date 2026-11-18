@@ -1632,10 +1632,10 @@
         "toc"
       ],
       "id": "F045",
-      "passes": false,
-      "status": "claimed",
+      "passes": true,
+      "status": "passing",
       "source": "proposal:P001",
-      "updated_at": "2026-11-18T10:54:16Z",
+      "updated_at": "2026-11-18T10:55:16Z",
       "attempts": [
         {
           "at": "2026-11-18T10:52:17Z",
@@ -1650,6 +1650,11 @@
         {
           "at": "2026-11-18T10:54:16Z",
           "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:55:16Z",
+          "event": "pass",
           "note": ""
         }
       ],
