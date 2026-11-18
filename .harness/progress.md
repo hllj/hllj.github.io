@@ -150,3 +150,7 @@ Extended _dark.scss: dark footer (bg #010409, muted links), hero overlay text fo
 
 ## F021 Test report (tester, session 23)
 init ok, rebuilt. Dark-mode JS audit (transitions off) on pi-coding-agent-setup: 0 light bgs, 0 text <4.5:1 (no TOC on that post). On rsna wrap-up (TOC, 6 imgs, 13 tables, sidebar, related): 0 light bgs, images brightness(.92), scrollWidth ok, but TOC title ".toc .nav__title" contrast 3.92:1 (230,237,243 on 31,111,235). Result: FAIL. Screenshots blank in pane (known); DOM measurement used.
+
+## 2026-11-18 F021 (retry)
+- Fixed TOC header contrast in dark mode: .toc .nav__title bg #1f6feb -> #1a4f9c (text #e6edf3, 6.7:1). Build OK, compiled CSS contains new value.
+- Lesson: audit a post WITH a TOC (rsna-knee-abnormality-detection-wrap-up) too.
