@@ -169,3 +169,6 @@ Masthead auto-hide on post pages: post-ux.js adds html.masthead-autohide (only w
 
 ## F023 Test report (tester, session 26)
 init ok. rsna wrap-up at 1000px: real wheel scroll down 5 ticks -> masthead.is-hidden, top -73; wheel up -> class removed, sliding back (top ~0). Programmatic instant scrolls did not trigger (rAF in background pane), wheel did. TOC anchors via hash: heading top 77px with masthead bottom 73 (clear); when arriving while hidden heading at 20px (masthead hidden, fine). Home page: no masthead-autohide class, position relative (post-only). Mobile 375 pi-bench: hides on wheel down, returns on wheel up, scrollWidth 375. Result: pass.
+
+## 2026-11-18 session 27 - F024 (coder)
+Breadcrumb `nav.post-breadcrumbs` (Blog / truncated title) added at top of _layouts/single.html for dated pages, placed BEFORE the hero include since the hero overlay holds the title on these posts (inside inner-wrap it rendered below the hero). Deliberately not using class `breadcrumbs` (theme CSS pushes it down); styles in _post-ux.scss (dark variant, hidden in print). Verified on pi-bench at 375px: link href /blog/, nav bottom 99 above title top 135, scrollWidth 375; verify cmd passes. Known: none.

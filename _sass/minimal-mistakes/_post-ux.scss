@@ -482,3 +482,12 @@ html[data-theme="dark"].masthead-autohide .masthead { background-color: #0d1117;
   html.masthead-autohide .masthead { transition: none; }
 }
 @media print { html.masthead-autohide .masthead { position: static; transform: none; } }
+
+/* Post breadcrumb above title */
+.post-breadcrumbs { margin: 0 auto; padding: 0.5rem 1rem 0; max-width: 1280px; box-sizing: border-box; font-size: 0.8rem; }
+.post-breadcrumbs ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.25rem; }
+.post-breadcrumbs li { display: inline; min-width: 0; overflow-wrap: anywhere; }
+.post-breadcrumbs li + li::before { content: "/"; margin-right: 0.25rem; opacity: 0.6; }
+.post-breadcrumbs a { display: inline-block; padding: 0.25rem 0; min-height: 24px; }
+html[data-theme="dark"] .post-breadcrumbs { color: #9ba7b4; }
+@media print { .post-breadcrumbs { display: none; } }
