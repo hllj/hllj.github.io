@@ -369,3 +369,6 @@ Blog index grid: .entries-grid used floated .grid__item with span() widths (3 of
 
 ## F050 Test report (tester, session 59)
 init ok. Iframes at 375/768/1280/1600 x light/dark, all 5 year sections: .entries-grid columns 1/2/3/3, last-row-agnostic check: rightmost card right edge equals year heading rule right edge (gap 0) for every section with >=2 cards; cards left-aligned (left offset 0); single-card 2022 stays normal width (351/363/303px) left aligned; scrollWidth==viewport everywhere. Content area caps at 1280 so 1600 matches. Real headless Chrome screenshot at 1280: 3 cards flush to rule, no empty third. Result: pass.
+
+## 2026-11-18 session 60 - F051 (coder)
+Archive "Back to top" links in posts/tags/categories layouts used class .back-to-top, so they inherited the floating 44px circle (fixed, overflow). Renamed to .archive__back-top and styled as a 44px-high right-aligned text link (end of _post-ux.scss, dark and print variants). The floating button in single.html keeps .back-to-top, unchanged (still 1 on post pages). Measured iframes 375/768/1280 x light/dark: 5 links, scrollWidth<=clientWidth, height 44, position static, page scrollWidth==viewport; real headless Chrome screenshot at 1280 shows the link right-aligned under the card row. Verify cmd passes. Known: none.
