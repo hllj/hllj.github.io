@@ -2074,14 +2074,19 @@
         "tags"
       ],
       "id": "F056",
-      "passes": false,
-      "status": "claimed",
+      "passes": true,
+      "status": "passing",
       "source": "proposal:P004",
-      "updated_at": "2026-11-18T12:07:16Z",
+      "updated_at": "2026-11-18T12:08:23Z",
       "attempts": [
         {
           "at": "2026-11-18T12:07:16Z",
           "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T12:08:23Z",
+          "event": "pass",
           "note": ""
         }
       ]
