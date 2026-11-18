@@ -378,3 +378,6 @@ init ok. /blog/ iframes 375/768/1280 x light/dark: 5 .archive__back-top links, h
 
 ## 2026-11-18 session 60 - curator
 Refreshed learnings.md (dark mode done, headless Chrome visual checks, claim/tester gotchas, backlog F052-F057).
+
+## 2026-11-18 session 61 - F052 (coder)
+Compact author sidebar block in _post-ux.scss (and the author button min-size rule) no longer scoped to .layout--single; now targets .sidebar on all layouts, print rule generic. Iframe measurement at 1280/768/375 x light/dark on post, / and /categories/ (blog index and /about/ have no author sidebar / no about page): avatar 72px (36px <1024), same name/bio font sizes, same link row offsets (45px pitch, 2 columns), scrollWidth==viewport. Headless Chrome screenshot of / shows the compact layout like the post. Known: 45px row pitch comes from the existing 44px tap-target rule (.sidebar a), same on every page; duplicate Email is F054.
