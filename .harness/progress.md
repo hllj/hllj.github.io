@@ -56,3 +56,6 @@ init ok, rebuilt. Browser on pi-bench-harness-iterations: scroll 0/50/75/100% gi
 
 ## 2026-11-18 - F007 (coder, session 8)
 single.html: TOC auto-enabled for posts (page.date) with >=3 h2/h3 unless `toc: false`; label fixed to "On this page". _post-ux.scss: html smooth scroll (respects reduced motion), heading scroll-margin-top 4.5rem, and sticky right float TOC for `.wide` posts (MM disables the right sidebar there). Verified at 1280px on pi-bench-harness-iterations: 17 entries, aside position sticky, stays at top 27px after scrolling 2500px, hash target lands at 81px (masthead is not sticky). Smooth animation not observable in the hidden pane. Known issues: pi-coding-agent-setup has `toc: false` front matter so no TOC (explicit opt-out).
+
+## F007 Test report (tester, session 8)
+init ok, rebuilt. Built HTML: toc present on how-i-setup-this-blog, pi-bench-harness-iterations, rsna wrap-up; absent only on pi-coding-agent-setup (explicit toc:false opt-out, accepted). Browser 1280px on pi-bench-harness-iterations: label "On this page", 17 entries, aside position sticky, top 27px at scrollY 2500 and 5000 (and 7069), no horizontal overflow; clicking entry #9 lands heading in view (scroll-margin 81px, html scroll-behavior smooth). Animation itself not observable; screenshot pane was blank so JS measurements used. Result: pass.
