@@ -2186,9 +2186,9 @@
         "post-css"
       ],
       "passes": false,
-      "status": "claimed",
+      "status": "failing",
       "source": "proposal:P008",
-      "updated_at": "2026-11-18T13:09:58Z",
+      "updated_at": "2026-11-18T13:11:07Z",
       "attempts": [
         {
           "at": "2026-11-18T12:54:59Z",
@@ -2204,8 +2204,14 @@
           "at": "2026-11-18T13:09:58Z",
           "event": "claim",
           "note": ""
+        },
+        {
+          "at": "2026-11-18T13:11:07Z",
+          "event": "fail",
+          "note": "Dark mode: getComputedStyle(nav.toc).backgroundColor is rgb(22,27,34), not transparent (rule 'html[data-theme=dark] .toc { background: #161b22; ... }' still applies; also dark expanded). Seen at 375/768/1280/1900 on rsna, pi-bench, how-i-setup posts. Light is correct (border 0, shadow none, bg rgba(0,0,0,0), nav width 143-187 == header width, menu overflow visible, aria-expanded toggles, no horizontal overflow). Visually hidden behind the blue button in dark, but spec requires nav.toc bg transparent in light AND dark; fix: override the dark .toc background/color rule for .page__content nav.toc (background:none), keep own bg only on open .toc__menu."
         }
-      ]
+      ],
+      "notes": "Dark mode: getComputedStyle(nav.toc).backgroundColor is rgb(22,27,34), not transparent (rule 'html[data-theme=dark] .toc { background: #161b22; ... }' still applies; also dark expanded). Seen at 375/768/1280/1900 on rsna, pi-bench, how-i-setup posts. Light is correct (border 0, shadow none, bg rgba(0,0,0,0), nav width 143-187 == header width, menu overflow visible, aria-expanded toggles, no horizontal overflow). Visually hidden behind the blue button in dark, but spec requires nav.toc bg transparent in light AND dark; fix: override the dark .toc background/color rule for .page__content nav.toc (background:none), keep own bg only on open .toc__menu."
     },
     {
       "category": "functional",

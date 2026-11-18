@@ -204,3 +204,6 @@ init ok. Iframe measurements (data-theme set) at 375/768/1280 x light/dark on pi
 
 ## Session 72 - F059 rework (coder)
 _post-ux.scss: `.page__content nav.toc` now fit-content, border 0, box-shadow none, background none; removed `.toc--js {width:100%}`; aside wrapper reset (auto width, no bg/border); open menu gets own light bg/border only when open. Note Sass minifies `background: transparent` to rgba(0,0,0,0), so verify needs `background: none`. Headless Chrome iframe: computed border 0px, shadow none, bg transparent; collapsed nav width == button width (143px at 375); open menu overflow visible, scrollHeight==clientHeight. Author sidebar files untouched (verify passes). Known: dark and 1900px not screenshot-checked.
+
+## F059 rework Test report (tester, session 72)
+init ok. Iframe measurements (data-theme set) at 375/768/1280/1900 x light/dark on rsna, pi-bench, how-i-setup posts: nav.toc border 0, shadow none, float none, static, aside wrapper transparent/no border/shadow; nav width == header width (143/171/187), menu overflow visible, scrollHeight==clientHeight, aria-expanded toggles back, no horizontal overflow. Screenshot dark 1280: only blue button visible. FAIL: dark computed nav.toc background is rgb(22,27,34) (html[data-theme=dark] .toc rule), spec requires transparent. Not exercised: real keyboard events, scroll-spy.
