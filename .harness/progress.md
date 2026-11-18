@@ -104,3 +104,6 @@ init ok. rsna-knee wrap-up at 375/768/1280: 6 content images (SVG, natural 1200p
 
 ## 2026-11-18 - F015 (coder, session 16)
 Added image lightbox in post-ux.js (click/Enter on .page__content img opens fixed overlay with full-size img + close button; Esc, overlay click or button closes; focus returns to the opener; body scroll locked) plus styles in _post-ux.scss. Skips images inside links and related/archive teasers. Verified on rsna-knee wrap-up: 6 triggers; open -> overlay, focus on close button, natural width 1200; Esc closes and focus returns; overlay click closes and focus returns; verify grep passes. Known issues: none.
+
+## F015 Test report (tester, session 16)
+init ok. rsna-knee-abnormality-detection-wrap-up (6 triggers). Open: fixed full-viewport overlay (z 10000), focus on close button, full-size 1200px image shown at 960px, html scroll locked. Esc closes, focus returns to opener, scroll restored. Enter on focused image opens; close button, overlay click and clicking the big image all close and return focus. Rapid double click yields one overlay. Teaser images (related) do not open it. Esc/Tab handled via keydown trap. Real mouse not used (synthetic clicks in pane). Result: pass.
