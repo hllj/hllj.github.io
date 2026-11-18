@@ -6,6 +6,8 @@
       <section id="discourse-comments"></section>
     {% when "disqus" %}
       <h4 class="page__comments-title">{{ comments_label }}</h4>
+      <p class="comments-lazy__intro">Join the discussion. Comments are powered by Disqus and only load when you ask.</p>
+      <button type="button" class="comments-lazy__btn" id="comments-lazy-btn" aria-controls="disqus_thread">Load comments</button>
       <section id="disqus_thread"></section>
     {% when "facebook" %}
       <h4 class="page__comments-title">{{ comments_label }}</h4>

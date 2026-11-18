@@ -217,3 +217,6 @@ Related posts restyled as cards (end of _post-ux.scss, scoped .layout--single .p
 
 ## F030 Test report (tester, session 34)
 init ok, rebuilt. pi-bench: "You may also enjoy" has 4 cards each with teaser img, title, excerpt, date + read time. 1024: 2 cols (388px), 375: 1 col (351px), 1700: 4 cols (223px, equal 340px height), scrollWidth == viewport at all three. 4 other posts checked: each renders 4 grid items. Dark mode not checked. Result: pass.
+
+## 2026-11-18 session 35 - F031 (coder)
+Disqus now lazy: comments.html shows heading ("Leave a comment"), intro text and a "Load comments" button; _includes/comments-providers/disqus.html injects embed.js only on click (retry on error). Styles at end of _post-ux.scss (top border, 3rem spacing, hidden in print). Verified in production build: button present, no disqus script in DOM before click, scrollWidth ok; verify cmd passes. Did not click (would hit the real Disqus). Known: none.

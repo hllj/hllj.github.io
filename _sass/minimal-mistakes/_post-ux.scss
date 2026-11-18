@@ -642,3 +642,20 @@ html[data-theme="dark"] .layout--single .page__related .archive__item-excerpt,
 html[data-theme="dark"] .layout--single .page__related .page__meta,
 :root.dark .layout--single .page__related .archive__item-excerpt,
 :root.dark .layout--single .page__related .page__meta { color: #adbac7; }
+
+/* F031: lazy comments */
+.layout--single .page__comments {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(128, 128, 128, 0.3);
+  clear: both;
+  .page__comments-title { margin: 0 0 0.5rem; font-size: 1.25em; }
+  .comments-lazy__intro { margin: 0 0 1rem; font-size: 0.9em; opacity: 0.8; }
+  .comments-lazy__btn {
+    padding: 0.6rem 1.25rem; min-height: 44px; border: 1px solid currentColor; border-radius: 999px;
+    background: transparent; color: inherit; font: inherit; cursor: pointer;
+    &:hover:not(:disabled) { background: rgba(128, 128, 128, 0.15); }
+    &:disabled { opacity: 0.6; cursor: progress; }
+  }
+}
+@media print { .page__comments { display: none; } }
