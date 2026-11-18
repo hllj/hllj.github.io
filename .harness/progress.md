@@ -86,3 +86,6 @@ init ok. pi-coding-agent-setup: 4 blocks (json, bash x3): radius 8px, padding 16
 
 ## 2026-11-18 - F012 (coder, session 13)
 Added copy button to every `.highlighter-rouge` block (post-ux.js appends button.code-copy; clipboard API with execCommand fallback; text "Copied" for 2s then "Copy"; "Failed" on error). Styles in _post-ux.scss (visible on block hover/focus, always on hover:none devices). Verified on pi-coding-agent-setup: 4 blocks/4 buttons; click -> "Copied", clipboard text equals block text, resets to "Copy" after ~2.3s; verify grep passes. Known issues: none.
+
+## F012 Test report (tester, session 13)
+init ok, rebuilt. pi-coding-agent-setup: 4 .highlighter-rouge blocks, exactly 1 button.code-copy each. Real clicks (not synthetic): text "Copied" at 0.5s and 1.5s, back to "Copy" by ~2.7s; navigator.clipboard.writeText received text equal to block text (multi-line, backslash continuations) for blocks 1 and 4. Probe: synthetic JS click without user activation gave "Failed" and reset to "Copy" (error path works, expected in unfocused pane). Button hidden (opacity 0) until hover/focus by design. Real paste check not possible in pane (cmd+v no-op). Result: pass.
