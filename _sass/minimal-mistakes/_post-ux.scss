@@ -553,3 +553,30 @@ html[data-theme="dark"] .post-breadcrumbs { color: #9ba7b4; }
     }
   }
 }
+
+// F027: category/tag chips at the bottom of a post share the header chip look
+.page__meta .page__taxonomy {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pux-space-2);
+  margin: var(--pux-space-3) 0;
+  > strong { margin-right: var(--pux-space-1); }
+  [itemprop="keywords"] { display: inline-flex; flex-wrap: wrap; gap: var(--pux-space-2); }
+  .sep { display: none; }
+  .page__taxonomy-item {
+    display: inline-block;
+    padding: 2px 10px;
+    margin: 0;
+    border: 1px solid var(--pux-border);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--pux-text-muted);
+    font-size: var(--pux-text-xs);
+    line-height: 1.5;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    &:hover, &:focus-visible { border-color: var(--pux-accent); color: var(--pux-accent); }
+  }
+}
+@media print { .page__taxonomy { display: none; } }

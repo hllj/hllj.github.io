@@ -193,3 +193,6 @@ init ok. rsna wrap-up at 1280 (JS measurement; pane screenshots are cropped): p 
 
 ## F026 Test report (tester, session 30)
 init ok, rebuilt (CSS contains calc(100% - 230px - 2rem)). rsna wrap-up at 1280: text p 600px, li 563, img/table/pre max 678 (stop short of TOC at x1032), 0 tables overflowing, TOC sticky 33 links. Scrolled to y=3000/6000/9000/13000: 0 img/table/pre intersect TOC rect (earlier failure fixed). scrollWidth 1280. At 375: img 351, pre 349, scrollWidth 375. Result: pass.
+
+## 2026-11-18 session 31 - F027 (coder)
+Tag chips at post bottom (.page__taxonomy-item) restyled to pill chips matching header chips (_post-ux.scss, hidden in print). /tags/ archive page was missing (404): added _pages/tags.md (layout tags) so tag links resolve to /tags/#tag; /categories/ already existed. Verified at 1024: 5 chips with 999px radius, /tags/ 200 with anchors, scrollWidth ok; verify cmd passes. Known: none.
