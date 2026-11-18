@@ -1,0 +1,43 @@
+{
+  "max_sessions": 100,
+  "stuck_limit": 3,
+  "claude_bin": "claude",
+  "model": "",
+  "permission_mode": "acceptEdits",
+  "mcp_config": ".harness/mcp.json",
+  "allowed_tools": "Bash,Read,Edit,Write,Glob,Grep,NotebookEdit,mcp__playwright",
+  "final_verify_command": "",
+  "pipeline": [
+    {
+      "agent": "coder",
+      "blocking": true
+    },
+    {
+      "agent": "tester",
+      "blocking": true,
+      "when": "claimed"
+    },
+    {
+      "agent": "curator",
+      "blocking": false,
+      "every": 10
+    }
+  ],
+  "allow_dirty": false,
+  "lock_timeout_minutes": 120,
+  "version": 3,
+  "verify_static": "",
+  "escalate_after_failures": 3,
+  "budget": {
+    "max_cost_usd": 0,
+    "max_tokens": 0,
+    "max_wall_minutes": 0,
+    "max_diff_lines": 0,
+    "on_large_diff": "warn"
+  },
+  "progress_max_kb": 64,
+  "parallel": {
+    "max_workers": 1
+  },
+  "preset": "web"
+}

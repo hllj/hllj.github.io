@@ -1,0 +1,923 @@
+{
+  "project": "hllj.github.io post-page UI/UX",
+  "features": [
+    {
+      "id": "F001",
+      "category": "functional",
+      "priority": 1,
+      "description": "Build tooling and baseline: site builds and a post page renders with title",
+      "steps": [
+        "Run .harness/init.sh",
+        "Open http://127.0.0.1:4000/blog/pi-bench-harness-iterations/",
+        "Verify the post title h1 and body render"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'page__title' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "tags": [
+        "scaffold"
+      ],
+      "depends_on": [],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F002",
+      "category": "functional",
+      "priority": 2,
+      "description": "Post-UX asset scaffold: a custom SCSS partial and custom JS file are wired into every page",
+      "steps": [
+        "Add _sass/minimal-mistakes/_post-ux.scss imported from _sass/minimal-mistakes.scss defining :root{--post-ux:1}",
+        "Add assets/js/post-ux.js loaded via _includes/footer/custom.html (defer)",
+        "Reload the post page and confirm the script loads with no console errors"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q -- '--post-ux' _site/assets/css/main.css && grep -q 'post-ux.js' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "tags": [
+        "post-css",
+        "post-js",
+        "scaffold"
+      ],
+      "depends_on": [
+        "F001"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F003",
+      "category": "functional",
+      "priority": 3,
+      "description": "Design tokens: a coherent type scale, spacing scale, accent color and content width defined as CSS variables for light mode",
+      "steps": [
+        "Open a post",
+        "Verify headings, body, links and meta text use the shared tokens and look visually consistent"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q -- '--pux-accent' _site/assets/css/main.css"
+      ],
+      "tags": [
+        "post-css"
+      ],
+      "depends_on": [
+        "F002"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F004",
+      "category": "functional",
+      "priority": 4,
+      "description": "Readable body typography: comfortable measure (about 65-75ch), line-height ~1.7, paragraph spacing, and a font stack that renders Vietnamese diacritics well",
+      "steps": [
+        "Open a Vietnamese post (e.g. the RSNA Knee wrap-up) at 1280px",
+        "Verify line length is not wider than ~75 characters in normal posts and diacritics render crisply",
+        "Verify heading hierarchy (h2/h3/h4) is clearly distinguishable"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q -i 'inter\\|be vietnam' _site/assets/css/main.css"
+      ],
+      "tags": [
+        "post-css"
+      ],
+      "depends_on": [
+        "F003"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F005",
+      "category": "functional",
+      "priority": 5,
+      "description": "Post header redesign: title, then a single meta row with date, read time, and category chips",
+      "steps": [
+        "Open a post",
+        "Verify title is large and well spaced and one meta row shows date, 'N min read' and category",
+        "Verify no duplicate or stray meta lines"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'page__meta' _site/blog/pi-bench-harness-iterations/index.html && grep -q 'min read' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "tags": [
+        "post-layout",
+        "post-css"
+      ],
+      "depends_on": [
+        "F003"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F006",
+      "category": "functional",
+      "priority": 6,
+      "description": "Reading progress bar fixed at the top of the viewport that fills as the user scrolls through the post",
+      "steps": [
+        "Open a long post",
+        "Scroll to the middle and verify the bar is about 50% filled",
+        "Scroll to the end and verify it is full; at the top it is empty",
+        "Verify it is not shown on non-post pages"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'reading-progress' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "tags": [
+        "post-layout",
+        "post-css",
+        "post-js"
+      ],
+      "depends_on": [
+        "F002"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F007",
+      "category": "functional",
+      "priority": 7,
+      "description": "Table of contents enabled by default for posts with 3+ headings, sticky on desktop right side",
+      "steps": [
+        "Open a long post at 1280px",
+        "Verify a 'On this page' TOC is visible and stays sticky while scrolling",
+        "Verify clicking an entry smooth-scrolls to the heading with the heading not hidden under the masthead"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'class=\"toc\"' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "tags": [
+        "post-layout",
+        "toc"
+      ],
+      "depends_on": [
+        "F003"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F008",
+      "category": "functional",
+      "priority": 8,
+      "description": "TOC highlights the currently visible section while scrolling",
+      "steps": [
+        "Open a long post",
+        "Scroll past several h2 sections",
+        "Verify the TOC entry for the current section is visibly active and updates"
+      ],
+      "verify": [],
+      "tags": [
+        "toc",
+        "post-js",
+        "post-css"
+      ],
+      "depends_on": [
+        "F007"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F009",
+      "category": "functional",
+      "priority": 9,
+      "description": "Mobile TOC is a collapsible block at the top of the post",
+      "steps": [
+        "Open a long post at 375px width",
+        "Verify the TOC is collapsed by default behind a toggle and expands on tap",
+        "Verify it does not push content off screen"
+      ],
+      "verify": [],
+      "tags": [
+        "toc",
+        "post-css",
+        "post-js"
+      ],
+      "depends_on": [
+        "F007"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F010",
+      "category": "functional",
+      "priority": 10,
+      "description": "Heading anchor links: hovering/focusing an h2-h4 shows a # link that copies/navigates to that section",
+      "steps": [
+        "Open a post",
+        "Hover a heading and verify a # link appears",
+        "Click it and verify the URL hash changes to that heading id"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'header-link\\|heading-anchor' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "tags": [
+        "post-js",
+        "post-css"
+      ],
+      "depends_on": [
+        "F002"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F011",
+      "category": "functional",
+      "priority": 11,
+      "description": "Code blocks: refined styling with language label, consistent font, and good contrast",
+      "steps": [
+        "Open a post with code blocks (pi-coding-agent-setup)",
+        "Verify blocks have rounded corners, padding, readable monospace font and a language label when known"
+      ],
+      "verify": [],
+      "tags": [
+        "post-css",
+        "code"
+      ],
+      "depends_on": [
+        "F003"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F012",
+      "category": "functional",
+      "priority": 12,
+      "description": "Copy button on every code block with 'Copied' feedback",
+      "steps": [
+        "Open a post with code blocks",
+        "Hover a block and click Copy",
+        "Verify button text changes to 'Copied' for ~2s and clipboard contains the code"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'copy' _site/assets/js/post-ux.js"
+      ],
+      "tags": [
+        "post-js",
+        "code"
+      ],
+      "depends_on": [
+        "F011"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F013",
+      "category": "functional",
+      "priority": 13,
+      "description": "Long code lines and inline code scroll or wrap without breaking the layout on mobile",
+      "steps": [
+        "Open a code-heavy post at 375px",
+        "Verify no horizontal page scroll; code blocks scroll internally"
+      ],
+      "verify": [],
+      "tags": [
+        "post-css",
+        "code"
+      ],
+      "depends_on": [
+        "F011"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F014",
+      "category": "functional",
+      "priority": 14,
+      "description": "Images and figures: responsive, centered, rounded, with styled captions, never overflowing the column",
+      "steps": [
+        "Open a post with images/diagrams (RSNA Knee wrap-up) at 375px, 768px and 1280px",
+        "Verify images scale to column width and captions are styled",
+        "Verify no horizontal overflow"
+      ],
+      "verify": [],
+      "tags": [
+        "post-css",
+        "images"
+      ],
+      "depends_on": [
+        "F003"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F015",
+      "category": "functional",
+      "priority": 15,
+      "description": "Click-to-zoom lightbox for images in post content",
+      "steps": [
+        "Open a post with images",
+        "Click an image",
+        "Verify a full-size overlay opens, Esc or click closes it, and focus returns"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q -i 'lightbox\\|zoom' _site/assets/js/post-ux.js"
+      ],
+      "tags": [
+        "post-js",
+        "images"
+      ],
+      "depends_on": [
+        "F014"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F016",
+      "category": "functional",
+      "priority": 16,
+      "description": "Images lazy-load and have width/alt handling so layout does not jump",
+      "steps": [
+        "Open a long image-heavy post with network throttling",
+        "Verify offscreen images carry loading=lazy and the page does not shift when they load"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'loading=\"lazy\"\\|loading=lazy\\|lazy' _site/assets/js/post-ux.js _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "tags": [
+        "post-js",
+        "images"
+      ],
+      "depends_on": [
+        "F014"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F017",
+      "category": "functional",
+      "priority": 17,
+      "description": "Tables are horizontally scrollable on small screens and styled with zebra rows and sticky header cell borders",
+      "steps": [
+        "Open a post containing a table at 375px",
+        "Verify the table scrolls inside its wrapper without causing page overflow"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'table-wrap\\|table-scroll' _site/assets/js/post-ux.js"
+      ],
+      "tags": [
+        "post-css",
+        "post-js",
+        "tables"
+      ],
+      "depends_on": [
+        "F003"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F018",
+      "category": "functional",
+      "priority": 18,
+      "description": "Blockquotes and notice callouts have a distinct, accessible style",
+      "steps": [
+        "Open a post with a blockquote or notice",
+        "Verify left accent border, tinted background, and adequate contrast"
+      ],
+      "verify": [],
+      "tags": [
+        "post-css"
+      ],
+      "depends_on": [
+        "F003"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F019",
+      "category": "functional",
+      "priority": 19,
+      "description": "Footnotes and inline links: footnote refs are easy to tap and links have clear hover/focus states",
+      "steps": [
+        "Open a post with links or footnotes",
+        "Verify link underline/hover states and footnote back-links work"
+      ],
+      "verify": [],
+      "tags": [
+        "post-css"
+      ],
+      "depends_on": [
+        "F003"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F020",
+      "category": "functional",
+      "priority": 20,
+      "description": "Dark mode: toggle in the masthead, respects prefers-color-scheme, persists choice in localStorage, no flash on load",
+      "steps": [
+        "Open a post with OS in light mode",
+        "Click the toggle and verify the page turns dark",
+        "Reload and verify dark persists with no light flash",
+        "Clear storage and set OS dark; verify it starts dark"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'data-theme' _site/blog/pi-bench-harness-iterations/index.html && grep -q 'theme-toggle' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "tags": [
+        "theme",
+        "post-css",
+        "post-js",
+        "post-layout"
+      ],
+      "depends_on": [
+        "F002"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F021",
+      "category": "functional",
+      "priority": 21,
+      "description": "Dark mode covers all post elements: code, tables, blockquotes, TOC, sidebar, related cards, images",
+      "steps": [
+        "Enable dark mode",
+        "Scroll a post and verify every component has legible contrast with no white patches"
+      ],
+      "verify": [],
+      "tags": [
+        "theme",
+        "post-css"
+      ],
+      "depends_on": [
+        "F020"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F022",
+      "category": "functional",
+      "priority": 22,
+      "description": "Back-to-top floating button appears after scrolling down and returns smoothly to the top",
+      "steps": [
+        "Open a long post",
+        "Verify no button at top, button appears after ~600px scroll",
+        "Click it and verify smooth scroll to top; honors prefers-reduced-motion"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'back-to-top' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "tags": [
+        "post-layout",
+        "post-css",
+        "post-js"
+      ],
+      "depends_on": [
+        "F002"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F023",
+      "category": "functional",
+      "priority": 23,
+      "description": "Masthead auto-hides on scroll down and reappears on scroll up on post pages",
+      "steps": [
+        "Open a long post",
+        "Scroll down: masthead slides away; scroll up: it returns",
+        "Verify anchor jumps are not hidden behind it"
+      ],
+      "verify": [],
+      "tags": [
+        "masthead",
+        "post-css",
+        "post-js"
+      ],
+      "depends_on": [
+        "F002"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F024",
+      "category": "functional",
+      "priority": 24,
+      "description": "Breadcrumb / back-to-blog link above the post title",
+      "steps": [
+        "Open a post",
+        "Verify 'Blog' breadcrumb link above the title leads to /blog/"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'breadcrumbs' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "tags": [
+        "post-layout"
+      ],
+      "depends_on": [
+        "F001"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F025",
+      "category": "functional",
+      "priority": 25,
+      "description": "Author profile sidebar is compact on post pages and collapses to a small author line on mobile",
+      "steps": [
+        "Open a post at 1280px: sidebar is tidy and does not overpower the content",
+        "Open at 375px: sidebar becomes a compact inline author card, not a tall block before the content"
+      ],
+      "verify": [],
+      "tags": [
+        "sidebar",
+        "post-css"
+      ],
+      "depends_on": [
+        "F003"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F026",
+      "category": "functional",
+      "priority": 26,
+      "description": "Wide posts (classes: wide) keep a comfortable text measure while allowing wide figures, with TOC still working",
+      "steps": [
+        "Open the RSNA Knee wrap-up (classes: wide)",
+        "Verify body text column is readable and wide images/tables can use extra width"
+      ],
+      "verify": [],
+      "tags": [
+        "post-css",
+        "post-layout"
+      ],
+      "depends_on": [
+        "F003"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F027",
+      "category": "functional",
+      "priority": 27,
+      "description": "Category and tag chips are styled consistently and link to their archives",
+      "steps": [
+        "Open a post",
+        "Verify tags/categories at the bottom render as chips and clicking one opens the matching archive page"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'page__taxonomy' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "tags": [
+        "post-css",
+        "taxonomy"
+      ],
+      "depends_on": [
+        "F003"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F028",
+      "category": "functional",
+      "priority": 28,
+      "description": "Share row: restyled buttons plus a 'Copy link' button with feedback",
+      "steps": [
+        "Open a post",
+        "Verify share buttons are tidy and Copy link copies the canonical URL and shows 'Copied'"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'copy-link' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "tags": [
+        "share",
+        "post-layout",
+        "post-css",
+        "post-js"
+      ],
+      "depends_on": [
+        "F003"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F029",
+      "category": "functional",
+      "priority": 29,
+      "description": "Previous/next post navigation shown as two cards with titles and dates",
+      "steps": [
+        "Open a middle post",
+        "Verify two cards (previous/next) with titles; first/last post shows a single card or a disabled state"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'pagination' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "tags": [
+        "post-layout",
+        "post-css",
+        "pagination"
+      ],
+      "depends_on": [
+        "F003"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F030",
+      "category": "functional",
+      "priority": 30,
+      "description": "Related posts rendered as clean cards with teaser/excerpt, date and read time",
+      "steps": [
+        "Scroll to the bottom of a post",
+        "Verify 'You may also enjoy' shows up to 4 consistent cards with title, excerpt and meta; layout is 1 column on mobile, 2-4 on wider screens"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'page__related' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "tags": [
+        "post-layout",
+        "post-css",
+        "related"
+      ],
+      "depends_on": [
+        "F003"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F031",
+      "category": "functional",
+      "priority": 31,
+      "description": "Comments are lazy-loaded behind a 'Load comments' button or when scrolled into view, with a clear section heading",
+      "steps": [
+        "Build with JEKYLL_ENV=production and open a post",
+        "Verify Disqus is not loaded until the button is pressed or the section is reached",
+        "Verify the section heading and spacing look intentional"
+      ],
+      "verify": [
+        "JEKYLL_ENV=production bash .harness/build.sh && grep -q -i 'load comments\\|comments-lazy' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "tags": [
+        "comments",
+        "post-layout",
+        "post-js",
+        "post-css"
+      ],
+      "depends_on": [
+        "F003"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F032",
+      "category": "functional",
+      "priority": 32,
+      "description": "Blog index (/blog/) uses a card/list layout with title, excerpt, date, read time and tags",
+      "steps": [
+        "Open /blog/",
+        "Verify each entry shows title, excerpt, date, read time and tags with a clear hover state"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'archive__item' _site/blog/index.html"
+      ],
+      "tags": [
+        "archive",
+        "post-css"
+      ],
+      "depends_on": [
+        "F003"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F033",
+      "category": "functional",
+      "priority": 33,
+      "description": "Blog index pagination and category archive pages are styled consistently with the post page",
+      "steps": [
+        "Open /blog/ and /page2/ and a category archive",
+        "Verify pagination controls are clear, current page highlighted, and layout matches the post-page styling"
+      ],
+      "verify": [],
+      "tags": [
+        "archive",
+        "post-css"
+      ],
+      "depends_on": [
+        "F032"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F034",
+      "category": "functional",
+      "priority": 34,
+      "description": "Reading time and 'Updated' date are shown accurately in the post meta",
+      "steps": [
+        "Open a post with last_modified_at (add to a sample if absent)",
+        "Verify read time reflects word count and an 'Updated' date appears only when set"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'min read' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "tags": [
+        "post-layout"
+      ],
+      "depends_on": [
+        "F005"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F035",
+      "category": "functional",
+      "priority": 35,
+      "description": "Accessibility pass: visible focus rings, skip link works, contrast AA, landmarks labelled, reduced-motion honored",
+      "steps": [
+        "Tab through a post from the top",
+        "Verify skip link appears and works, every control shows a focus ring",
+        "Enable prefers-reduced-motion and verify smooth scroll/animations are off"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'skip-links\\|skip' _site/blog/pi-bench-harness-iterations/index.html && grep -q 'prefers-reduced-motion' _site/assets/css/main.css"
+      ],
+      "tags": [
+        "post-css",
+        "a11y"
+      ],
+      "depends_on": [
+        "F003"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F036",
+      "category": "functional",
+      "priority": 36,
+      "description": "Responsive audit: no horizontal overflow at 320, 375, 768, 1024 and 1440px on post and blog index",
+      "steps": [
+        "Resize the browser to each width on a post and /blog/",
+        "Verify document scrollWidth equals clientWidth at each size and tap targets are >= 40px"
+      ],
+      "verify": [],
+      "tags": [
+        "post-css",
+        "responsive"
+      ],
+      "depends_on": [
+        "F033"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F037",
+      "category": "functional",
+      "priority": 37,
+      "description": "Print stylesheet: clean single-column output without masthead, sidebar, share, comments or related posts",
+      "steps": [
+        "Open print preview of a post",
+        "Verify only title, meta and content print, links show their URLs, code does not overflow"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'print' _site/assets/css/main.css"
+      ],
+      "tags": [
+        "post-css",
+        "print"
+      ],
+      "depends_on": [
+        "F003"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F038",
+      "category": "functional",
+      "priority": 38,
+      "description": "SEO and social metadata: description, canonical, Open Graph and Twitter card tags present on posts",
+      "steps": [
+        "View source of a post",
+        "Verify og:title, og:description, canonical link and twitter:card exist with sensible values"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'og:title' _site/blog/pi-bench-harness-iterations/index.html && grep -q 'rel=\"canonical\"' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "tags": [
+        "seo"
+      ],
+      "depends_on": [
+        "F001"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F039",
+      "category": "functional",
+      "priority": 39,
+      "description": "Custom 404 page styled like the rest of the site with links back to home and blog",
+      "steps": [
+        "Open /nonexistent/ on the dev server",
+        "Verify a friendly 404 with links to Home and Blog"
+      ],
+      "verify": [
+        "bash .harness/build.sh && test -f _site/404.html && grep -q -i 'blog' _site/404.html"
+      ],
+      "tags": [
+        "pages"
+      ],
+      "depends_on": [
+        "F001"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F040",
+      "category": "functional",
+      "priority": 40,
+      "description": "Search page and overlay are polished: focus on open, result snippets, empty state",
+      "steps": [
+        "Click the search icon and type a query",
+        "Verify results show title and snippet, and a no-results message appears for gibberish"
+      ],
+      "verify": [],
+      "tags": [
+        "search",
+        "post-css"
+      ],
+      "depends_on": [
+        "F003"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F041",
+      "category": "functional",
+      "priority": 41,
+      "description": "Footer polish: compact, consistent social links, copyright, and no empty icon links (GitLab/Bitbucket without URLs removed)",
+      "steps": [
+        "Scroll to the footer of a post",
+        "Verify only links with URLs are shown and spacing is tidy"
+      ],
+      "verify": [
+        "bash .harness/build.sh && ! grep -q 'fa-gitlab' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "tags": [
+        "footer"
+      ],
+      "depends_on": [
+        "F003"
+      ],
+      "status": "todo",
+      "passes": false
+    },
+    {
+      "id": "F042",
+      "category": "functional",
+      "priority": 42,
+      "description": "Final consistency review: post page visually checked at mobile/tablet/desktop in light and dark with no console errors",
+      "steps": [
+        "Open the three most different posts (long Vietnamese, code-heavy, image-heavy) in light and dark at 375/768/1280",
+        "Verify no console errors, no layout bugs, all new features work together"
+      ],
+      "verify": [
+        "bash .harness/build.sh"
+      ],
+      "tags": [
+        "review"
+      ],
+      "depends_on": [
+        "F021",
+        "F039"
+      ],
+      "status": "todo",
+      "passes": false
+    }
+  ]
+}
