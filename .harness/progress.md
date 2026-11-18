@@ -205,3 +205,6 @@ Share row: added `button.copy-link` to _includes/social-share.html; handler at e
 
 ## F028 Test report (tester, session 32)
 init ok. pi-bench post at 1024 (stubbed clipboard): 4 pill buttons 40px tall in one row (Twitter, Facebook, LinkedIn, Copy link). Click Copy link -> writeText("https://hllj.github.io/blog/pi-bench-harness-iterations/") (canonical with the `//` collapsed), label "Copied" + aria-live "Link copied", reverts to "Copy link" after ~2s; second rapid click also fine. At 375: icon-only 48x40 buttons in one row, scrollWidth 375, single copy-link button. Real OS clipboard not read. Result: pass.
+
+## 2026-11-18 session 33 - F029 (coder)
+Prev/next post nav rewritten as two cards (_includes/post_pagination.html, styles at end of _post-ux.scss): label, title, date; missing neighbour shows a dashed disabled card ("No older/newer posts"); stacks at <=600px; dark variant; hidden in print. Verified: pi-bench shows two 388px cards with dates at 1024, scrollWidth ok; oldest/newest posts show one disabled card; verify cmd passes. Known: dark variant selector (html[data-theme=dark]/:root.dark) to be rechecked in F020.

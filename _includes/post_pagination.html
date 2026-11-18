@@ -1,14 +1,28 @@
 {% if page.previous or page.next %}
-  <nav class="pagination">
+  <nav class="pagination post-nav" aria-label="More posts">
     {% if page.previous %}
-      <a href="{{ page.previous.url | relative_url }}" class="pagination--pager" title="{{ page.previous.title | markdownify | strip_html }}">{{ site.data.ui-text[site.locale].pagination_previous | default: "Previous" }}</a>
+      <a href="{{ page.previous.url | relative_url }}" class="post-nav__card post-nav__card--prev" rel="prev">
+        <span class="post-nav__label">&larr; {{ site.data.ui-text[site.locale].pagination_previous | default: "Previous" }}</span>
+        <span class="post-nav__title">{{ page.previous.title | markdownify | strip_html }}</span>
+        <time class="post-nav__date" datetime="{{ page.previous.date | date_to_xmlschema }}">{{ page.previous.date | date: "%b %-d, %Y" }}</time>
+      </a>
     {% else %}
-      <a href="#" class="pagination--pager disabled">{{ site.data.ui-text[site.locale].pagination_previous | default: "Previous" }}</a>
+      <span class="post-nav__card post-nav__card--prev is-disabled" aria-disabled="true">
+        <span class="post-nav__label">&larr; {{ site.data.ui-text[site.locale].pagination_previous | default: "Previous" }}</span>
+        <span class="post-nav__title">No older posts</span>
+      </span>
     {% endif %}
     {% if page.next %}
-      <a href="{{ page.next.url | relative_url }}" class="pagination--pager" title="{{ page.next.title | markdownify | strip_html }}">{{ site.data.ui-text[site.locale].pagination_next | default: "Next" }}</a>
+      <a href="{{ page.next.url | relative_url }}" class="post-nav__card post-nav__card--next" rel="next">
+        <span class="post-nav__label">{{ site.data.ui-text[site.locale].pagination_next | default: "Next" }} &rarr;</span>
+        <span class="post-nav__title">{{ page.next.title | markdownify | strip_html }}</span>
+        <time class="post-nav__date" datetime="{{ page.next.date | date_to_xmlschema }}">{{ page.next.date | date: "%b %-d, %Y" }}</time>
+      </a>
     {% else %}
-      <a href="#" class="pagination--pager disabled">{{ site.data.ui-text[site.locale].pagination_next | default: "Next" }}</a>
+      <span class="post-nav__card post-nav__card--next is-disabled" aria-disabled="true">
+        <span class="post-nav__label">{{ site.data.ui-text[site.locale].pagination_next | default: "Next" }} &rarr;</span>
+        <span class="post-nav__title">No newer posts</span>
+      </span>
     {% endif %}
   </nav>
 {% endif %}
