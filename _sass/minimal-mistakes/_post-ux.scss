@@ -136,12 +136,27 @@ html { scroll-behavior: auto; }
 
 /* TOC is a compact content-sized button above the post at all widths (F059) */
 .page__content > .sidebar__right.sticky {
-  position: static;
+  position: sticky; /* F061: pinned below the masthead */
+  right: auto;
+  left: auto;
+  top: 8px;
+  z-index: 15;
   float: none;
   width: 100%;
   margin: 0 0 1.25em;
   padding: 0;
 }
+
+/* F061: sticky offset follows masthead visibility (classes/vars set by post-ux.js) */
+html.masthead-autohide .page__content > .sidebar__right.sticky {
+  top: calc(var(--pux-mast-h, 60px) + 8px);
+  transition: top 0.25s ease;
+}
+html.masthead-autohide.masthead-hidden .page__content > .sidebar__right.sticky { top: 8px; }
+@media (prefers-reduced-motion: reduce) {
+  html.masthead-autohide .page__content > .sidebar__right.sticky { transition: none; }
+}
+@media print { .page__content > .sidebar__right.sticky { position: static; } }
 
 /* Active TOC entry (scroll-spy) */
 .toc .toc__menu a { border-left: 3px solid transparent; transition: background-color .15s, color .15s, border-color .15s; }
@@ -156,7 +171,7 @@ html { scroll-behavior: auto; }
 .toc--js:not(.is-open) .toc__menu { display: none; }
 .toc--js.is-open .toc__menu { display: block; max-height: none; overflow: visible; margin-top: .5rem; }
 .page__content nav.toc { width: fit-content; max-width: 100%; border: 0; box-shadow: none; background: none; border-radius: 0; margin: 0; }
-.page__content > .sidebar__right.sticky { width: auto; max-width: 100%; padding: 0; background: transparent; border: 0; box-shadow: none; }
+.page__content > .sidebar__right.sticky { width: fit-content; max-width: 100%; padding: 0; background: transparent; border: 0; box-shadow: none; }
 .toc--js.is-open .toc__menu { background: #fff; border: 1px solid #d5d9de; border-radius: 8px; box-shadow: none; }
 .toc--js > header { width: fit-content; max-width: 100%; }
 .toc--js .nav__title { cursor: pointer; display: inline-flex; align-items: center; gap: max(.6rem, 10px); width: fit-content; min-height: 40px; box-sizing: border-box; padding: 0 .5rem 0 .9rem; margin: 0; border-radius: 8px; }

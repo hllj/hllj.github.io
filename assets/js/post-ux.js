@@ -297,6 +297,10 @@
   if (!mast || !document.getElementById("reading-progress")) return;
   var root = document.documentElement;
   root.classList.add("masthead-autohide");
+  var setH = function () { root.style.setProperty("--pux-mast-h", (mast.offsetHeight || 60) + "px"); };
+  setH();
+  window.addEventListener("resize", setH);
+  window.addEventListener("load", setH);
   var last = window.pageYOffset || 0, ticking = false;
   var update = function () {
     ticking = false;
@@ -308,6 +312,7 @@
     } else if (dy > 4 && !mast.contains(document.activeElement)) {
       mast.classList.add("is-hidden");
     }
+    root.classList.toggle("masthead-hidden", mast.classList.contains("is-hidden"));
     if (Math.abs(dy) > 4 || y <= h) last = y;
   };
   window.addEventListener("scroll", function () {
@@ -316,7 +321,7 @@
     window.requestAnimationFrame(update);
   }, { passive: true });
   // keyboard focus inside the masthead always reveals it
-  mast.addEventListener("focusin", function () { mast.classList.remove("is-hidden"); });
+  mast.addEventListener("focusin", function () { mast.classList.remove("is-hidden"); root.classList.remove("masthead-hidden"); });
 })();
 
 // Copy link button in the share row

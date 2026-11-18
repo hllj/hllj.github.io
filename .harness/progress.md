@@ -219,3 +219,6 @@ _post-ux.scss: `.page__content > p/ul/ol/blockquote/h*/dl` max-width now none (w
 
 ## F060 rework Test report (tester, session 74)
 init ok, rebuilt. Iframe measurements (data-theme set) at 375/768/1280/1900 x light/dark on rsna, pi-coding-agent-setup, how-i-setup-this-blog (non-wide), pi-bench: every direct p/ul/ol/blockquote/h2/h3 (7-91 per post) right edge == .page__content right edge (max gap 0px); p width == content column (351/740/944) and == figure/table wrap width; column capped at 944 at 1280 and 1900; scrollWidth==viewport everywhere. how-i-setup code block is indented 40px on the left (existing style), right edge flush. Real headless Chrome 1900px screenshot of pi-coding-agent-setup: paragraphs flush with blockquote right edge. Built css has no min(100%. Not exercised: author sidebar visual diff beyond verify cmd. Result: pass.
+
+## Session 75 - F061 (coder)
+TOC wrapper now position:sticky (top = --pux-mast-h + 8px; 8px when html.masthead-hidden), set in post-ux.js autohide block, fit-content width. Headless Chrome iframe (instant scroll) at 1280/375: button left constant (318/12), sticks at ~85/73px after 1500px scroll, returns to normal place at top, scrollWidth==viewport. Known: CSS transitions stall in virtual time so hidden-state top (8px) and 768/1900/dark not measured; masthead-hidden class toggles correctly.
