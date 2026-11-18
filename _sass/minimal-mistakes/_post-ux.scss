@@ -711,3 +711,27 @@ html[data-theme="dark"] .pagination li a.current, :root.dark .pagination li a.cu
 html[data-theme="dark"] .taxonomy__section .archive__subtitle, :root.dark .taxonomy__section .archive__subtitle { border-color: #30363d; }
 html[data-theme="dark"] .taxonomy__index a, :root.dark .taxonomy__index a { background: #21262d; border-color: #30363d; color: #c9d1d9; }
 @media print { .pagination { display: none; } }
+
+/* Accessibility (F035): focus rings, skip link, reduced motion */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid #1a73e8;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+html[data-theme="dark"] :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible { outline-color: #8ab4f8; }
+.skip-links .screen-reader-shortcut:focus {
+  position: fixed !important;
+  top: 0.5rem; left: 0.5rem;
+  color: #1f2933;
+  background: #fff;
+  outline: 3px solid #1a73e8;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

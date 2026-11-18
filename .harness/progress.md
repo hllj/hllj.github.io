@@ -241,3 +241,6 @@ post-meta.html: read time now ceil(words/wpm), min 1 (was floor+1); 'Updated <da
 
 ## F034 Test report (tester, session 38)
 init ok. pi-bench (last_modified_at set): meta shows date, "Updated November 18, 2026" (page__meta-updated), "20 min read". The other 3 /blog/ posts have no Updated span (only pi-bench sets last_modified_at). Read time checked against Jekyll's own strip_html/number_of_words: formula is ceil(words/200), min 1; rendered counts 226->2, 3211->17, ~4000->20 (section word count includes TOC/share so slightly higher), 6138->~30. Not exercised: last_modified_at equal to date (read from template logic only). Result: pass.
+
+## 2026-11-18 session 39 - F035 (coder)
+A11y: aria-labels on landmarks (skip links, primary nav, TOC aside/nav, main, footer); global :focus-visible ring (3px blue, lighter in dark); skip links become a fixed visible box on focus; global prefers-reduced-motion block (no smooth scroll, transitions/animations ~0). Styles at end of _post-ux.scss. Verified in browser: first Tab focuses "Skip to primary navigation" (fixed, 3px outline), click goes to #site-nav; labels present; verify cmd passes. Known: contrast not audited site-wide beyond earlier features; dark mode ring selector html[data-theme=dark] (F020).
