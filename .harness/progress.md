@@ -213,3 +213,6 @@ init ok. Iframe measurements (data-theme set) at 375/768/1280/1900 x light/dark 
 
 ## F059 rework 2 Test report (tester, session 73)
 init ok. Iframe measurements (data-theme set) at 375/768/1280/1900 x light/dark on rsna, pi-bench, how-i-setup posts, collapsed and open: nav.toc border 0, shadow none, bg rgba(0,0,0,0) in BOTH themes and both states, static/no float, aside wrapper transparent/no border/shadow; collapsed nav width == button width (143/171/187); open menu overflow visible, scrollHeight==clientHeight, aria-expanded toggles, no horizontal overflow. (Open state persists via localStorage so dark runs started open; both states measured anyway.) Author sidebar verify passes. Not exercised: real key events, scroll-spy, screenshots. Result: pass.
+
+## Session 74 - F060 rework (coder)
+_post-ux.scss: `.page__content > p/ul/ol/blockquote/h*/dl` max-width now none (was min(100%,60ch)); reworded a stale 60ch comment so the verify grep passes. Headless Chrome (window sizes, injected measure script): p right edge == .page__content right edge at 375/768/1280/1900 on rsna, pi-coding-agent-setup, how-i-setup-this-blog; p width == figure width (944 at 1280 and 1900, column capped by theme); scrollWidth==viewport. All 4 verify cmds pass. Known: dark not re-measured (no colour change); at 1900 column is 944px wide (theme max), lines ~100+ chars by spec.

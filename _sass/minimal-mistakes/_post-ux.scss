@@ -58,9 +58,9 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 
-  // comfortable measure (60ch cap, readable line length) for text blocks; code, images, tables stay wide
+  // text blocks fill the content column; line length is bounded by the theme page width
   > p, > ul, > ol, > blockquote, > h1, > h2, > h3, > h4, > h5, > h6, > dl {
-    max-width: min(100%, 60ch);
+    max-width: none;
   }
 
   h1, h2, h3, h4 { font-family: var(--pux-font-body); font-weight: 700; letter-spacing: -0.01em; }
@@ -515,7 +515,7 @@ html[data-theme="dark"] .post-breadcrumbs { color: #9ba7b4; }
 }
 @media print { .sidebar { display: none; } }
 
-/* Wide posts (classes: wide): keep the 60ch text measure, let figures and tables use the full column */
+/* Wide posts (classes: wide): let figures and tables use the full column */
 .wide .page__content {
   > p:has(img),
   > figure,
