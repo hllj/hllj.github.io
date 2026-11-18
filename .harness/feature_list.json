@@ -1978,9 +1978,9 @@
       ],
       "id": "F054",
       "passes": false,
-      "status": "claimed",
+      "status": "failing",
       "source": "proposal:P003",
-      "updated_at": "2026-11-18T11:59:55Z",
+      "updated_at": "2026-11-18T12:00:03Z",
       "attempts": [
         {
           "at": "2026-11-18T11:58:11Z",
@@ -1996,9 +1996,14 @@
           "at": "2026-11-18T11:59:55Z",
           "event": "claim",
           "note": ""
+        },
+        {
+          "at": "2026-11-18T12:00:03Z",
+          "event": "fail",
+          "note": "verify command failed: python3 -c \"import re | $ bash .harness/build.sh $ python3 -c \"import re,sys;h=open('_site/blog/pi-bench-harness-iterations/index.html').read();m=re.search(r'<ul class=\\\"author__urls.*?</ul>',h,re.S);sys.exit(0 if m and m.group(0).count('fa-envelope')==1 else 1)\"  (log: .harness/sessions/064-verify-F054.log)"
         }
       ],
-      "notes": "verify command failed: python3 -c \"import re,sys | $ bash .harness/build.sh $ python3 -c \"import re,sys;h=open('_site/blog/pi-bench-harness-iterations/index.html').read();m=re.search(r'<ul class=\\\"author__urls.*?</ul>',h,re.S);sys.exit(0 if m and m.group(0).count('fa-envelope')==1 else 1)\"  (log: .harness/sessions/063-verify-F054.log)"
+      "notes": "verify command failed: python3 -c \"import re | $ bash .harness/build.sh $ python3 -c \"import re,sys;h=open('_site/blog/pi-bench-harness-iterations/index.html').read();m=re.search(r'<ul class=\\\"author__urls.*?</ul>',h,re.S);sys.exit(0 if m and m.group(0).count('fa-envelope')==1 else 1)\"  (log: .harness/sessions/064-verify-F054.log)"
     },
     {
       "category": "functional",
