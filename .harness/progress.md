@@ -32,3 +32,6 @@ Rebuilt; --pux-accent in main.css. Browser (1024px) on /blog/pi-coding-agent-set
 
 ## 2026-11-18 - F004 (coder)
 Added Inter (Google Fonts, vietnamese subset) link in _includes/head/custom.html; --pux-font-body now Inter/Be Vietnam Pro stack; .page__content text blocks max-width 70ch, line-height 1.7, h2 border/weight, h4 muted. Verified in browser on RSNA wrap-up post: paragraph width ~750px at 17px (~72 chars), font Inter, lh 28.9px, h2 30px. Known issues: Google Fonts needs network; falls back to system stack offline. That post has no h3, so h3/h4 hierarchy checked only via CSS sizes (24/20px).
+
+## 2026-11-18 - F004 (tester)
+init ok; rebuilt; main.css has Inter. Browser 1280px on RSNA wrap-up: Inter loaded, lh 1.7 (32.5px), mb 27px, h2 33.75px/700 bordered, vietnamese glyphs ok. But p font-size 19.125px, width 845px, measured 72-88 chars/line (avg ~81) > ~75 limit. Post has no h3 (hierarchy only h2/h4; h4 is white in hero overlay). Result: fail (measure too wide at 1280).

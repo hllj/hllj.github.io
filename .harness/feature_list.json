@@ -124,16 +124,22 @@
       "depends_on": [
         "F003"
       ],
-      "status": "claimed",
+      "status": "failing",
       "passes": false,
-      "updated_at": "2026-11-18T06:41:52Z",
+      "updated_at": "2026-11-18T06:42:45Z",
       "attempts": [
         {
           "at": "2026-11-18T06:41:52Z",
           "event": "claim",
           "note": ""
+        },
+        {
+          "at": "2026-11-18T06:42:45Z",
+          "event": "fail",
+          "note": "At 1280px on /blog/rsna-knee-abnormality-detection-wrap-up/ body p computed font-size is 19.125px (html scales up at xl breakpoint), max-width 70ch resolves to ~845px, and actual rendered line length is 72-88 chars/line (typically ~81) for Vietnamese paragraphs; step requires not wider than ~75 chars. Coder measured at 17px only. Fix: cap measure in a way that holds at larger root font sizes (e.g. ~60ch or max-width in em tied to char count, or set explicit font-size) and re-measure real chars/line. Other items OK: Inter loaded and applied, line-height 1.7, diacritics render, h2 33.75px/700 with border."
         }
-      ]
+      ],
+      "notes": "At 1280px on /blog/rsna-knee-abnormality-detection-wrap-up/ body p computed font-size is 19.125px (html scales up at xl breakpoint), max-width 70ch resolves to ~845px, and actual rendered line length is 72-88 chars/line (typically ~81) for Vietnamese paragraphs; step requires not wider than ~75 chars. Coder measured at 17px only. Fix: cap measure in a way that holds at larger root font sizes (e.g. ~60ch or max-width in em tied to char count, or set explicit font-size) and re-measure real chars/line. Other items OK: Inter loaded and applied, line-height 1.7, diacritics render, h2 33.75px/700 with border."
     },
     {
       "id": "F005",
