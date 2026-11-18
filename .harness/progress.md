@@ -175,3 +175,6 @@ Breadcrumb `nav.post-breadcrumbs` (Blog / truncated title) added at top of _layo
 
 ## F024 Test report (tester, session 27)
 init ok. pi-bench post (1024px): nav.post-breadcrumbs above h1 (nav bottom 112 < h1 top 160), Blog link href /blog/, click navigates to /blog/ (200). Present on all 4 posts, absent on home. Mobile 375 short-title post: nav bottom 99 < h1 135, scrollWidth 375, link height 24, long title truncated with ellipsis. Light link rgb(57,62,70), dark rgb(122,167,255) on rgb(13,17,23) fine. Result: pass.
+
+## 2026-11-18 session 28 - F025 (coder)
+Compact author sidebar on posts: new block at end of _post-ux.scss scoped to `.layout--single .sidebar`: avatar 72px, small name, bio clamped to 3 lines, opacity 1, social links in 2-col grid at >=1024px (sidebar height 443 -> 306 at 1280); below 1024px an inline author line (36px avatar, name, 1-line bio, 32px Follow button, hairline borders; height 74 -> 50 at 375). Hidden in print. Verified in browser at 1280 and 375: scrollWidth == viewport. Known: none. Dropdown links on mobile not clicked through.
