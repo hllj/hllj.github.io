@@ -38,3 +38,6 @@ init ok; rebuilt; main.css has Inter. Browser 1280px on RSNA wrap-up: Inter load
 
 ## F004 retry (session 5)
 Cause of prior fail: 70ch at 19.125px root (xl) gave ~81 chars/line. Changed .page__content text-block max-width to 50ch in _sass/minimal-mistakes/_post-ux.scss. Measured at 1280px on RSNA wrap-up (per-character range rects, 30 long paragraphs): mean 62.5, max 71 chars/line; max-width 603px. verify command passes. Note: _site must be rebuilt (bash .harness/build.sh) before measuring.
+
+## F004 (tester, session 5)
+Rebuilt; 1280px RSNA wrap-up: 37 long paragraphs measured per-character: mean 56, max 69 chars/line (<=75); Inter active, lh 32.5px (1.7), mb 27px, h2 33.75/700, h4 14.3/600 (no h3 in post). Probe: pi-coding-agent-setup p width 603px, no horizontal overflow. Result: pass.
