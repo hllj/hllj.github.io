@@ -44,3 +44,6 @@ Rebuilt; 1280px RSNA wrap-up: 37 long paragraphs measured per-character: mean 56
 
 ## 2026-11-18 - F005 (coder, session 6)
 Added _includes/post-meta.html (single row: date, "N min read", category chips), used in _layouts/single.html header and page__hero.html (overlay posts). Footer now only shows tags (removed duplicate categories/updated-date lines). Styles appended to _post-ux.scss (chips, overlay colors, title spacing). Verified: build ok, verify grep ok, browser screenshot of hero post shows single row. Known issues: none. Archive pages still use page__meta.html.
+
+## F005 (tester, session 6)
+init ok; rebuilt. Browser on pi-bench-harness-iterations (hero overlay) and pi-coding-agent-setup: title 39px, 12px margin, exactly one .page__meta--row in header: date, "N min read", category chip (links to /categories/#blog); no duplicate read-time/date/category in footer (only Tags). Screenshot confirms single row. No horizontal overflow at 1024px. Note: hero teaser paragraph sits between title and meta row (hero layout), judged acceptable. Result: pass.
