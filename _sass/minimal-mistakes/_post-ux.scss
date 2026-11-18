@@ -175,14 +175,9 @@ html.masthead-autohide.masthead-hidden .page__content > .sidebar__right.sticky {
   html:not(.masthead-autohide) .sidebar > .sidebar__right.sticky { top: 8px; }
   html.masthead-autohide.masthead-hidden .sidebar > .sidebar__right.sticky { top: 8px; }
 }
-/* F064: sidebar-hosted TOC opens as an overlay to the right of the button */
+/* F064/F059: sidebar-hosted TOC panel opens directly below the button, same left edge */
 @media (min-width: 1024px) {
-  .sidebar.sidebar--has-toc .toc--js.is-open .toc__menu {
-    top: 0; left: calc(100% + .5rem); margin-top: 0;
-    width: max-content;
-    max-width: min(28rem, calc(100vw - 260px));
-    z-index: 30;
-  }
+  .sidebar.sidebar--has-toc .toc--js.is-open .toc__menu { top: 100%; left: 0; z-index: 30; max-width: min(28rem, calc(100vw - 2rem)); }
 }
 @media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
   .sidebar > .sidebar__right.sticky { transition: none; }
@@ -199,9 +194,9 @@ html.masthead-autohide.masthead-hidden .page__content > .sidebar__right.sticky {
 
 /* TOC collapse (all widths, F046) */
 .toc--js:not(.is-open) .toc__menu { display: none; }
-.toc--js.is-open .toc__menu { display: block; position: absolute; top: 100%; left: 0; z-index: 20; margin-top: .35rem; width: max-content; max-width: min(92vw, 28rem); max-height: none; overflow: visible; overflow-wrap: anywhere; box-sizing: border-box; }
-.page__content nav.toc { width: fit-content; max-width: 100%; border: 0; box-shadow: none; background: none; border-radius: 0; margin: 0; }
-.page__content > .sidebar__right.sticky { width: fit-content; max-width: 100%; padding: 0; background: transparent; border: 0; box-shadow: none; }
+.toc--js.is-open .toc__menu { display: block; position: absolute; top: 100%; left: 0; z-index: 20; margin-top: .35rem; width: max-content; max-width: min(92vw, 28rem); max-height: min(70vh, 40rem); overflow-y: auto; overflow-wrap: anywhere; box-sizing: border-box; }
+nav.toc, .toc--js { width: fit-content; max-width: 100%; border: 0; box-shadow: none; background: none; border-radius: 0; margin: 0; }
+aside.sidebar__right.sticky { width: fit-content; max-width: 100%; padding: 0; background: transparent; border: 0; box-shadow: none; }
 .toc--js.is-open .toc__menu { background: #fff; border: 1px solid #d5d9de; border-radius: 8px; box-shadow: 0 6px 18px rgba(0,0,0,.15); }
 .toc--js > header { width: fit-content; max-width: 100%; }
 .toc--js .nav__title { cursor: pointer; display: inline-flex; align-items: center; gap: max(.6rem, 10px); width: fit-content; min-height: 40px; box-sizing: border-box; padding: 0 .5rem 0 .9rem; margin: 0; border-radius: 8px; }
