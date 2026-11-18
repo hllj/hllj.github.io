@@ -202,3 +202,6 @@ init ok. pi-bench post at 1024: 5 tag chips (.page__taxonomy-item), radius 999px
 
 ## 2026-11-18 session 32 - F028 (coder)
 Share row: added `button.copy-link` to _includes/social-share.html; handler at end of assets/js/post-ux.js copies the canonical URL (link[rel=canonical] href with the existing double slash after host collapsed; fallback execCommand), label flips to "Copied" for 2s plus aria-live status. Share row restyled (pill buttons, 40px, flex wrap, hidden in print) in _post-ux.scss. Verified on pi-bench at 1024 with stubbed clipboard: wrote https://hllj.github.io/blog/pi-bench-harness-iterations/, label Copied then reverted, scrollWidth ok; verify cmd passes. Known: pre-existing canonical tag has `//` (F038 SEO); browser may cache old JS (hard reload).
+
+## F028 Test report (tester, session 32)
+init ok. pi-bench post at 1024 (stubbed clipboard): 4 pill buttons 40px tall in one row (Twitter, Facebook, LinkedIn, Copy link). Click Copy link -> writeText("https://hllj.github.io/blog/pi-bench-harness-iterations/") (canonical with the `//` collapsed), label "Copied" + aria-live "Link copied", reverts to "Copy link" after ~2s; second rapid click also fine. At 375: icon-only 48x40 buttons in one row, scrollWidth 375, single copy-link button. Real OS clipboard not read. Result: pass.
