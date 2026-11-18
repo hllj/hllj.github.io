@@ -88,10 +88,16 @@
   };
   var saved = null;
   try { saved = localStorage.getItem(KEY); } catch (e) {}
-  set(saved === "1", false);
+  set(false, false); // overlay panel: always start closed
   title.addEventListener("click", function () { set(!toc.classList.contains("is-open"), true); });
   menu.addEventListener("click", function (e) {
-    if (e.target.closest("a") && window.matchMedia("(max-width: 1023px)").matches) set(false, false);
+    if (e.target.closest("a")) set(false, false);
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && toc.classList.contains("is-open")) { set(false, false); btn.focus(); }
+  });
+  document.addEventListener("click", function (e) {
+    if (toc.classList.contains("is-open") && !toc.contains(e.target)) set(false, false);
   });
 })();
 

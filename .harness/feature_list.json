@@ -2335,8 +2335,16 @@
       ],
       "id": "F062",
       "passes": false,
-      "status": "todo",
-      "source": "proposal:P010"
+      "status": "claimed",
+      "source": "proposal:P010",
+      "updated_at": "2026-11-18T13:25:27Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T13:25:27Z",
+          "event": "claim",
+          "note": ""
+        }
+      ]
     }
   ]
 }
