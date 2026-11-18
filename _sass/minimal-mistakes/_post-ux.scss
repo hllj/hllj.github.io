@@ -539,3 +539,17 @@ html[data-theme="dark"] .post-breadcrumbs { color: #9ba7b4; }
   > p:has(img) > img,
   > figure img { display: block; max-width: 100%; height: auto; margin-left: auto; margin-right: auto; }
 }
+
+/* Beside the floated TOC (230px + 2rem gap) wide blocks stop short of it so nothing is occluded */
+@media (min-width: 1024px) {
+  .wide .page__content {
+    > p:has(img),
+    > figure,
+    > .table-wrap,
+    > table,
+    > pre,
+    > div.highlighter-rouge {
+      max-width: calc(100% - 230px - 2rem);
+    }
+  }
+}
