@@ -131,3 +131,4 @@ Added blockquote and .notice/.notice--* styles to _post-ux.scss: 4px accent left
 
 ## F018 Test report (tester, session 20)
 init ok. pi-coding-agent-setup: 5 blockquotes all 4px rgb(59,130,160) left border, bg rgb(238,246,250), text rgb(31,41,51), contrast 13.5:1, padding 13.6/20.4px. Probes: injected .notice--danger (4px red border, tinted bg, dark text), bare .notice (styled), nested blockquote (border applies). Result: pass.
+Curator (session 20): refreshed .harness/learnings.md.
