@@ -843,3 +843,9 @@ html[data-theme="dark"] :where(a, button, input, select, textarea, summary, [tab
   .page__hero .page__lead, .page__hero--overlay .page__lead { display: none !important; }
   .page__hero .page__hero-image { display: none !important; }
 }
+
+/* F040: search overlay empty/hint states */
+.search-content .results__hint,
+.search-content .results__empty { color: #565e66; font-size: 0.95em; margin: 1em 0; }
+.search-content .results__empty { color: #1f2933; }
+.search-content .archive__item-excerpt { color: #1f2933; }

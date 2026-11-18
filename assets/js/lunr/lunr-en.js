@@ -39,6 +39,16 @@ $(document).ready(function() {
         })
       });
     resultdiv.empty();
+    resultdiv.attr('aria-live', 'polite');
+    if (!query.trim()) {
+      resultdiv.append('<p class="results__hint">Type to search posts by title, topic or tag.</p>');
+      return;
+    }
+    if (result.length === 0) {
+      var safe = $('<div>').text($(this).val().trim()).html();
+      resultdiv.append('<p class="results__found results__empty">No results for &ldquo;'+safe+'&rdquo;. Try different keywords or a shorter term.</p>');
+      return;
+    }
     resultdiv.prepend('<p class="results__found">'+result.length+' {{ site.data.ui-text[site.locale].results_found | default: "Result(s) found" }}</p>');
     for (var item in result) {
       var ref = result[item].ref;

@@ -289,3 +289,6 @@ Added _pages/404.md (layout single, permalink /404.html) with message and Home /
 
 ## F039 Test report (tester, session 46)
 init ok. /nonexistent/, /blog/nope/x, /foo.html all return HTTP 404 with the styled page (site CSS, masthead, footer, Lato font, no horizontal overflow); h1 "Page not found", friendly text, buttons Go to Home (/) and Browse the Blog (/blog/). Nit: "1 min read" meta shown on 404 (cosmetic). Result: pass.
+
+## 2026-11-18 session 47 - F040 (coder)
+Search (lunr overlay) already focused input on open and showed title+snippet. Added in assets/js/lunr/lunr-en.js: empty-query hint, friendly escaped "No results for ..." message, aria-live on results; small styles at end of _post-ux.scss. Verified in browser: focus on #search after toggle, "harness" gives 2 results with snippets, gibberish gives no-results message, empty shows hint, no overflow. Known: none.
