@@ -146,3 +146,12 @@ html { scroll-behavior: smooth; }
     z-index: 10;
   }
 }
+
+/* Active TOC entry (scroll-spy) */
+.toc .toc__menu a { border-left: 3px solid transparent; transition: background-color .15s, color .15s, border-color .15s; }
+.toc .toc__menu a.is-active {
+  color: var(--pux-accent, #2a6df4);
+  font-weight: 600;
+  border-left-color: var(--pux-accent, #2a6df4);
+  background: rgba(42, 109, 244, .08);
+}

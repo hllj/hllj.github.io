@@ -26,3 +26,40 @@
     update();
   }
 })();
+
+// TOC scroll-spy: highlight the entry for the section currently in view
+(function () {
+  "use strict";
+  var links = document.querySelectorAll(".toc .toc__menu a[href^='#']");
+  if (!links.length) return;
+  var items = [];
+  Array.prototype.forEach.call(links, function (a) {
+    var id = decodeURIComponent(a.getAttribute("href").slice(1));
+    var el = document.getElementById(id);
+    if (el) items.push({ a: a, el: el });
+  });
+  if (!items.length) return;
+  var current = null;
+  var update = function () {
+    var offset = 120, active = items[0];
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].el.getBoundingClientRect().top - offset <= 0) active = items[i]; else break;
+    }
+    var doc = document.documentElement;
+    if (window.innerHeight + (window.pageYOffset || doc.scrollTop) >= doc.scrollHeight - 2) active = items[items.length - 1];
+    if (active === current) return;
+    if (current) { current.a.classList.remove("is-active"); current.a.removeAttribute("aria-current"); }
+    active.a.classList.add("is-active");
+    active.a.setAttribute("aria-current", "true");
+    current = active;
+  };
+  var ticking = false;
+  var onScroll = function () {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(function () { ticking = false; update(); });
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  update();
+})();

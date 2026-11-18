@@ -59,3 +59,6 @@ single.html: TOC auto-enabled for posts (page.date) with >=3 h2/h3 unless `toc: 
 
 ## F007 Test report (tester, session 8)
 init ok, rebuilt. Built HTML: toc present on how-i-setup-this-blog, pi-bench-harness-iterations, rsna wrap-up; absent only on pi-coding-agent-setup (explicit toc:false opt-out, accepted). Browser 1280px on pi-bench-harness-iterations: label "On this page", 17 entries, aside position sticky, top 27px at scrollY 2500 and 5000 (and 7069), no horizontal overflow; clicking entry #9 lands heading in view (scroll-margin 81px, html scroll-behavior smooth). Animation itself not observable; screenshot pane was blank so JS measurements used. Result: pass.
+
+## 2026-11-18 - F008 (coder, session 9)
+Added TOC scroll-spy in assets/js/post-ux.js (rAF scroll handler; active = last heading whose top is within 120px of viewport top; last entry at page bottom; sets .is-active + aria-current) and .is-active styles (accent color, bold, left border, tint) in _post-ux.scss. Verified at 1280px on pi-bench-harness-iterations: exactly one active entry at all tested scroll positions, matching heading positions (e.g. scrollY 3244 -> "Những thay đổi chính", 5976 -> "Mình đã đổi gì từ v2 sang"). Note: html smooth scroll makes scrollTo animate, so wait/read scrollY after. Known issues: none.
