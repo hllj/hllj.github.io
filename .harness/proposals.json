@@ -491,6 +491,62 @@
         "drop": []
       },
       "decided_at": "2026-11-18T12:53:11Z"
+    },
+    {
+      "id": "P009",
+      "status": "approved",
+      "by": "planner",
+      "reason": "Rework F059/F060 after user review failure: remove full-width TOC chrome, make text fill column, leave author sidebar alone",
+      "at": "2026-11-18T13:06:00Z",
+      "payload": {
+        "add": [],
+        "drop": [],
+        "amend": [
+          {
+            "id": "F059",
+            "description": "REWORK (user failed F059 on review: 'On this page' still sits inside a full-width bordered, shadowed grey bar). The TOC is ONLY a standalone content-sized button (icon, >=8px gap, label, chevron) with NO surrounding container chrome: nav.toc has no border, box-shadow, background or full-width box. Click expands the full list beneath the button (no inner scroll). The TOC is not a floated/sticky sidebar; the AUTHOR sidebar (left) must stay exactly as before and is not touched.",
+            "steps": [
+              "Cause: MM's `.toc` rule in _sass/minimal-mistakes/_navigation.scss (~line 506) still gives nav.toc a 1px border, border-radius, box-shadow, background and, via `.toc--js {width:100%}` / `.sidebar__right.sticky {width:100%}` in _post-ux.scss, a full-width box. Only the inner header was made fit-content.",
+              "Fix in _sass/minimal-mistakes/_post-ux.scss (scope to .page__content nav.toc, do not edit the MM partial globally): nav.toc { width: fit-content (or auto with display:block; max-width:100%); border: 0; box-shadow: none; background: transparent; border-radius: 0; margin: 0 }; the wrapper aside .sidebar__right.sticky has background/border/box-shadow none too and is not wider than its content when collapsed. Expanded .toc__menu appears beneath the button: give it its own light background/border ONLY while open if needed for legibility, but the collapsed state must show nothing except the blue button. Do not change float/position of the author sidebar (.sidebar, .author__*), and keep the TOC non-floated, non-sticky, static in flow above the first paragraph.",
+              "Open /blog/rsna-knee-abnormality-detection-wrap-up/ and /blog/pi-coding-agent-setup/ at 375, 768, 1280 and ~1900 px, light and dark, collapsed and expanded: with real headless Chrome screenshots confirm there is no grey bar/border/shadow to the right of the button; getComputedStyle(nav.toc) borderTopWidth=0px, boxShadow=none, backgroundColor transparent (rgba(0,0,0,0)); nav.toc getBoundingClientRect().width is within 4px of the button width when collapsed; expanded list shows all entries, no overflow-y auto/scroll; scroll-spy, aria-expanded, keyboard toggle still work",
+              "Confirm git diff of author sidebar rules/markup vs commit before 28d5dc62 is empty apart from what the user asked (author-profile include, _sidebar.scss, .author__* rules unchanged)"
+            ],
+            "verify": [
+              "bash .harness/build.sh",
+              "python3 -c \"import re,sys; c=open('_site/assets/css/main.css').read(); m=re.findall(r'(?:\\.page__content\\s+)?nav\\.toc\\s*\\{[^}]*\\}|\\.page__content\\s+\\.toc\\s*\\{[^}]*\\}',c); blk=' '.join(m); print(blk); ('border:0' in blk.replace(' ','') or 'border:none' in blk.replace(' ','') or 'border-width:0' in blk.replace(' ','')) or sys.exit('nav.toc border not removed'); ('box-shadow:none' in blk.replace(' ','')) or sys.exit('nav.toc box-shadow not removed'); ('background:transparent' in blk.replace(' ','') or 'background-color:transparent' in blk.replace(' ','') or 'background:none' in blk.replace(' ','')) or sys.exit('nav.toc background not removed'); ('fit-content' in blk or 'width:auto' in blk.replace(' ','')) or sys.exit('nav.toc not content-sized')\"",
+              "python3 -c \"import sys; s=open('_sass/minimal-mistakes/_post-ux.scss').read(); ('60vh' not in s) or sys.exit('60vh present'); import re; ('.toc--js { width: 100%; }' not in s) or sys.exit('full-width .toc--js rule still present')\"",
+              "git diff --quiet 28d5dc62~1 HEAD -- _sidebar.scss _includes/author-profile.html _sass/minimal-mistakes/_sidebar.scss || (echo 'author sidebar files changed since F059' >&2; exit 1)"
+            ],
+            "tags": [
+              "toc",
+              "post-css"
+            ]
+          },
+          {
+            "id": "F060",
+            "description": "REWORK (user failed review: text still ends far short of the content column's right edge). Post body text blocks (p, ul, ol, blockquote, headings, dl) fill the full available content column on desktop: the 60ch cap is removed (max-width: none / 100%), so paragraph right edge is within 2px of the column right edge at 1280 and ~1900px, identically on every post (with and without classes: wide). The column itself is bounded by the theme's page width (state: at most 1280px content area / theme max-width), so line length stays readable by container, not by ch. Do not change the author sidebar.",
+            "steps": [
+              "Cause: _post-ux.scss ~line 61-63 still sets `.page__content > p, ul, ol, blockquote, h1-h6, dl { max-width: min(100%, 60ch) }`; F060 only changed 50ch to 60ch, so text stays narrower than the column (and the TOC bar).",
+              "Fix: replace that rule with max-width: none (text fills .page__content); keep figures/tables/code max-width: 100%; delete leftover .wide max-width: none duplication only if redundant; keep the F060 padding-right:0 rule for .layout--single .page. Do not touch author sidebar width or float.",
+              "At 1280 and ~1900px on /blog/rsna-knee-abnormality-detection-wrap-up/, /blog/pi-coding-agent-setup/ and a classes:wide post: measure via JS getBoundingClientRect that first p right edge >= .page__content right edge - 2px, and p width equals the width of the first figure/table wrap; at 375 and 768 no horizontal overflow (documentElement.scrollWidth == viewport); light and dark",
+              "Real headless Chrome screenshot at ~1900px: text visually reaches the right edge of the content column"
+            ],
+            "verify": [
+              "bash .harness/build.sh",
+              "python3 -c \"import sys; s=open('_sass/minimal-mistakes/_post-ux.scss').read(); ('60ch' not in s and '50ch' not in s) or sys.exit('ch measure cap still present'); ('min(100%, 60ch)' not in s) or sys.exit('old cap')\"",
+              "python3 -c \"import re,sys; c=open('_site/assets/css/main.css').read(); (not re.search(r'\\.page__content\\s*>\\s*p[^{]*\\{[^}]*max-width:\\s*(min\\(|\\d+ch)',c)) or sys.exit('text max-width cap present in built css')\"",
+              "git diff --quiet 28d5dc62~1 HEAD -- _includes/author-profile.html _sass/minimal-mistakes/_sidebar.scss || (echo 'author sidebar files changed' >&2; exit 1)"
+            ],
+            "depends_on": [
+              "F059"
+            ],
+            "tags": [
+              "post-css"
+            ]
+          }
+        ]
+      },
+      "decided_at": "2026-11-18T13:06:38Z"
     }
   ]
 }
