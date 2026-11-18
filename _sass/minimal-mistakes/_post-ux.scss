@@ -256,3 +256,28 @@ html { scroll-behavior: smooth; }
   &.language-markdown::before { content: "markdown"; }
   &.language-plaintext::before { display: none; }
 }
+
+/* Copy button (F012) */
+.page__content div.highlighter-rouge .code-copy {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  z-index: 2;
+  padding: 2px 10px;
+  border: 1px solid #484f58;
+  border-radius: 6px;
+  background: #21262d;
+  color: #e6edf3;
+  font-family: var(--pux-font-mono);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .15s;
+
+  &:hover { background: #30363d; }
+  &.is-copied { color: #7ee787; border-color: #7ee787; opacity: 1; }
+}
+.page__content div.highlighter-rouge:hover .code-copy,
+.page__content div.highlighter-rouge .code-copy:focus { opacity: 1; }
+@media (hover: none) { .page__content div.highlighter-rouge .code-copy { opacity: .85; } }

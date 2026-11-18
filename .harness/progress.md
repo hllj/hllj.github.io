@@ -83,3 +83,6 @@ Code blocks restyled in _post-ux.scss: dark theme (#161b22, text #e6edf3, token 
 
 ## F011 Test report (tester, session 12)
 init ok. pi-coding-agent-setup: 4 blocks (json, bash x3): radius 8px, padding 16/24, bg #161b22, text #e6edf3 (~14:1 contrast), ui-monospace 14px, language label shown via ::before ("json"/"bash"). Other posts: python blocks present, plaintext block gets no label (intended). 375px: no horizontal overflow, pre overflow-x auto. Inline code unaffected (light bg, dark text). Known issue (languages outside CSS list get no label) judged acceptable ("when known"). Result: pass.
+
+## 2026-11-18 - F012 (coder, session 13)
+Added copy button to every `.highlighter-rouge` block (post-ux.js appends button.code-copy; clipboard API with execCommand fallback; text "Copied" for 2s then "Copy"; "Failed" on error). Styles in _post-ux.scss (visible on block hover/focus, always on hover:none devices). Verified on pi-coding-agent-setup: 4 blocks/4 buttons; click -> "Copied", clipboard text equals block text, resets to "Copy" after ~2.3s; verify grep passes. Known issues: none.

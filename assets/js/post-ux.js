@@ -117,3 +117,52 @@
   window.addEventListener("load", run);
   setTimeout(run, 300);
 })();
+
+// Copy button on every code block, with "Copied" feedback for ~2s
+(function () {
+  "use strict";
+  var fallback = function (text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) {}
+    document.body.removeChild(ta);
+    return ok ? Promise.resolve() : Promise.reject(new Error("copy failed"));
+  };
+  var copy = function (text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text).catch(function () { return fallback(text); });
+    }
+    return fallback(text);
+  };
+  document.querySelectorAll(".page__content div.highlighter-rouge").forEach(function (block) {
+    var code = block.querySelector("pre code") || block.querySelector("pre");
+    if (!code || block.querySelector(".code-copy")) return;
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "code-copy";
+    btn.textContent = "Copy";
+    btn.setAttribute("aria-label", "Copy code to clipboard");
+    var timer = null;
+    btn.addEventListener("click", function () {
+      copy(code.innerText.replace(/\n$/, "")).then(function () {
+        btn.textContent = "Copied";
+        btn.classList.add("is-copied");
+      }, function () {
+        btn.textContent = "Failed";
+      }).then(function () {
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          btn.textContent = "Copy";
+          btn.classList.remove("is-copied");
+        }, 2000);
+      });
+    });
+    block.appendChild(btn);
+  });
+})();
