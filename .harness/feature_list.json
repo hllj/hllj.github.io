@@ -2186,9 +2186,9 @@
         "post-css"
       ],
       "passes": false,
-      "status": "todo",
+      "status": "claimed",
       "source": "proposal:P008",
-      "updated_at": "2026-11-18T12:56:04Z",
+      "updated_at": "2026-11-18T13:09:58Z",
       "attempts": [
         {
           "at": "2026-11-18T12:54:59Z",
@@ -2198,6 +2198,11 @@
         {
           "at": "2026-11-18T12:56:04Z",
           "event": "pass",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T13:09:58Z",
+          "event": "claim",
           "note": ""
         }
       ]
