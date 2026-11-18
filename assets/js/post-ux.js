@@ -88,7 +88,7 @@
   };
   var saved = null;
   try { saved = localStorage.getItem(KEY); } catch (e) {}
-  set(saved === "1" ? true : saved === "0" ? false : !window.matchMedia("(max-width: 1023px)").matches, false);
+  set(saved === "1", false);
   title.addEventListener("click", function () { set(!toc.classList.contains("is-open"), true); });
   menu.addEventListener("click", function (e) {
     if (e.target.closest("a") && window.matchMedia("(max-width: 1023px)").matches) set(false, false);

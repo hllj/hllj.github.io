@@ -134,18 +134,13 @@ html { scroll-behavior: auto; }
 .page__content :is(h1, h2, h3, h4, h5, h6)[id] { scroll-margin-top: 5.5rem; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
-/* Sticky TOC on the right for wide posts (MM disables the right sidebar there) */
-@media (min-width: 1024px) {
-  .wide .page__content > .sidebar__right.sticky {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 1.5rem;
-    float: right;
-    width: 230px;
-    margin: 0 0 1em 2rem;
-    padding-left: 0;
-    z-index: 10;
-  }
+/* TOC is a compact content-sized button above the post at all widths (F059) */
+.page__content > .sidebar__right.sticky {
+  position: static;
+  float: none;
+  width: 100%;
+  margin: 0 0 1.25em;
+  padding: 0;
 }
 
 /* Active TOC entry (scroll-spy) */
@@ -157,21 +152,13 @@ html { scroll-behavior: auto; }
   background: rgba(42, 109, 244, .08);
 }
 
-/* Mobile TOC: collapsible block at the top of the post */
-@media (max-width: 1023px) {
-  .page__content > .sidebar__right.sticky {
-    position: static;
-    float: none;
-    width: 100%;
-    margin: 0 0 1.25em;
-    padding: 0;
-  }
-}
-
 /* TOC collapse (all widths, F046) */
 .toc--js:not(.is-open) .toc__menu { display: none; }
-.toc--js.is-open .toc__menu { display: block; max-height: 60vh; overflow-y: auto; }
-.toc--js .nav__title { cursor: pointer; display: flex; align-items: center; justify-content: space-between; margin: 0; }
+.toc--js.is-open .toc__menu { display: block; max-height: none; overflow: visible; margin-top: .5rem; }
+.toc--js { width: 100%; }
+.toc--js > header { width: fit-content; max-width: 100%; }
+.toc--js .nav__title { cursor: pointer; display: inline-flex; align-items: center; gap: .6rem; width: fit-content; min-height: 40px; box-sizing: border-box; padding: 0 .5rem 0 .9rem; margin: 0; border-radius: 8px; }
+.toc--js .nav__title .fa-list { margin: 0; }
 .toc--js .toc__toggle { background: none; border: 0; padding: .25rem .5rem; margin-left: auto; color: inherit; cursor: pointer; }
 .toc__chevron {
   display: inline-block; width: .5em; height: .5em;
