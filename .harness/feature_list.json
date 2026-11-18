@@ -1541,6 +1541,121 @@
         }
       ],
       "notes": "At 375px viewport the masthead is broken on all posts (CNN-Architecture-Part-2, pi-coding-agent-setup): .site-subtitle (x 73-173) overlaps the Home menu item (x 155-219) so Home renders clipped as 'ome' behind the tagline 'My little window and wall' (verified by screenshot zoom + getBoundingClientRect after fresh load). Coder only checked scrollWidth, not visual layout. Fix: hide subtitle or wrap/shrink at narrow widths. Other checks: no console errors, no horizontal overflow, no broken images at 375 light."
+    },
+    {
+      "category": "functional",
+      "priority": 43,
+      "description": "Masthead and breadcrumb bar share one consistent color scheme (same background as page or one unified header band, light and dark), and both align to the same content width. The site title (.site-title) and tagline (.site-subtitle) must have a visible gap of at least 8px between them at ALL widths where the tagline is shown (including 600-900px; never touching, as in the regression where 'Hop's Log' and 'My little window and wall' abut with zero gap), with the tagline vertically aligned to the title (shared baseline or centered, not a different baseline). The title+tagline group is left-aligned to the masthead/content column left edge with no unexplained empty space to its left (regression: group pushed far right at ~700px), at 375, 600, 768, 1024 and 1280px in light and dark.",
+      "steps": [
+        "Open /blog/pi-bench-harness-iterations/ at 375, 600, 768, 1024 and 1280px in both light and dark",
+        "Verify via getComputedStyle that masthead and breadcrumb backgrounds are the same color (or intentionally one band) and there is no grey band inside a white strip",
+        "Via getBoundingClientRect of .site-title and .site-subtitle (wherever the subtitle is displayed, including 600-900px): subtitle.left - title.right >= 8px, and vertical centers (or text baselines) differ by <= 2px",
+        "Via getBoundingClientRect: .site-title left edge equals the content column left edge (e.g. the post/article container or breadcrumb left edge) within 2px, so the group is not pushed right; compare against the masthead inner left and confirm no large empty area to its left",
+        "Subtitle hidden below 600px is acceptable; in that case just check the title left edge. Do not rely on overflow checks alone: record the measured gap and left-edge values for each width and theme",
+        "Verify masthead inner and breadcrumb left edges align with the content column left edge"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'site-subtitle' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "depends_on": [],
+      "tags": [
+        "header"
+      ],
+      "id": "F043",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P001"
+    },
+    {
+      "category": "functional",
+      "priority": 44,
+      "description": "Breadcrumb is correctly styled: all crumbs (Blog link and current title) sit on one shared baseline, with even separator spacing and no taller tap-target offset on the link",
+      "steps": [
+        "Open /blog/pi-bench-harness-iterations/ at 375, 768 and 1280px in light and dark",
+        "Via getBoundingClientRect confirm the Blog link and the '/ title' crumb have the same vertical center/baseline (difference <= 1px)",
+        "Confirm separator spacing is symmetric around '/' and long titles wrap without misalignment",
+        "Confirm the bar's left edge matches the masthead and content width"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'post-breadcrumbs' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "depends_on": [],
+      "tags": [
+        "header"
+      ],
+      "id": "F044",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P001"
+    },
+    {
+      "category": "functional",
+      "priority": 45,
+      "description": "Sticky 'On this page' TOC styling fixed: no stray empty grey toggle box beside the title, link text normal weight and not underlined, consistent indentation per heading level and even entry spacing, in light and dark",
+      "steps": [
+        "Open /blog/pi-bench-harness-iterations/ at 1280px (light and dark) and at 375px",
+        "Verify the TOC header shows a proper chevron toggle (no empty grey box)",
+        "Verify getComputedStyle of .toc__menu a: font-weight <= 500, text-decoration none; nested levels have consistent increasing padding-left; entry spacing is uniform",
+        "Verify active-entry highlighting still works on scroll"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'class=\"toc\"' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "depends_on": [],
+      "tags": [
+        "toc"
+      ],
+      "id": "F045",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P001"
+    },
+    {
+      "category": "functional",
+      "priority": 46,
+      "description": "TOC is collapsible/expandable on desktop as well as mobile via an accessible toggle (aria-expanded), and the open/closed state is remembered in localStorage (try/catch guarded)",
+      "steps": [
+        "Open /blog/pi-bench-harness-iterations/ at 1280px",
+        "Click the TOC toggle: list collapses; click again: it expands; aria-expanded updates",
+        "Reload: the last state persists",
+        "At 375px the toggle also works (default collapsed unless user chose otherwise)",
+        "Works in light and dark; no console errors"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'localStorage' assets/js/post-ux.js && grep -q 'aria-expanded' assets/js/post-ux.js"
+      ],
+      "depends_on": [
+        "F045"
+      ],
+      "tags": [
+        "toc"
+      ],
+      "id": "F046",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P001"
+    },
+    {
+      "category": "functional",
+      "priority": 47,
+      "description": "Post footer vertical rhythm: consistent gap between tags, share row and the prev/next cards (cards no longer touch the share row's bottom border), and a clear gap between the two cards",
+      "steps": [
+        "Open /blog/pi-bench-harness-iterations/ at 375, 768 and 1280px in light and dark, scroll to post end",
+        "Via getBoundingClientRect: gap from share row bottom to first .post-nav__card >= 24px; gap between tags, share row and cards is the same rhythm (e.g. 24-32px)",
+        "Gap between prev and next cards >= 12px both side by side (wide) and stacked (375px)",
+        "No horizontal overflow"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'post-nav__card' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "depends_on": [],
+      "tags": [
+        "post-nav"
+      ],
+      "id": "F047",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P001"
     }
   ]
 }

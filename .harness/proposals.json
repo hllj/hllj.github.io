@@ -1,1 +1,336 @@
-{"proposals":[]}
+{
+  "proposals": [
+    {
+      "id": "P001",
+      "status": "approved",
+      "by": "planner",
+      "reason": "Visual defects on pi-bench post: masthead/breadcrumb colors, breadcrumb alignment, TOC style and collapse, post-end spacing",
+      "at": "2026-11-18T10:40:45Z",
+      "payload": {
+        "add": [
+          {
+            "category": "functional",
+            "description": "Masthead and breadcrumb bar share one consistent color scheme (same background as page or one unified header band, light and dark), and both align to the same content width. The site title (.site-title) and tagline (.site-subtitle) must have a visible gap of at least 8px between them at ALL widths where the tagline is shown (including 600-900px; never touching, as in the regression where 'Hop's Log' and 'My little window and wall' abut with zero gap), with the tagline vertically aligned to the title (shared baseline or centered, not a different baseline). The title+tagline group is left-aligned to the masthead/content column left edge with no unexplained empty space to its left (regression: group pushed far right at ~700px), at 375, 600, 768, 1024 and 1280px in light and dark.",
+            "steps": [
+              "Open /blog/pi-bench-harness-iterations/ at 375, 600, 768, 1024 and 1280px in both light and dark",
+              "Verify via getComputedStyle that masthead and breadcrumb backgrounds are the same color (or intentionally one band) and there is no grey band inside a white strip",
+              "Via getBoundingClientRect of .site-title and .site-subtitle (wherever the subtitle is displayed, including 600-900px): subtitle.left - title.right >= 8px, and vertical centers (or text baselines) differ by <= 2px",
+              "Via getBoundingClientRect: .site-title left edge equals the content column left edge (e.g. the post/article container or breadcrumb left edge) within 2px, so the group is not pushed right; compare against the masthead inner left and confirm no large empty area to its left",
+              "Subtitle hidden below 600px is acceptable; in that case just check the title left edge. Do not rely on overflow checks alone: record the measured gap and left-edge values for each width and theme",
+              "Verify masthead inner and breadcrumb left edges align with the content column left edge"
+            ],
+            "verify": [
+              "bash .harness/build.sh && grep -q 'site-subtitle' _site/blog/pi-bench-harness-iterations/index.html"
+            ],
+            "depends_on": [],
+            "tags": [
+              "header"
+            ]
+          },
+          {
+            "category": "functional",
+            "description": "Breadcrumb is correctly styled: all crumbs (Blog link and current title) sit on one shared baseline, with even separator spacing and no taller tap-target offset on the link",
+            "steps": [
+              "Open /blog/pi-bench-harness-iterations/ at 375, 768 and 1280px in light and dark",
+              "Via getBoundingClientRect confirm the Blog link and the '/ title' crumb have the same vertical center/baseline (difference <= 1px)",
+              "Confirm separator spacing is symmetric around '/' and long titles wrap without misalignment",
+              "Confirm the bar's left edge matches the masthead and content width"
+            ],
+            "verify": [
+              "bash .harness/build.sh && grep -q 'post-breadcrumbs' _site/blog/pi-bench-harness-iterations/index.html"
+            ],
+            "depends_on": [],
+            "tags": [
+              "header"
+            ]
+          },
+          {
+            "category": "functional",
+            "description": "Sticky 'On this page' TOC styling fixed: no stray empty grey toggle box beside the title, link text normal weight and not underlined, consistent indentation per heading level and even entry spacing, in light and dark",
+            "steps": [
+              "Open /blog/pi-bench-harness-iterations/ at 1280px (light and dark) and at 375px",
+              "Verify the TOC header shows a proper chevron toggle (no empty grey box)",
+              "Verify getComputedStyle of .toc__menu a: font-weight <= 500, text-decoration none; nested levels have consistent increasing padding-left; entry spacing is uniform",
+              "Verify active-entry highlighting still works on scroll"
+            ],
+            "verify": [
+              "bash .harness/build.sh && grep -q 'class=\"toc\"' _site/blog/pi-bench-harness-iterations/index.html"
+            ],
+            "depends_on": [],
+            "tags": [
+              "toc"
+            ]
+          },
+          {
+            "category": "functional",
+            "description": "TOC is collapsible/expandable on desktop as well as mobile via an accessible toggle (aria-expanded), and the open/closed state is remembered in localStorage (try/catch guarded)",
+            "steps": [
+              "Open /blog/pi-bench-harness-iterations/ at 1280px",
+              "Click the TOC toggle: list collapses; click again: it expands; aria-expanded updates",
+              "Reload: the last state persists",
+              "At 375px the toggle also works (default collapsed unless user chose otherwise)",
+              "Works in light and dark; no console errors"
+            ],
+            "verify": [
+              "bash .harness/build.sh && grep -q 'localStorage' assets/js/post-ux.js && grep -q 'aria-expanded' assets/js/post-ux.js"
+            ],
+            "depends_on": [
+              "F045"
+            ],
+            "tags": [
+              "toc"
+            ]
+          },
+          {
+            "category": "functional",
+            "description": "Post footer vertical rhythm: consistent gap between tags, share row and the prev/next cards (cards no longer touch the share row's bottom border), and a clear gap between the two cards",
+            "steps": [
+              "Open /blog/pi-bench-harness-iterations/ at 375, 768 and 1280px in light and dark, scroll to post end",
+              "Via getBoundingClientRect: gap from share row bottom to first .post-nav__card >= 24px; gap between tags, share row and cards is the same rhythm (e.g. 24-32px)",
+              "Gap between prev and next cards >= 12px both side by side (wide) and stacked (375px)",
+              "No horizontal overflow"
+            ],
+            "verify": [
+              "bash .harness/build.sh && grep -q 'post-nav__card' _site/blog/pi-bench-harness-iterations/index.html"
+            ],
+            "depends_on": [],
+            "tags": [
+              "post-nav"
+            ]
+          }
+        ],
+        "amend": [],
+        "drop": []
+      },
+      "decided_at": "2026-11-18T10:46:37Z"
+    },
+    {
+      "id": "P002",
+      "status": "pending",
+      "by": "planner",
+      "reason": "Blog index /blog/: year pill anchor navigation, card/rule overlap, grid width, back-to-top overflow",
+      "at": "2026-11-18T10:42:25Z",
+      "payload": {
+        "add": [
+          {
+            "category": "functional",
+            "description": "Blog index year pills (/blog/): each pill scrolls to its own year section and lands with the year h2 fully visible below the masthead (scroll-margin-top/scroll-padding-top), also when arriving with #YYYY in the URL, with smooth scrolling and reduced motion honored",
+            "steps": [
+              "Open /blog/ at 375, 768 and 1280px in light and dark",
+              "Check each pill href equals the id of exactly one element (section or h2) and ids are unique; prefer a non-numeric id such as year-2026 if numeric ids cause trouble, updating _layouts/posts.html pills and sections together",
+              "Click each pill and via getBoundingClientRect confirm the year h2 top >= masthead bottom (masthead visible or hidden state noted) and h2 bottom within the viewport",
+              "Load /blog/#2021 and /blog/#2026 directly and confirm the same landing position",
+              "Confirm CSS has html{scroll-behavior:smooth} only inside @media (prefers-reduced-motion:no-preference) and scroll-behavior:auto otherwise (reduced motion cannot be emulated in the pane; inspect the CSS)",
+              "Confirm pill :target section is not hidden under auto-hiding masthead and the focus ring on pills is visible"
+            ],
+            "verify": [
+              "bash .harness/build.sh && python3 -c \"import re,sys;h=open('_site/blog/index.html').read();hs=re.findall(r'class=\\\"taxonomy__index\\\".*?</ul>',h,re.S)[0];hr=re.findall(r'href=\\\"#([^\\\"]+)\\\"',hs);assert len(hr)>=4,hr;[sys.exit('missing id '+x) for x in hr if h.count('id=\\\"'+x+'\\\"')!=1]\"",
+              "grep -rq 'scroll-margin-top' _sass/minimal-mistakes/_post-ux.scss"
+            ],
+            "depends_on": [],
+            "tags": [
+              "blog-index"
+            ]
+          },
+          {
+            "category": "functional",
+            "description": "Blog index year sections: post cards no longer overlap the horizontal rule under the year heading (single rule, clear gap between rule and first card row) in light and dark",
+            "steps": [
+              "Open /blog/ at 375, 768 and 1280px in light and dark",
+              "For each year section compare getBoundingClientRect: h2 bottom (incl. its border) <= first .archive__item top, gap >= 12px",
+              "Confirm only one rule appears between heading and cards (no second rule at card top; check border/hr/::before/::after on .archive__subtitle, .entries-grid, .archive__item) and take a screenshot to verify visually",
+              "Check the 2026 section especially (first section)"
+            ],
+            "verify": [
+              "bash .harness/build.sh && grep -q 'archive__subtitle' _site/blog/index.html"
+            ],
+            "depends_on": [],
+            "tags": [
+              "blog-index"
+            ]
+          },
+          {
+            "category": "functional",
+            "description": "Blog index card grid fills the available width at wide viewports: no empty rightmost column; columns are responsive (1 at 375, 2 at 768, 3 at 1280) and the grid is as wide as the page content area",
+            "steps": [
+              "Open /blog/ at 375, 768 and 1280px (and 1600px) in light and dark",
+              "Inspect getComputedStyle(.entries-grid .grid__wrapper or equivalent).gridTemplateColumns and confirm the number of columns and that the last column right edge is within ~16px of the content container's right edge (no empty third of the row, no float/width:33% leftovers from .archive__item or .list__item)",
+              "Confirm the year with one or two posts (2022, 2023) lays out left aligned without stretching a single card to absurd width",
+              "Confirm documentElement scrollWidth == viewport"
+            ],
+            "verify": [
+              "bash .harness/build.sh && grep -q 'entries-grid' _site/blog/index.html"
+            ],
+            "depends_on": [],
+            "tags": [
+              "blog-index"
+            ]
+          },
+          {
+            "category": "functional",
+            "description": "Blog index 'Back to top' link under each year section is a properly sized control: label fits inside its box (no text overflowing a circle, arrow not clipped), stays readable in light and dark and does not collide with cards. Note: the floating .back-to-top on post pages (single.html) is a separate element and must keep working",
+            "steps": [
+              "Open /blog/ at 375, 768 and 1280px in light and dark, scroll to the end of a year section",
+              "Via getBoundingClientRect/scrollWidth vs clientWidth confirm the .back-to-top text and arrow are fully inside the element box (scrollWidth <= clientWidth) with min 40px tap target",
+              "Verify the selector for the archive link in _layouts/posts.html does not inherit the circular floating-button styles from _post-ux.scss (.back-to-top at ~line 443) or give it a distinct class like .archive__back-top",
+              "Open a post page and confirm the floating circular button there is unchanged and still appears after scrolling",
+              "Screenshot check"
+            ],
+            "verify": [
+              "bash .harness/build.sh && grep -q 'href=\"#page-title\"' _site/blog/index.html"
+            ],
+            "depends_on": [],
+            "tags": [
+              "blog-index"
+            ]
+          }
+        ],
+        "amend": [],
+        "drop": []
+      }
+    },
+    {
+      "id": "P003",
+      "status": "pending",
+      "by": "planner",
+      "reason": "Author sidebar inconsistent between post and other pages; spacing defects; duplicate Email link",
+      "at": "2026-11-18T10:45:12Z",
+      "payload": {
+        "add": [
+          {
+            "category": "functional",
+            "description": "Author sidebar looks and behaves the same on every layout that shows it (post, home, blog index, categories, about): same compact avatar, name/bio sizes, link layout and mobile inline author line with Follow dropdown, in light and dark",
+            "steps": [
+              "In _sass/minimal-mistakes/_post-ux.scss move the 'Compact author sidebar on posts' block (keep the comment marker '/* Compact author sidebar' and keep it before '/* Wide posts') off the .layout--single scope so it targets .sidebar on all layouts; make the print rule generic too (.sidebar)",
+              "bash .harness/build.sh, serve, and open /blog/pi-bench-harness-iterations/, /, /blog/, /categories/ and /about/ at 1280px",
+              "In each, measure via JS getBoundingClientRect/getComputedStyle: .author__avatar img width, .author__name and .author__bio font-size, and the vertical distance between consecutive .author__urls li; values must be equal across pages within 2px (avatar about 72px, links no longer one very tall single column)",
+              "Repeat at 768px and 375px: at <1024px every page shows the compact inline author line (36px avatar, name, 1-line bio) with the Follow dropdown opening on click and no horizontal overflow",
+              "Repeat in dark mode (html[data-theme=dark]); text remains readable and styling identical to light apart from colours"
+            ],
+            "verify": [
+              "bash .harness/build.sh",
+              "python3 -c \"s=open('_sass/minimal-mistakes/_post-ux.scss').read();a=s.index('/* Compact author sidebar');b=s.index('/* Wide posts');blk=s[a:b];import sys;sys.exit(1 if '.layout--single' in blk else 0)\""
+            ],
+            "depends_on": [],
+            "tags": [
+              "sidebar",
+              "scss"
+            ]
+          },
+          {
+            "category": "functional",
+            "description": "Author sidebar spacing defects fixed: at least 12px gap between the Follow button and the location line, and uniform compact row spacing in the links list, on every layout",
+            "steps": [
+              "Add margin/padding in _sass/minimal-mistakes/_post-ux.scss (after F-sidebar unification, same compact block) so .author__urls-wrapper button has >=12px space before the first .author__urls li (location) on desktop; on mobile the dropdown must not overlap the button",
+              "Build and open /blog/pi-bench-harness-iterations/, / and /about/ at 1280px; measure with getBoundingClientRect: location li top minus Follow button bottom >= 12px",
+              "Measure the vertical gap between every pair of consecutive link rows in .author__urls: all equal within 2px and each row pitch <= 32px (no very large gaps)",
+              "Check at 375px and 768px that the dropdown list rows are likewise evenly spaced, in light and dark"
+            ],
+            "verify": [
+              "bash .harness/build.sh",
+              "grep -Eq 'author__urls' _sass/minimal-mistakes/_post-ux.scss"
+            ],
+            "depends_on": [],
+            "tags": [
+              "sidebar",
+              "scss"
+            ]
+          },
+          {
+            "category": "bug",
+            "description": "Author links show 'Email' once: the duplicate Email entry (author.email plus an Email item in author.links) is removed so each link renders a single time",
+            "steps": [
+              "Cause: _config.yml author.links has an Email item (mailto) while author.email is also set, and _includes/author-profile.html renders both the links loop and the author.email block, so Email appears at the start and end",
+              "Fix by removing the redundant 'Email' item from author.links in _config.yml (keep author.email, which renders one Email entry with schema.org markup); also drop or fix any links entry that has a label but no url only if it renders an empty item (the include already skips url-less links, so confirm Website does not render)",
+              "Build and open /, /blog/, /categories/, /about/ and a post: the links list shows Email exactly once and each other link once; no empty icon-only entry"
+            ],
+            "verify": [
+              "bash .harness/build.sh",
+              "python3 -c \"import re,sys;h=open('_site/blog/pi-bench-harness-iterations/index.html').read();m=re.search(r'<ul class=\\\"author__urls.*?</ul>',h,re.S);sys.exit(0 if m and m.group(0).count('fa-envelope')==1 else 1)\"",
+              "python3 -c \"import re,sys\nfor p in ['index.html','blog/index.html','categories/index.html','about/index.html']:\n h=open('_site/'+p).read();m=re.search(r'<ul class=\\\"author__urls.*?</ul>',h,re.S);assert m and m.group(0).count('fa-envelope')==1,p\""
+            ],
+            "depends_on": [],
+            "tags": [
+              "sidebar",
+              "config"
+            ]
+          }
+        ],
+        "amend": [],
+        "drop": []
+      }
+    },
+    {
+      "id": "P004",
+      "status": "pending",
+      "by": "planner",
+      "reason": "Home Recent posts section does not follow blog index card/chip style",
+      "at": "2026-11-18T10:46:03Z",
+      "payload": {
+        "add": [
+          {
+            "category": "functional",
+            "description": "Home page Recent posts entries use the same card markup and styles as the /blog/ cards (shared class, one set of CSS), in a clean single-column card list",
+            "steps": [
+              "Coder: refactor the F032 card block at the end of _sass/minimal-mistakes/_post-ux.scss so the card rules apply to a shared selector (e.g. `.layout--posts, .layout--home` scope, or a shared `.post-card` class added in _includes/archive-single.html) instead of only `.layout--posts .entries-grid`; keep dark-mode and print rules covering both scopes. Do not duplicate the CSS block.",
+              "Home (_layouts/home.html) renders entries as a single-column list of cards with a consistent vertical gap (about 1rem to 1.5rem) and no empty gaps; keep entries_layout list on home and do not change /blog/ grid",
+              "Open / and /blog/ at 375, 768 and 1280px in light and dark; with JS compare getBoundingClientRect and getComputedStyle of the first .archive__item on / versus the first card on /blog/: title font-size and text-decoration (none, underline on hover), border-radius 10px, border width/color, background, meta font-size, excerpt font-size and line clamp, padding/margins; the title must no longer be heavy/huge and underlined",
+              "Hover and keyboard focus (focus-within) on a home card show the same lift and shadow as /blog/",
+              "No horizontal overflow (scrollWidth == viewport) at 375/768/1280; /blog/ and single-post related cards look unchanged"
+            ],
+            "verify": [
+              "bash .harness/build.sh",
+              "python3 - <<'PY'\nimport re\nh=open('_site/index.html').read()\nassert 'archive__item' in h\ns=open('_sass/minimal-mistakes/_post-ux.scss').read()\nassert re.search(r'layout--home|post-card',s),'home/shared card selector missing'\nPY"
+            ],
+            "depends_on": [],
+            "tags": [
+              "home",
+              "post-css"
+            ]
+          },
+          {
+            "category": "functional",
+            "description": "Tags on home page post entries render as pill chips (not a bulleted list), wrap neatly and link to /tags/#slug",
+            "steps": [
+              "Coder: make the chip styling (.archive__item-tags li) apply on the home layout too, and in _includes/archive-single.html render each tag as a link `<a href=\"/tags/#slug\">` (use site.baseurl via relative_url and slugify) inside the li, keeping the chips hidden in single-post related cards and print; reuse the existing chip CSS, no duplicate rules",
+              "On / at 375, 768, 1280 px in light and dark: each tag is a pill (computed display of li not list-item, list-style-type none, border-radius 999px, same font-size, padding and colors as /blog/ chips), laid out horizontally with flex-wrap and 6px gap, no bullet markers, no overflow",
+              "Compare computed styles of a home chip and a /blog/ chip: they must match; link text color keeps AA contrast in light and dark; clicking a chip goes to /tags/#slug and the anchor exists on the tags page",
+              "Focus ring is visible when tabbing to a chip link"
+            ],
+            "verify": [
+              "bash .harness/build.sh",
+              "python3 - <<'PY'\nimport re\nh=open('_site/index.html').read()\nm=re.search(r'<ul class=\"archive__item-tags\".*?</ul>',h,re.S)\nassert m,'no tag list on home'\nassert re.search(r'<li><a href=\"[^\"]*/tags/#[^\"]+\"',m.group(0)),'tags not linked to /tags/#slug'\nPY"
+            ],
+            "depends_on": [],
+            "tags": [
+              "home",
+              "post-css",
+              "tags"
+            ]
+          },
+          {
+            "category": "functional",
+            "description": "Home page Recent posts heading, card list spacing and pagination are styled consistently with the blog index",
+            "steps": [
+              "Coder: style the 'Recent posts' heading (.archive__subtitle in home layout) like the blog index section headings (size, weight, spacing, bottom border if used there) and ensure the .pagination block under the list uses the F033 styles with proper top margin; if a 'view all posts' link is absent add a simple link to /blog/ styled as the existing pill/back-to-top link",
+              "Open / at 375, 768, 1280 px in light and dark: heading, cards and pagination are aligned to the same content width with no big empty gaps between entries (measure gap between consecutive card rects, expect equal gap within 1px) and no horizontal overflow",
+              "Compare heading computed font-size/weight/margins and pagination computed styles with /blog/ equivalents; verify page 2 (/page2/) renders cards with chips identically",
+              "No console errors"
+            ],
+            "verify": [
+              "bash .harness/build.sh",
+              "python3 - <<'PY'\nh=open('_site/index.html').read()\nassert 'Recent' in h and 'archive__item' in h\nassert 'class=\"pagination\"' in h or '/blog/' in h\nPY"
+            ],
+            "depends_on": [],
+            "tags": [
+              "home",
+              "post-css"
+            ]
+          }
+        ],
+        "amend": [],
+        "drop": []
+      }
+    }
+  ]
+}

@@ -18,8 +18,21 @@
         "scaffold"
       ],
       "depends_on": [],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T06:37:56Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T06:37:33Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T06:37:56Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F002",
@@ -42,8 +55,21 @@
       "depends_on": [
         "F001"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T06:38:56Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T06:38:31Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T06:38:56Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F003",
@@ -63,8 +89,21 @@
       "depends_on": [
         "F002"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T06:40:51Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T06:39:43Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T06:40:51Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F004",
@@ -85,8 +124,32 @@
       "depends_on": [
         "F003"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T06:45:13Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T06:41:52Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T06:42:45Z",
+          "event": "fail",
+          "note": "At 1280px on /blog/rsna-knee-abnormality-detection-wrap-up/ body p computed font-size is 19.125px (html scales up at xl breakpoint), max-width 70ch resolves to ~845px, and actual rendered line length is 72-88 chars/line (typically ~81) for Vietnamese paragraphs; step requires not wider than ~75 chars. Coder measured at 17px only. Fix: cap measure in a way that holds at larger root font sizes (e.g. ~60ch or max-width in em tied to char count, or set explicit font-size) and re-measure real chars/line. Other items OK: Inter loaded and applied, line-height 1.7, diacritics render, h2 33.75px/700 with border."
+        },
+        {
+          "at": "2026-11-18T06:44:13Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T06:45:13Z",
+          "event": "pass",
+          "note": ""
+        }
+      ],
+      "notes": "At 1280px on /blog/rsna-knee-abnormality-detection-wrap-up/ body p computed font-size is 19.125px (html scales up at xl breakpoint), max-width 70ch resolves to ~845px, and actual rendered line length is 72-88 chars/line (typically ~81) for Vietnamese paragraphs; step requires not wider than ~75 chars. Coder measured at 17px only. Fix: cap measure in a way that holds at larger root font sizes (e.g. ~60ch or max-width in em tied to char count, or set explicit font-size) and re-measure real chars/line. Other items OK: Inter loaded and applied, line-height 1.7, diacritics render, h2 33.75px/700 with border."
     },
     {
       "id": "F005",
@@ -108,8 +171,21 @@
       "depends_on": [
         "F003"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T06:46:56Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T06:46:21Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T06:46:56Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F006",
@@ -133,8 +209,21 @@
       "depends_on": [
         "F002"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T06:48:41Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T06:47:42Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T06:48:41Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F007",
@@ -156,8 +245,21 @@
       "depends_on": [
         "F003"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T06:51:47Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T06:50:50Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T06:51:47Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F008",
@@ -178,8 +280,21 @@
       "depends_on": [
         "F007"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T06:54:48Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T06:52:53Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T06:54:48Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F009",
@@ -200,8 +315,21 @@
       "depends_on": [
         "F007"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T06:56:29Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T06:55:45Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T06:56:29Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F010",
@@ -223,8 +351,21 @@
       "depends_on": [
         "F002"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T06:59:34Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T06:58:30Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T06:59:34Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F011",
@@ -243,8 +384,21 @@
       "depends_on": [
         "F003"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T07:01:18Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T07:00:29Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T07:01:18Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F012",
@@ -266,8 +420,21 @@
       "depends_on": [
         "F011"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T07:04:09Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T07:02:22Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T07:04:09Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F013",
@@ -286,8 +453,21 @@
       "depends_on": [
         "F011"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T07:06:04Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T07:05:29Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T07:06:04Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F014",
@@ -307,8 +487,21 @@
       "depends_on": [
         "F003"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T07:08:04Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T07:07:20Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T07:08:04Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F015",
@@ -330,8 +523,21 @@
       "depends_on": [
         "F014"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T07:09:31Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T07:08:40Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T07:09:31Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F016",
@@ -352,8 +558,32 @@
       "depends_on": [
         "F014"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T07:11:54Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T07:10:03Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T07:10:35Z",
+          "event": "fail",
+          "note": "Lazy/decoding attrs present (6/6 content imgs on rsna wrap-up), alt ok. But layout-shift goal not met: built HTML imgs have no width/height and no CSS aspect-ratio; post-ux.js sets width/height only AFTER load, which is too late. An unloaded lazy img has 0 height (verified: new Image loading=lazy appended to .page__content measures height 0), so the page jumps when each image loads. Need dimensions reserved before load (e.g. build-time width/height or aspect-ratio via per-image data, or placeholder min-height)."
+        },
+        {
+          "at": "2026-11-18T07:11:24Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T07:11:54Z",
+          "event": "pass",
+          "note": ""
+        }
+      ],
+      "notes": "Lazy/decoding attrs present (6/6 content imgs on rsna wrap-up), alt ok. But layout-shift goal not met: built HTML imgs have no width/height and no CSS aspect-ratio; post-ux.js sets width/height only AFTER load, which is too late. An unloaded lazy img has 0 height (verified: new Image loading=lazy appended to .page__content measures height 0), so the page jumps when each image loads. Need dimensions reserved before load (e.g. build-time width/height or aspect-ratio via per-image data, or placeholder min-height)."
     },
     {
       "id": "F017",
@@ -375,8 +605,21 @@
       "depends_on": [
         "F003"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T07:13:04Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T07:12:32Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T07:13:04Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F018",
@@ -394,8 +637,21 @@
       "depends_on": [
         "F003"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T07:14:24Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T07:14:03Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T07:14:24Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F019",
@@ -413,8 +669,21 @@
       "depends_on": [
         "F003"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T07:16:15Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T07:15:42Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T07:16:15Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F020",
@@ -439,8 +708,21 @@
       "depends_on": [
         "F002"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T07:17:56Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T07:17:17Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T07:17:56Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F021",
@@ -459,8 +741,32 @@
       "depends_on": [
         "F020"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T07:21:24Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T07:19:29Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T07:20:15Z",
+          "event": "fail",
+          "note": "Dark mode on /blog/rsna-knee-abnormality-detection-wrap-up/ (TOC present): .toc .nav__title 'On this page' is rgb(230,237,243) on rgb(31,111,235) = 3.92:1, below 4.5:1 (description: legible contrast). Coder audited only pi-coding-agent-setup which has no TOC. Fix: darken that bg or use darker TOC header. Everything else (no light patches, code, tables, images brightness .92, footer, related, share) passed on both posts."
+        },
+        {
+          "at": "2026-11-18T07:20:44Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T07:21:24Z",
+          "event": "pass",
+          "note": ""
+        }
+      ],
+      "notes": "Dark mode on /blog/rsna-knee-abnormality-detection-wrap-up/ (TOC present): .toc .nav__title 'On this page' is rgb(230,237,243) on rgb(31,111,235) = 3.92:1, below 4.5:1 (description: legible contrast). Coder audited only pi-coding-agent-setup which has no TOC. Fix: darken that bg or use darker TOC header. Everything else (no light patches, code, tables, images brightness .92, footer, related, share) passed on both posts."
     },
     {
       "id": "F022",
@@ -483,8 +789,21 @@
       "depends_on": [
         "F002"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T07:23:27Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T07:22:17Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T07:23:27Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F023",
@@ -505,8 +824,21 @@
       "depends_on": [
         "F002"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T07:25:43Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T07:24:31Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T07:25:43Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F024",
@@ -526,8 +858,21 @@
       "depends_on": [
         "F001"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T07:27:55Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T07:27:10Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T07:27:55Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F025",
@@ -546,8 +891,21 @@
       "depends_on": [
         "F003"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T07:29:49Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T07:29:05Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T07:29:49Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F026",
@@ -566,8 +924,32 @@
       "depends_on": [
         "F003"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T10:03:45Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T10:01:31Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:02:36Z",
+          "event": "fail",
+          "note": "At 1280px on rsna wrap-up, .page__content is 944px and images/tables/pre span the full 944px (x318-1262), but the sticky floated TOC (.sidebar__right.sticky, z-index 10, opaque bg, x1032-1262, ~1559px tall) sits on top of them: while scrolled (scrollY~13000) an img at y-249..459 overlaps the TOC rect and document.elementFromPoint at the overlap returns H4.nav__title, so the right ~230px (24%) of wide figures/tables is covered by the TOC. Expected: wide figures usable alongside a working TOC without occlusion. Text measure itself is fine (p 402px, ~62 chars/line, scrollWidth 1280)."
+        },
+        {
+          "at": "2026-11-18T10:03:04Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:03:45Z",
+          "event": "pass",
+          "note": ""
+        }
+      ],
+      "notes": "At 1280px on rsna wrap-up, .page__content is 944px and images/tables/pre span the full 944px (x318-1262), but the sticky floated TOC (.sidebar__right.sticky, z-index 10, opaque bg, x1032-1262, ~1559px tall) sits on top of them: while scrolled (scrollY~13000) an img at y-249..459 overlaps the TOC rect and document.elementFromPoint at the overlap returns H4.nav__title, so the right ~230px (24%) of wide figures/tables is covered by the TOC. Expected: wide figures usable alongside a working TOC without occlusion. Text measure itself is fine (p 402px, ~62 chars/line, scrollWidth 1280)."
     },
     {
       "id": "F027",
@@ -588,8 +970,21 @@
       "depends_on": [
         "F003"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T10:04:54Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T10:04:18Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:04:54Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F028",
@@ -612,8 +1007,21 @@
       "depends_on": [
         "F003"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T10:06:16Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T10:05:42Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:06:16Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F029",
@@ -635,8 +1043,21 @@
       "depends_on": [
         "F003"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T10:07:24Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T10:06:50Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:07:24Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F030",
@@ -658,8 +1079,21 @@
       "depends_on": [
         "F003"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T10:08:36Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T10:08:01Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:08:36Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F031",
@@ -683,8 +1117,21 @@
       "depends_on": [
         "F003"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T10:10:02Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T10:09:12Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:10:02Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F032",
@@ -705,8 +1152,21 @@
       "depends_on": [
         "F003"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T10:11:19Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T10:10:46Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:11:19Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F033",
@@ -725,8 +1185,21 @@
       "depends_on": [
         "F032"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T10:12:35Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T10:12:01Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:12:35Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F034",
@@ -746,8 +1219,21 @@
       "depends_on": [
         "F005"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T10:13:55Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T10:13:05Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:13:55Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F035",
@@ -769,8 +1255,32 @@
       "depends_on": [
         "F003"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T10:18:22Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T10:14:37Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:15:31Z",
+          "event": "fail",
+          "note": "Contrast AA not met. On /blog/pi-bench-harness-iterations/ in-content links (and TOC links) are rgb(42,109,244) on page bg #eee = 3.94:1 (17px and 11.7px text, needs 4.5:1); footer copyright is white on #0092ca = 3.52:1 at 11px text (needs 4.5:1). Coder's own known issue says contrast not audited. Other parts work: skip links appear fixed with 3px outline, landmarks labelled, :focus-visible rings on all 79 focusables, prefers-reduced-motion CSS present (could not emulate in browser)."
+        },
+        {
+          "at": "2026-11-18T10:17:44Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:18:22Z",
+          "event": "pass",
+          "note": ""
+        }
+      ],
+      "notes": "Contrast AA not met. On /blog/pi-bench-harness-iterations/ in-content links (and TOC links) are rgb(42,109,244) on page bg #eee = 3.94:1 (17px and 11.7px text, needs 4.5:1); footer copyright is white on #0092ca = 3.52:1 at 11px text (needs 4.5:1). Coder's own known issue says contrast not audited. Other parts work: skip links appear fixed with 3px outline, landmarks labelled, :focus-visible rings on all 79 focusables, prefers-reduced-motion CSS present (could not emulate in browser)."
     },
     {
       "id": "F036",
@@ -789,8 +1299,21 @@
       "depends_on": [
         "F033"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T10:21:24Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T10:20:38Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:21:24Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F037",
@@ -811,8 +1334,32 @@
       "depends_on": [
         "F003"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T10:24:28Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T10:22:17Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:23:17Z",
+          "event": "fail",
+          "note": "Real print output (headless Chrome --print-to-pdf of /blog/pi-bench-harness-iterations/, 13 pages): masthead/TOC/share/comments/related/sidebar hidden, URLs appended, no horizontal overflow (max x 578 < 612pt). BUT the post-header hero overlay is not neutralized: page 1 prints the dark overlay_image banner with the title, meta and lead in WHITE text on top of it, and then the lead paragraph is duplicated below. With default print settings (background graphics off) the white title/meta/lead on white paper would be invisible, and it wastes the top of the page; not 'clean black on white, only title/meta/content'. Fix: in @media print force .page__hero, .page__hero--overlay and their title/meta/lead to background:none, color:#000, padding small, and drop the lead duplicate or hero image."
+        },
+        {
+          "at": "2026-11-18T10:23:56Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:24:28Z",
+          "event": "pass",
+          "note": ""
+        }
+      ],
+      "notes": "Real print output (headless Chrome --print-to-pdf of /blog/pi-bench-harness-iterations/, 13 pages): masthead/TOC/share/comments/related/sidebar hidden, URLs appended, no horizontal overflow (max x 578 < 612pt). BUT the post-header hero overlay is not neutralized: page 1 prints the dark overlay_image banner with the title, meta and lead in WHITE text on top of it, and then the lead paragraph is duplicated below. With default print settings (background graphics off) the white title/meta/lead on white paper would be invisible, and it wastes the top of the page; not 'clean black on white, only title/meta/content'. Fix: in @media print force .page__hero, .page__hero--overlay and their title/meta/lead to background:none, color:#000, padding small, and drop the lead duplicate or hero image."
     },
     {
       "id": "F038",
@@ -832,8 +1379,21 @@
       "depends_on": [
         "F001"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T10:25:31Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T10:25:06Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:25:31Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F039",
@@ -853,8 +1413,21 @@
       "depends_on": [
         "F001"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T10:26:27Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T10:26:00Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:26:27Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F040",
@@ -873,8 +1446,21 @@
       "depends_on": [
         "F003"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T10:27:35Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T10:27:05Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:27:35Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F041",
@@ -894,8 +1480,21 @@
       "depends_on": [
         "F003"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T10:28:34Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T10:28:02Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:28:34Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F042",
@@ -916,8 +1515,147 @@
         "F021",
         "F039"
       ],
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T10:33:09Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T10:29:30Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:30:22Z",
+          "event": "fail",
+          "note": "At 375px viewport the masthead is broken on all posts (CNN-Architecture-Part-2, pi-coding-agent-setup): .site-subtitle (x 73-173) overlaps the Home menu item (x 155-219) so Home renders clipped as 'ome' behind the tagline 'My little window and wall' (verified by screenshot zoom + getBoundingClientRect after fresh load). Coder only checked scrollWidth, not visual layout. Fix: hide subtitle or wrap/shrink at narrow widths. Other checks: no console errors, no horizontal overflow, no broken images at 375 light."
+        },
+        {
+          "at": "2026-11-18T10:31:42Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:33:09Z",
+          "event": "pass",
+          "note": ""
+        }
+      ],
+      "notes": "At 375px viewport the masthead is broken on all posts (CNN-Architecture-Part-2, pi-coding-agent-setup): .site-subtitle (x 73-173) overlaps the Home menu item (x 155-219) so Home renders clipped as 'ome' behind the tagline 'My little window and wall' (verified by screenshot zoom + getBoundingClientRect after fresh load). Coder only checked scrollWidth, not visual layout. Fix: hide subtitle or wrap/shrink at narrow widths. Other checks: no console errors, no horizontal overflow, no broken images at 375 light."
+    },
+    {
+      "category": "functional",
+      "priority": 43,
+      "description": "Masthead and breadcrumb bar share one consistent color scheme (same background as page or one unified header band, light and dark), and both align to the same content width. The site title (.site-title) and tagline (.site-subtitle) must have a visible gap of at least 8px between them at ALL widths where the tagline is shown (including 600-900px; never touching, as in the regression where 'Hop's Log' and 'My little window and wall' abut with zero gap), with the tagline vertically aligned to the title (shared baseline or centered, not a different baseline). The title+tagline group is left-aligned to the masthead/content column left edge with no unexplained empty space to its left (regression: group pushed far right at ~700px), at 375, 600, 768, 1024 and 1280px in light and dark.",
+      "steps": [
+        "Open /blog/pi-bench-harness-iterations/ at 375, 600, 768, 1024 and 1280px in both light and dark",
+        "Verify via getComputedStyle that masthead and breadcrumb backgrounds are the same color (or intentionally one band) and there is no grey band inside a white strip",
+        "Via getBoundingClientRect of .site-title and .site-subtitle (wherever the subtitle is displayed, including 600-900px): subtitle.left - title.right >= 8px, and vertical centers (or text baselines) differ by <= 2px",
+        "Via getBoundingClientRect: .site-title left edge equals the content column left edge (e.g. the post/article container or breadcrumb left edge) within 2px, so the group is not pushed right; compare against the masthead inner left and confirm no large empty area to its left",
+        "Subtitle hidden below 600px is acceptable; in that case just check the title left edge. Do not rely on overflow checks alone: record the measured gap and left-edge values for each width and theme",
+        "Verify masthead inner and breadcrumb left edges align with the content column left edge"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'site-subtitle' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "depends_on": [],
+      "tags": [
+        "header"
+      ],
+      "id": "F043",
+      "passes": false,
       "status": "todo",
-      "passes": false
+      "source": "proposal:P001"
+    },
+    {
+      "category": "functional",
+      "priority": 44,
+      "description": "Breadcrumb is correctly styled: all crumbs (Blog link and current title) sit on one shared baseline, with even separator spacing and no taller tap-target offset on the link",
+      "steps": [
+        "Open /blog/pi-bench-harness-iterations/ at 375, 768 and 1280px in light and dark",
+        "Via getBoundingClientRect confirm the Blog link and the '/ title' crumb have the same vertical center/baseline (difference <= 1px)",
+        "Confirm separator spacing is symmetric around '/' and long titles wrap without misalignment",
+        "Confirm the bar's left edge matches the masthead and content width"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'post-breadcrumbs' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "depends_on": [],
+      "tags": [
+        "header"
+      ],
+      "id": "F044",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P001"
+    },
+    {
+      "category": "functional",
+      "priority": 45,
+      "description": "Sticky 'On this page' TOC styling fixed: no stray empty grey toggle box beside the title, link text normal weight and not underlined, consistent indentation per heading level and even entry spacing, in light and dark",
+      "steps": [
+        "Open /blog/pi-bench-harness-iterations/ at 1280px (light and dark) and at 375px",
+        "Verify the TOC header shows a proper chevron toggle (no empty grey box)",
+        "Verify getComputedStyle of .toc__menu a: font-weight <= 500, text-decoration none; nested levels have consistent increasing padding-left; entry spacing is uniform",
+        "Verify active-entry highlighting still works on scroll"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'class=\"toc\"' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "depends_on": [],
+      "tags": [
+        "toc"
+      ],
+      "id": "F045",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P001"
+    },
+    {
+      "category": "functional",
+      "priority": 46,
+      "description": "TOC is collapsible/expandable on desktop as well as mobile via an accessible toggle (aria-expanded), and the open/closed state is remembered in localStorage (try/catch guarded)",
+      "steps": [
+        "Open /blog/pi-bench-harness-iterations/ at 1280px",
+        "Click the TOC toggle: list collapses; click again: it expands; aria-expanded updates",
+        "Reload: the last state persists",
+        "At 375px the toggle also works (default collapsed unless user chose otherwise)",
+        "Works in light and dark; no console errors"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'localStorage' assets/js/post-ux.js && grep -q 'aria-expanded' assets/js/post-ux.js"
+      ],
+      "depends_on": [
+        "F045"
+      ],
+      "tags": [
+        "toc"
+      ],
+      "id": "F046",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P001"
+    },
+    {
+      "category": "functional",
+      "priority": 47,
+      "description": "Post footer vertical rhythm: consistent gap between tags, share row and the prev/next cards (cards no longer touch the share row's bottom border), and a clear gap between the two cards",
+      "steps": [
+        "Open /blog/pi-bench-harness-iterations/ at 375, 768 and 1280px in light and dark, scroll to post end",
+        "Via getBoundingClientRect: gap from share row bottom to first .post-nav__card >= 24px; gap between tags, share row and cards is the same rhythm (e.g. 24-32px)",
+        "Gap between prev and next cards >= 12px both side by side (wide) and stacked (375px)",
+        "No horizontal overflow"
+      ],
+      "verify": [
+        "bash .harness/build.sh && grep -q 'post-nav__card' _site/blog/pi-bench-harness-iterations/index.html"
+      ],
+      "depends_on": [],
+      "tags": [
+        "post-nav"
+      ],
+      "id": "F047",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P001"
     }
   ]
 }
