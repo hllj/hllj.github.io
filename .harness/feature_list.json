@@ -741,16 +741,22 @@
       "depends_on": [
         "F020"
       ],
-      "status": "claimed",
+      "status": "failing",
       "passes": false,
-      "updated_at": "2026-11-18T07:19:29Z",
+      "updated_at": "2026-11-18T07:20:15Z",
       "attempts": [
         {
           "at": "2026-11-18T07:19:29Z",
           "event": "claim",
           "note": ""
+        },
+        {
+          "at": "2026-11-18T07:20:15Z",
+          "event": "fail",
+          "note": "Dark mode on /blog/rsna-knee-abnormality-detection-wrap-up/ (TOC present): .toc .nav__title 'On this page' is rgb(230,237,243) on rgb(31,111,235) = 3.92:1, below 4.5:1 (description: legible contrast). Coder audited only pi-coding-agent-setup which has no TOC. Fix: darken that bg or use darker TOC header. Everything else (no light patches, code, tables, images brightness .92, footer, related, share) passed on both posts."
         }
-      ]
+      ],
+      "notes": "Dark mode on /blog/rsna-knee-abnormality-detection-wrap-up/ (TOC present): .toc .nav__title 'On this page' is rgb(230,237,243) on rgb(31,111,235) = 3.92:1, below 4.5:1 (description: legible contrast). Coder audited only pi-coding-agent-setup which has no TOC. Fix: darken that bg or use darker TOC header. Everything else (no light patches, code, tables, images brightness .92, footer, related, share) passed on both posts."
     },
     {
       "id": "F022",
