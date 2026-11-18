@@ -298,3 +298,6 @@ init ok. In browser: toggle focuses #search; "harness" -> 2 results with title+s
 
 ## 2026-11-18 session 48 - F041 (coder)
 Footer template already skipped links without url; removed the empty GitLab/Bitbucket entries from footer.links in _config.yml. Built: no fa-gitlab/fa-bitbucket in post HTML; footer shows Twitter, Facebook, GitHub, Instagram, Feed in one aligned row (same y, 40px high), copyright line present, no overflow. Verify cmd passes. Known: none.
+
+## F041 Test report (tester, session 48)
+init ok. Live post footer: links Twitter, Facebook, GitHub, Instagram, Feed (all with hrefs, same row, 40px high), then Jekyll/Minimal Mistakes row, copyright line present; no gitlab/bitbucket on post, /, /blog/, 404. At 320px: no overflow, icons wrap to 2 rows. Result: pass.
