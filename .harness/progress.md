@@ -35,3 +35,6 @@ Added Inter (Google Fonts, vietnamese subset) link in _includes/head/custom.html
 
 ## 2026-11-18 - F004 (tester)
 init ok; rebuilt; main.css has Inter. Browser 1280px on RSNA wrap-up: Inter loaded, lh 1.7 (32.5px), mb 27px, h2 33.75px/700 bordered, vietnamese glyphs ok. But p font-size 19.125px, width 845px, measured 72-88 chars/line (avg ~81) > ~75 limit. Post has no h3 (hierarchy only h2/h4; h4 is white in hero overlay). Result: fail (measure too wide at 1280).
+
+## F004 retry (session 5)
+Cause of prior fail: 70ch at 19.125px root (xl) gave ~81 chars/line. Changed .page__content text-block max-width to 50ch in _sass/minimal-mistakes/_post-ux.scss. Measured at 1280px on RSNA wrap-up (per-character range rects, 30 long paragraphs): mean 62.5, max 71 chars/line; max-width 603px. verify command passes. Note: _site must be rebuilt (bash .harness/build.sh) before measuring.
