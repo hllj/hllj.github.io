@@ -295,3 +295,6 @@ Search (lunr overlay) already focused input on open and showed title+snippet. Ad
 
 ## F040 Test report (tester, session 47)
 init ok. In browser: toggle focuses #search; "harness" -> 2 results with title+snippet; gibberish and an HTML-injection string -> escaped "No results for ..." message; unicode "viet" returns 18 results; clearing shows hint; results aria-live=polite. Nit: hint not shown on very first open until query cleared. Result: pass.
+
+## 2026-11-18 session 48 - F041 (coder)
+Footer template already skipped links without url; removed the empty GitLab/Bitbucket entries from footer.links in _config.yml. Built: no fa-gitlab/fa-bitbucket in post HTML; footer shows Twitter, Facebook, GitHub, Instagram, Feed in one aligned row (same y, 40px high), copyright line present, no overflow. Verify cmd passes. Known: none.
