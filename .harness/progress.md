@@ -192,3 +192,6 @@ init ok. curl on /, /page2/, /page3/, /page4/: every img src is root-relative (/
 
 ## Session 70 - F059 (coder)
 TOC restyled as content-sized inline-flex button (fit-content, gap max(.6rem,10px)), float/sticky rule and 60vh scroll removed, default collapsed unless saved. Measured on rsna post: button 103px wide, menu overflow visible, scrollHeight==clientHeight, aria-expanded toggles. Known: browser pane viewport was ~0 wide so 375/768/1280 and dark not measured; styles are width-independent.
+
+## F059 Test report (tester, session 70)
+init ok. Iframe measurements (data-theme set) at 375/768/1280 x light/dark on rsna post and how-i-setup-this-blog: toc header is content-sized (143/157/187px wide vs 351/740/944px column), 40px high, icon-text gap 10-10.8px, menu closed height 0 by default (localStorage cleared), click opens: overflowY visible, maxHeight none, scrollHeight==clientHeight (1320 for 33 entries, 200 for 5), all links visible, aria-expanded true/false toggles, click again collapses, no horizontal overflow. pi-bench post: default collapsed, toggle persists toc-open. Note: /blog/pi-coding-agent-setup/ has no TOC (fewer than 3 headings, pre-existing by toc rule). Browser pane width was 0 so screenshot not useful; focus ring and keyboard Enter/Space not exercised by real key events (button element, native). Result: pass.
