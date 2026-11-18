@@ -64,7 +64,7 @@
   update();
 })();
 
-// Mobile TOC: collapsible block (collapsed by default below 1024px; CSS only applies the collapse there)
+// Mobile TOC: collapsible block (open by default on desktop, collapsed on mobile unless a saved choice exists)
 (function () {
   "use strict";
   var toc = document.querySelector(".page__content .toc");
@@ -80,13 +80,18 @@
   btn.innerHTML = '<span class="toc__chevron" aria-hidden="true"></span>';
   title.appendChild(btn);
   toc.classList.add("toc--js");
-  var set = function (open) {
+  var KEY = "toc-open";
+  var set = function (open, persist) {
     toc.classList.toggle("is-open", open);
     btn.setAttribute("aria-expanded", open ? "true" : "false");
+    if (persist) { try { localStorage.setItem(KEY, open ? "1" : "0"); } catch (e) {} }
   };
-  title.addEventListener("click", function () { set(!toc.classList.contains("is-open")); });
+  var saved = null;
+  try { saved = localStorage.getItem(KEY); } catch (e) {}
+  set(saved === "1" ? true : saved === "0" ? false : !window.matchMedia("(max-width: 1023px)").matches, false);
+  title.addEventListener("click", function () { set(!toc.classList.contains("is-open"), true); });
   menu.addEventListener("click", function (e) {
-    if (e.target.closest("a") && window.matchMedia("(max-width: 1023px)").matches) set(false);
+    if (e.target.closest("a") && window.matchMedia("(max-width: 1023px)").matches) set(false, false);
   });
 })();
 

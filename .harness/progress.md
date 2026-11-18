@@ -339,3 +339,6 @@ init ok. Browser at 1280 and 375 on pi-bench-harness-iterations: desktop toggle 
 
 ## F045 Test report (tester, session 54)
 init ok, rebuilt. pi-bench-harness-iterations: 17 TOC links, gap between consecutive links 0 everywhere (even spacing, nested group gap fixed) at 1024 light; weights 500 active/400 others, underline none, padding 9/21px; desktop toggle hidden. 375 dark: chevron toggle flex 40x40 transparent bg, expands, gaps uniform, scrollWidth==375. Active highlight tracks real wheel scroll (Tong quan -> Viec tiep theo), exactly one active. Result: pass.
+
+## 2026-11-18 session 55 - F046 (coder)
+TOC collapse now at all widths: CSS collapse rules moved out of the max-width media query in _post-ux.scss, desktop toggle-hide rules removed. post-ux.js: state in localStorage key `toc-open` (try/catch), default open >=1024 / closed <1024 unless saved; only manual toggles persist (link-click auto-close on mobile does not). Verified at 1024 and 375: toggle/aria-expanded/display, persistence across reload, scrollWidth==viewport. Dark mode uses currentColor only. Known: none.
