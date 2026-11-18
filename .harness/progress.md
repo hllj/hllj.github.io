@@ -238,3 +238,6 @@ init ok. /page2/ at 1024: pagination pills 40px, radius 999px, current "2" dark 
 
 ## 2026-11-18 session 38 - F034 (coder)
 post-meta.html: read time now ceil(words/wpm), min 1 (was floor+1); 'Updated <date>' span shown only when last_modified_at set and differs from date. Added last_modified_at: 2026-11-18 to pi-bench post as sample. Verified: pi-bench shows Updated + 20 min read, pi-coding-agent-setup has no Updated span; verify cmd passes. Known: none.
+
+## F034 Test report (tester, session 38)
+init ok. pi-bench (last_modified_at set): meta shows date, "Updated November 18, 2026" (page__meta-updated), "20 min read". The other 3 /blog/ posts have no Updated span (only pi-bench sets last_modified_at). Read time checked against Jekyll's own strip_html/number_of_words: formula is ceil(words/200), min 1; rendered counts 226->2, 3211->17, ~4000->20 (section word count includes TOC/share so slightly higher), 6138->~30. Not exercised: last_modified_at equal to date (read from template logic only). Result: pass.
