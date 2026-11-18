@@ -107,3 +107,6 @@ Added image lightbox in post-ux.js (click/Enter on .page__content img opens fixe
 
 ## F015 Test report (tester, session 16)
 init ok. rsna-knee-abnormality-detection-wrap-up (6 triggers). Open: fixed full-viewport overlay (z 10000), focus on close button, full-size 1200px image shown at 960px, html scroll locked. Esc closes, focus returns to opener, scroll restored. Enter on focused image opens; close button, overlay click and clicking the big image all close and return focus. Rapid double click yields one overlay. Teaser images (related) do not open it. Esc/Tab handled via keydown trap. Real mouse not used (synthetic clicks in pane). Result: pass.
+
+## 2026-11-18 session 17 - F016
+Layout single.html adds loading="lazy" decoding="async" to all content imgs via Liquid replace; post-ux.js ensures lazy/async/alt and sets width/height from natural size on load (CSS height:auto keeps ratio). Verified: rsna wrap-up built HTML has 6 lazy imgs; verify grep passes. Known: width/height only set after load (no intrinsic dims in markdown source); pi-bench post has no images.

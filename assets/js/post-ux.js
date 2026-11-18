@@ -222,3 +222,21 @@
     });
   });
 })();
+
+// Images: lazy-load, alt fallback, and reserve space (width/height) to avoid layout shift
+(function () {
+  "use strict";
+  var imgs = document.querySelectorAll(".page__content img");
+  Array.prototype.forEach.call(imgs, function (img) {
+    if (!img.hasAttribute("loading")) img.setAttribute("loading", "lazy");
+    if (!img.hasAttribute("decoding")) img.setAttribute("decoding", "async");
+    if (!img.hasAttribute("alt")) img.setAttribute("alt", "");
+    var reserve = function () {
+      if (img.naturalWidth && !img.getAttribute("width") && !img.getAttribute("height")) {
+        img.setAttribute("width", img.naturalWidth);
+        img.setAttribute("height", img.naturalHeight);
+      }
+    };
+    if (img.complete) reserve(); else img.addEventListener("load", reserve, { once: true });
+  });
+})();

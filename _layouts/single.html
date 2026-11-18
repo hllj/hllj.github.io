@@ -34,6 +34,7 @@ layout: default
       {% endunless %}
 
       <section class="page__content" itemprop="text">
+        {% assign content = content | replace: '<img ', '<img loading="lazy" decoding="async" ' %}
         {% assign toc_count = content | split: '<h2' | size | plus: content.size | minus: content.size | minus: 1 %}{% assign toc_h3 = content | split: '<h3' | size | minus: 1 %}{% assign toc_count = toc_count | plus: toc_h3 %}
         {% assign toc_on = false %}
         {% if page.toc == true %}{% assign toc_on = true %}
