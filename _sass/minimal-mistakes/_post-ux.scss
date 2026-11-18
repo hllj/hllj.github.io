@@ -698,7 +698,7 @@ html[data-theme="dark"] .layout--posts .entries-grid .archive__item-tags li,
     &.current, &.disabled.current { opacity: 1; background: #1f2933 !important; border-color: #1f2933; color: #fff !important; pointer-events: none; } }
 }
 .taxonomy__section { margin-bottom: 2.5rem; padding-top: .5rem; }
-.taxonomy__section .archive__subtitle { margin: 0 0 1rem; padding-bottom: .4rem; border-bottom: 1px solid #d9dee3; font-size: 1.25rem; }
+.taxonomy__section .archive__subtitle { margin: 0 0 1.5rem; padding-bottom: .4rem; border-bottom: 2px solid #c3ccd5; font-size: 1.25rem; }
 .taxonomy__section .entries-list .archive__item, .taxonomy__section .list__item .archive__item { border-radius: 8px; }
 .taxonomy__index { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 0 0 2rem;
   li { margin: 0; }
