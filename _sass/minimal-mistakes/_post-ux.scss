@@ -789,3 +789,35 @@ html[data-theme="dark"] :where(a, button, input, select, textarea, summary, [tab
 .page__content h2 .header-link, .page__content h3 .header-link, .page__content h4 .header-link { line-height: 1; vertical-align: middle; }
 .author__urls-wrapper button.btn { min-height: 40px; min-width: 40px; padding-top: 0; padding-bottom: 0; }
 .layout--single .sidebar .author__urls-wrapper button.btn { min-height: 40px; min-width: 40px; }
+
+/* ==========================================================================
+   Print (F037): single column, title + meta + content only
+   ========================================================================== */
+@media print {
+  .skip-links, .masthead, .masthead__inner-wrap, .reading-progress, .back-to-top,
+  .post-breadcrumbs, .toc, .sidebar__right, .page__share, .post-nav, .pagination,
+  .page__comments, .page__related, .page__footer, .page__taxonomy, footer.page__meta,
+  .code-copy, .copy-btn, .lightbox, .sidebar, .author__avatar, .page__footer-follow {
+    display: none !important;
+  }
+  html, body { background: #fff !important; color: #000 !important; font-size: 12pt; }
+  #main { display: block !important; width: 100% !important; max-width: none !important; margin: 0 !important; padding: 0 !important; }
+  .page, .layout--single .page, .page__inner-wrap, .page__content, .page__title, .page__lead {
+    float: none !important; width: 100% !important; max-width: none !important;
+    margin-left: 0 !important; margin-right: 0 !important; padding-left: 0 !important; padding-right: 0 !important;
+  }
+  .page__title { font-size: 24pt; margin-top: 0; }
+  .page__content a, .page__content a:visited { color: #000 !important; text-decoration: underline; }
+  .page__content a[href^="http"]::after, .page__content a[href^="//"]::after { content: " (" attr(href) ")"; font-size: 0.85em; word-break: break-all; overflow-wrap: anywhere; font-weight: normal; }
+  .page__content a[href^="#"]::after, .page__content a.header-link::after, .page__content a[href^="javascript"]::after,
+  .page__content a:has(> img)::after { content: none !important; }
+  .header-link, .page__content .header-link { display: none !important; }
+  pre, .highlight, div.highlighter-rouge { white-space: pre-wrap !important; overflow: visible !important; word-break: break-word; overflow-wrap: anywhere; max-width: 100% !important; page-break-inside: avoid; border: 1px solid #999; background: #fff !important; color: #000 !important; }
+  pre code, pre * { white-space: pre-wrap !important; color: #000 !important; background: transparent !important; }
+  code { overflow-wrap: anywhere; }
+  .table-wrap { overflow: visible !important; max-width: 100% !important; }
+  table { max-width: 100% !important; page-break-inside: auto; }
+  tr, img, figure { page-break-inside: avoid; }
+  img { max-width: 100% !important; height: auto !important; }
+  h1, h2, h3, h4 { page-break-after: avoid; }
+}

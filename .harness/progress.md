@@ -264,3 +264,6 @@ Responsive audit: measured via same-origin iframes at 320/375/768/1024/1440 on 3
 
 ## F036 Test report (tester, session 42)
 init ok. Via same-origin iframes at 320/375/768/1024/1440 on pi-bench post, pi-coding-agent-setup, rsna wrap-up, how-i-setup-this-blog, /blog/, /page2/, /categories/: documentElement scrollWidth == clientWidth in all 35 combos. Own tap-target audit (all a/button, excluding skip links and inline prose links by design): 0 below 40px; spot check at 320 on pi-bench shows nav, toggles, header anchors, copy buttons, Follow all 40px. Overflowing elements at 320 are code spans inside scrollable code blocks (no page overflow). Inline prose links 16-37px high (excluded, reasonable). Dark mode unchecked (F020). Result: pass.
+
+## 2026-11-18 session 43 - F037 (coder)
+Print stylesheet appended to _post-ux.scss: hides skip links, masthead, progress, back-to-top, breadcrumbs, TOC, share, post-nav, comments, related, tags footer; single full-width column, black on white; external links get " (url)" after; pre wraps (no overflow); tables/images fit. Verified by unwrapping the compiled @media print rules into screen styles in the browser (real print preview not available): only title + meta row + content visible, links show URLs, pre fits, scrollWidth == viewport. Verify cmd passes. Known: dark mode unchecked (F020).
