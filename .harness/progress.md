@@ -184,3 +184,6 @@ init ok, rebuilt. pi-bench post at 1280: sidebar 282x294 (avatar 72, bio 2 lines
 
 ## 2026-11-18 session 29 - F026 (coder)
 Wide posts: appended `.wide .page__content` block to _post-ux.scss so paragraphs containing images (incl. captions), figures, tables, pre lift the 50ch cap. Verified on rsna wrap-up at 1280: text paragraphs 603px, images 944px (full column), code 942, TOC sticky at right with 33 links, scrollWidth 1280. At 375: images 351, scrollWidth 375, TOC link click sets hash. Known: none.
+
+## F026 Test report (tester, session 29)
+init ok. rsna wrap-up at 1280 (JS measurement; pane screenshots are cropped): p 402px (~62 chars/line), li 563, img 944, table 678-944, pre 942, scrollWidth 1280, TOC 33 links. Probe: scrolled mid-page, full-width image overlaps sticky TOC (z-index 10, opaque, 230px wide, 1559px tall); elementFromPoint at the overlap hits TOC title, so right ~24% of wide figures is hidden under the TOC. Result: FAIL. Fix idea: keep figures out of TOC column (max-width to content minus TOC) or make TOC not overlap.

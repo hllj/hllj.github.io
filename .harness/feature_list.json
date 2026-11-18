@@ -924,16 +924,22 @@
       "depends_on": [
         "F003"
       ],
-      "status": "claimed",
+      "status": "failing",
       "passes": false,
-      "updated_at": "2026-11-18T10:01:31Z",
+      "updated_at": "2026-11-18T10:02:36Z",
       "attempts": [
         {
           "at": "2026-11-18T10:01:31Z",
           "event": "claim",
           "note": ""
+        },
+        {
+          "at": "2026-11-18T10:02:36Z",
+          "event": "fail",
+          "note": "At 1280px on rsna wrap-up, .page__content is 944px and images/tables/pre span the full 944px (x318-1262), but the sticky floated TOC (.sidebar__right.sticky, z-index 10, opaque bg, x1032-1262, ~1559px tall) sits on top of them: while scrolled (scrollY~13000) an img at y-249..459 overlaps the TOC rect and document.elementFromPoint at the overlap returns H4.nav__title, so the right ~230px (24%) of wide figures/tables is covered by the TOC. Expected: wide figures usable alongside a working TOC without occlusion. Text measure itself is fine (p 402px, ~62 chars/line, scrollWidth 1280)."
         }
-      ]
+      ],
+      "notes": "At 1280px on rsna wrap-up, .page__content is 944px and images/tables/pre span the full 944px (x318-1262), but the sticky floated TOC (.sidebar__right.sticky, z-index 10, opaque bg, x1032-1262, ~1559px tall) sits on top of them: while scrolled (scrollY~13000) an img at y-249..459 overlaps the TOC rect and document.elementFromPoint at the overlap returns H4.nav__title, so the right ~230px (24%) of wide figures/tables is covered by the TOC. Expected: wide figures usable alongside a working TOC without occlusion. Text measure itself is fine (p 402px, ~62 chars/line, scrollWidth 1280)."
     },
     {
       "id": "F027",
