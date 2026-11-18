@@ -159,3 +159,6 @@ Cause confirmed on built pages: _config.yml author.links had an Email item and a
 
 ## 2026-11-18 session 64 - F054
 - No code change (fix already committed). Rebuilt; ran amended verify commands: pass. /, /categories/, /tags/, pi-bench post each show Email once (fa-envelope x1) plus Twitter, Facebook, GitHub, Instagram. Headless Chrome screenshot of / sidebar viewed: 5 links, Email once, no empty entry.
+
+## Session 65 - F054
+Rebuilt, ran all 3 verify entries (rc=0), confirmed Email once plus Twitter/Facebook/GitHub/Instagram on /, /categories/, /tags/ and a post. Claimed. No code changes.
