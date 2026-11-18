@@ -277,3 +277,6 @@ init ok. Used real print rendering: headless Chrome --print-to-pdf on pi-bench p
 
 ## F037 Test report (tester, session 44)
 init ok. Real print via headless Chrome --print-to-pdf of pi-bench (12pp), pi-coding-agent-setup (12pp), rsna wrap-up (23pp). pi-bench page 1: black-on-white title, meta, content; hero banner/lead duplicate gone (rendered PNG checked); no masthead/TOC/share/comments/related text; URLs appended to external links; max text x 578pt < 612 (other posts also within page). Result: pass.
+
+## 2026-11-18 session 45 - F038 (coder)
+SEO tags (og:title/description/url/image, twitter:card, canonical, description) already existed via theme. Fixed: site url trailing slash caused "//" in canonical/og:url (config url now no trailing slash); description truncated to 160 chars in _includes/seo.html (was full excerpt); default og_image set (/images/2022-thumb.jpeg) for pages without images. Verified in built _site on posts and index. Verify cmd passes. Known: og:locale stays en_US.

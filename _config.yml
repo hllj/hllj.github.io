@@ -21,7 +21,7 @@ title_separator          : "-"
 subtitle                 : "My little window and wall"
 name                     : "Bùi Văn Hợp"
 description              : "An amazing website."
-url                      : "https://hllj.github.io/" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+url                      : "https://hllj.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "hllj/hllj.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
@@ -76,7 +76,7 @@ facebook:
   username               : "vanhop.bui.3"
   app_id                 : 2995449277386436
   publisher              :
-og_image                 : # Open Graph/Twitter default site image
+og_image                 : "/images/2022-thumb.jpeg" # Open Graph/Twitter default site image
 # For specifying social profiles
 # - https://developers.google.com/structured-data/customize/social-profiles
 social:
