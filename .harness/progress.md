@@ -256,3 +256,6 @@ Chrome reset made unscoped (`nav.toc, .toc--js`, `aside.sidebar__right.sticky`; 
 
 ## F059 rework 2 Test report (tester, session 80)
 init ok, tests/toc_css_check.py passes. Iframes (data-theme set, transitions off) on pi-bench at 375/768/1280/1900 x light/dark x collapsed/open: nav.toc, aside.sidebar__right and the ancestor up to .sidebar/.page__content all border 0, outline none, box-shadow none, bg rgba(0,0,0,0), radius 0, padding 0; header blue (#00688f light / #1a4f9c dark). Open menu: below nav (gap 4-6px), left == nav left, overflow-y auto, max-height 480/560px (70vh), scrollHeight 680 > clientHeight (internal scroll), opaque bg + 1px border in both themes, scrollWidth==viewport. Screenshots at 375 light and dark: only blue button visible, no grey box. Escape closes (aria false), button reopens. Not exercised: rsna URL guess was wrong (no TOC on that path), real key events. Result: pass.
+
+## Session 81 - F062 (coder)
+No code change: the F059 rework 2 commit already implements F062 (open .toc__menu absolute top:100% left:0, max-height min(70vh,40rem), overflow-y auto, opaque bg + border, Escape/outside/link close). Re-ran all 4 verify cmds (build, Escape grep, tests/toc_css_check.py, git diff on author-profile/_sidebar) - all pass. Claimed. Not re-measured in browser this session (tester covered 375/768/1280/1900 light/dark in session 80).
