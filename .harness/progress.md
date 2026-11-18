@@ -280,3 +280,6 @@ init ok. Real print via headless Chrome --print-to-pdf of pi-bench (12pp), pi-co
 
 ## 2026-11-18 session 45 - F038 (coder)
 SEO tags (og:title/description/url/image, twitter:card, canonical, description) already existed via theme. Fixed: site url trailing slash caused "//" in canonical/og:url (config url now no trailing slash); description truncated to 160 chars in _includes/seo.html (was full excerpt); default og_image set (/images/2022-thumb.jpeg) for pages without images. Verified in built _site on posts and index. Verify cmd passes. Known: og:locale stays en_US.
+
+## F038 Test report (tester, session 45)
+init ok. Fetched live pages: pi-bench, home, /blog/ plus built how-i-setup-this-blog, pi-coding-agent-setup, rsna wrap-up. All have description (truncated ~160 chars with ellipsis), og:title/description/url/image/type, twitter:card (summary_large_image on posts with image, summary otherwise), twitter:title/description/image, canonical with no double slash. og:image URLs resolve 200 (default 2022-thumb.jpeg, pi-bench-dashboard.png). Result: pass.
