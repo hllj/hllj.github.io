@@ -332,3 +332,7 @@ TOC polish (end of _post-ux.scss): toggle hidden again at >=1024 (a later displa
 
 ## F045 Test report (tester, session 53)
 init ok. Browser at 1280 and 375 on pi-bench-harness-iterations: desktop toggle display none (no grey box), mobile chevron toggle 40x40 transparent, expands OK; .toc__menu a weight 400 (active 500), text-decoration none; padding-left consistent per level (10.5/24 desktop, 6/15 mobile); active entry follows scroll (Tong quan -> Ket luan), dark theme renders fine; scrollWidth==viewport. FAIL: entry spacing uneven - nested ul margin-bottom 18px gives 58px gap after each nested group vs 40px elsewhere. Result: fail.
+
+## 2026-11-18 F045 retry
+- Fix: `.toc .toc__menu ul { margin: 0; }` in _post-ux.scss (nested ul had 18px margin-bottom causing 58px gap).
+- Verified in browser: for every TOC link, top-to-next-top delta equals its own height (zero extra gap; 40px single-line, 49px two-line wrap) on pi-bench-harness-iterations (nested, 17 links) at 1280 light and 375 dark, and rsna-knee-abnormality-detection-wrap-up (33 links) at 375 dark and 1280 light. scrollWidth == viewport.

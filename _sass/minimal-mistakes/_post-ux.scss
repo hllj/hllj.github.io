@@ -883,6 +883,7 @@ html[data-theme="dark"] :where(a, button, input, select, textarea, summary, [tab
 .toc .toc__menu li ul > li a { padding-left: calc(1.5rem - 3px); font-weight: 400; }
 .toc .toc__menu li ul li ul > li a { padding-left: calc(2.25rem - 3px); }
 .toc .toc__menu li ul li ul li ul > li a { padding-left: calc(3rem - 3px); }
+.toc .toc__menu ul { margin: 0; }
 .toc .toc__menu a:hover { text-decoration: none; }
 .toc .toc__menu a.is-active { font-weight: 500; }
 .page__content .toc .toc__menu li a,
