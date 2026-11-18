@@ -320,3 +320,6 @@ Masthead: .site-title now flex align-items:center gap:12px (measured gap 12px, v
 
 ## F043 Test report (tester, session 51)
 init ok. Measured via iframes at 375/600/699/700/768/1024/1280 in light and dark on pi-bench-harness-iterations. Title text vs .site-subtitle (Range rects): gap 12px at 700/768/1024/1280, vertical centers diff <=0.25px. Title left 12/14/16/18 == breadcrumb "Blog" link left == h1 left. Masthead bg == html bg (#eee light, #0d1117 dark), breadcrumb transparent so one band; scrollWidth==viewport everywhere. Screenshot at 1280 dark looks right. Note: tagline hidden at 600-699px (coder's choice to avoid nav collision; description says subtitle shown "including 600-900px" but also allows hiding below 600) - judged acceptable since no overlap/abutting occurs. Result: pass.
+
+## 2026-11-18 session 52 - F044 (coder)
+Breadcrumb: ol/li now flex align-items:center, li min-height 40px (same as link tap target), separator gap symmetric 0.5rem each side (end of _post-ux.scss). Measured at 375/768/1280 x light/dark: link vs current crumb vertical center diff 0, left edge == masthead title left (12/14/18), scrollWidth==viewport. Verify cmd passes. Known: none.

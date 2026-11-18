@@ -861,3 +861,9 @@ html[data-theme="dark"] :where(a, button, input, select, textarea, summary, [tab
 @media (min-width: 700px) { .site-title .site-subtitle { display: inline; } }
 .site-title .site-subtitle { white-space: nowrap; font-weight: normal; line-height: 1; }
 .masthead__inner-wrap { justify-content: flex-start; }
+
+/* F044 breadcrumb: shared center line for link and current crumb, symmetric separator */
+.post-breadcrumbs ol { align-items: center; gap: 0 0.5rem; }
+.post-breadcrumbs li { display: flex; align-items: center; min-height: 40px; line-height: 1.3; }
+.post-breadcrumbs li + li::before { margin-right: 0.5rem; }
+.post-breadcrumbs a { line-height: 1.3; }
