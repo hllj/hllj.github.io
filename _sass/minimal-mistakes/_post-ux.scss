@@ -58,9 +58,9 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 
-  // comfortable measure (~50ch, about 65-72 real chars) for text blocks; code, images, tables stay wide
+  // comfortable measure (60ch cap, readable line length) for text blocks; code, images, tables stay wide
   > p, > ul, > ol, > blockquote, > h1, > h2, > h3, > h4, > h5, > h6, > dl {
-    max-width: 50ch;
+    max-width: min(100%, 60ch);
   }
 
   h1, h2, h3, h4 { font-family: var(--pux-font-body); font-weight: 700; letter-spacing: -0.01em; }
@@ -513,7 +513,7 @@ html[data-theme="dark"] .post-breadcrumbs { color: #9ba7b4; }
 }
 @media print { .sidebar { display: none; } }
 
-/* Wide posts (classes: wide): keep ~50ch text measure, let figures and tables use the full column */
+/* Wide posts (classes: wide): keep the 60ch text measure, let figures and tables use the full column */
 .wide .page__content {
   > p:has(img),
   > figure,
@@ -525,20 +525,6 @@ html[data-theme="dark"] .post-breadcrumbs { color: #9ba7b4; }
   }
   > p:has(img) > img,
   > figure img { display: block; max-width: 100%; height: auto; margin-left: auto; margin-right: auto; }
-}
-
-/* Beside the floated TOC (230px + 2rem gap) wide blocks stop short of it so nothing is occluded */
-@media (min-width: 1024px) {
-  .wide .page__content {
-    > p:has(img),
-    > figure,
-    > .table-wrap,
-    > table,
-    > pre,
-    > div.highlighter-rouge {
-      max-width: calc(100% - 230px - 2rem);
-    }
-  }
 }
 
 // F027: category/tag chips at the bottom of a post share the header chip look
@@ -961,3 +947,10 @@ html[data-theme="dark"] .archive__back-top { color: #9aa7b4; &:hover { color: #e
 html[data-theme="dark"] .layout--home .archive__subtitle, :root.dark .layout--home .archive__subtitle { border-color: #30363d; }
 html[data-theme="dark"] .home__all-posts a, :root.dark .home__all-posts a { background: #161b22; border-color: #30363d; color: #e6edf3; }
 @media print { .home__all-posts { display: none; } }
+
+/* F060: posts without `classes: wide` reserved right padding for the old floated TOC; drop it so every post has the same text width */
+.layout--single .page,
+.layout--single .page__related {
+  @include breakpoint($large) { padding-right: 0; }
+  @include breakpoint($x-large) { padding-right: 0; }
+}
