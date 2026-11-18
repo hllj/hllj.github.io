@@ -691,6 +691,80 @@
         "drop": []
       },
       "decided_at": "2026-11-18T13:34:23Z"
+    },
+    {
+      "id": "P012",
+      "status": "approved",
+      "by": "planner",
+      "reason": "TOC button: remove wrapper box (sidebar), open list below button, scrollable panel (reverses no-scroll)",
+      "at": "2026-11-18T13:53:38Z",
+      "payload": {
+        "add": [],
+        "amend": [
+          {
+            "id": "F059",
+            "description": "REWORK 2 (user: 'I see a wrapper box in this button'). The TOC is ONLY a standalone content-sized blue button with NO surrounding container chrome anywhere it can live (text column below 1024px AND the left sidebar >= 1024px), collapsed and open, light and dark: nav.toc, .toc--js, the aside.sidebar__right.sticky wrapper and any ancestor added for the TOC have no border, outline, box-shadow, background, radius or padding box; only the blue button is visible. The opened list is a panel directly below the button that scrolls internally when long (max-height about 60-70vh, overflow-y:auto); this REVERSES the earlier 'no inner scroll' rule. The author sidebar/card is untouched.",
+            "steps": [
+              "ROOT CAUSE found by planner: _post-ux.scss lines ~203-204 strip border/box-shadow/background only under `.page__content nav.toc` and `.page__content > .sidebar__right.sticky`. After F063 the nav.toc is moved into `.sidebar`, so those selectors no longer match and MM's base `.toc` rule (_navigation.scss ~506: 1px border, radius, box-shadow, background) shows as a faint box around the blue button; _dark.scss line 51 only clears background/shadow in dark, not the border. Fix by making the chrome reset unscoped (`nav.toc, .toc--js, aside.sidebar__right.sticky` anywhere, light and dark, without editing the MM partial globally).",
+              "Fix the chrome reset so it is NOT scoped to .page__content (apply to nav.toc / .toc--js / aside.sidebar__right.sticky wherever they are), including dark mode (_dark.scss line ~51: also border:0).",
+              "Coder creates tests/toc_css_check.py (stdlib only) that reads _site/assets/css/main.css (after bash .harness/build.sh) and exits non-zero with a message unless ALL hold: (a) every rule whose selector targets `nav.toc`, `.toc` (MM base), `.toc--js`, `.sidebar__right.sticky`, `.sidebar > .sidebar__right.sticky` or `.page__content > .sidebar__right.sticky` (any width/media, including html[data-theme=dark]/dark-mode variants) that applies to the button wrapper has no border (only none/0), no box-shadow (only none), no non-transparent background, border-radius 0 or unset; (b) a `.toc__menu` open rule has overflow-y:auto and a max-height using vh (50vh-75vh, e.g. min(70vh,...)) and no `overflow:visible`/`max-height:none` remains on the open menu; (c) no `left:calc(100%` / `left:100%` rule exists for `.toc__menu`; the open menu has top:100% and left:0 (below the button, same left edge) in the sidebar; (d) the panel keeps an opaque background and a border in light and in dark; (e) the header/.nav__title keeps the blue button background.",
+              "Real headless Chrome screenshot + zoom of the button at 1280 and 375, light and dark, collapsed and open: only the blue button visible, no grey outline. Computed styles for nav.toc, its header, aside.sidebar__right.sticky and each ancestor up to .sidebar: borderTopWidth 0px, outlineStyle none, boxShadow none, backgroundColor rgba(0,0,0,0), borderRadius 0px."
+            ],
+            "verify": [
+              "bash .harness/build.sh",
+              "python3 tests/toc_css_check.py",
+              "git diff --quiet HEAD -- _includes/author-profile.html _sass/minimal-mistakes/_sidebar.scss"
+            ]
+          },
+          {
+            "id": "F062",
+            "description": "The opened 'On this page' list is a dropdown panel overlaying the post content, positioned directly BELOW the button (absolute, top:100%, left:0, z-index above text, does not push text or change page height), with an opaque background and a border (panel only) readable in light and dark. It is a SCROLLABLE panel: max-height about 60-70vh (never taller than the viewport space below the button) with overflow-y:auto, so long TOCs scroll inside the list (user reversed the old 'no inner scroll' rule). Toggle is keyboard accessible (Enter/Space, aria-expanded accurate), closes on Escape (focus returns to the button), outside click and entry click; entry click still jumps to the section. Works with the sticky button at 375/768/1280/1900.",
+            "steps": [
+              "CSS: `.toc--js.is-open .toc__menu {position:absolute; top:100%; left:0; margin-top:.35rem; max-height:min(70vh, calc(100vh - <button bottom offset>)); overflow-y:auto; overflow-x:hidden; overscroll-behavior:contain; background:#fff (#161b22 dark); border; radius; box-shadow ok on the panel only}`; remove `max-height:none; overflow:visible`. Long headings wrap, no horizontal overflow at 375.",
+              "Coder creates tests/toc_css_check.py (stdlib only) that reads _site/assets/css/main.css (after bash .harness/build.sh) and exits non-zero with a message unless ALL hold: (a) every rule whose selector targets `nav.toc`, `.toc` (MM base), `.toc--js`, `.sidebar__right.sticky`, `.sidebar > .sidebar__right.sticky` or `.page__content > .sidebar__right.sticky` (any width/media, including html[data-theme=dark]/dark-mode variants) that applies to the button wrapper has no border (only none/0), no box-shadow (only none), no non-transparent background, border-radius 0 or unset; (b) a `.toc__menu` open rule has overflow-y:auto and a max-height using vh (50vh-75vh, e.g. min(70vh,...)) and no `overflow:visible`/`max-height:none` remains on the open menu; (c) no `left:calc(100%` / `left:100%` rule exists for `.toc__menu`; the open menu has top:100% and left:0 (below the button, same left edge) in the sidebar; (d) the panel keeps an opaque background and a border in light and in dark; (e) the header/.nav__title keeps the blue button background.",
+              "Browser check at 375/768/1280, light+dark on rsna/pi-bench: open panel: panel.scrollHeight > clientHeight on a long TOC (or forced with many injected entries) and getComputedStyle overflowY is auto; panel.bottom <= window.innerHeight; scrolling the wheel over the panel scrolls the panel; document height and first paragraph top unchanged vs closed; Escape/outside/entry click close; aria-expanded flips."
+            ],
+            "verify": [
+              "bash .harness/build.sh",
+              "grep -q 'Escape' assets/js/post-ux.js",
+              "python3 tests/toc_css_check.py",
+              "git diff --quiet HEAD -- _includes/author-profile.html _sass/minimal-mistakes/_sidebar.scss"
+            ]
+          },
+          {
+            "id": "F064",
+            "description": "REWORK (user: list should show BELOW the button, scrollable). When the TOC button is in the left sidebar (>= 1024px) the opened list opens directly BELOW the button inside the sidebar column: same left edge as the button, width of the sidebar column (min the button width, max about 28rem, never clipped by the sidebar or the viewport), max-height about 60-70vh and never below the viewport bottom, overflow-y:auto so it scrolls internally, opaque background and border (panel only), z-index above text. The old right-opening rule (left:calc(100% + .5rem)) is DROPPED. Escape/outside/entry click close, aria-expanded accurate, panel stays attached to the sticky button while scrolling.",
+            "steps": [
+              "Delete the F064 `.sidebar.sidebar--has-toc .toc--js.is-open .toc__menu {top:0; left:calc(100% + .5rem); ...}` block in _post-ux.scss; replace with sidebar rule: top:100%; left:0; width:max(100%, max-content) capped by max-width:min(100%, 28rem) or the sidebar column width; max-height:min(70vh, calc(100vh - var(--pux-mast-h,60px) - 4rem)); overflow-y:auto. Ensure sidebar ancestors have overflow:visible so the panel is not clipped.",
+              "Coder creates tests/toc_css_check.py (stdlib only) that reads _site/assets/css/main.css (after bash .harness/build.sh) and exits non-zero with a message unless ALL hold: (a) every rule whose selector targets `nav.toc`, `.toc` (MM base), `.toc--js`, `.sidebar__right.sticky`, `.sidebar > .sidebar__right.sticky` or `.page__content > .sidebar__right.sticky` (any width/media, including html[data-theme=dark]/dark-mode variants) that applies to the button wrapper has no border (only none/0), no box-shadow (only none), no non-transparent background, border-radius 0 or unset; (b) a `.toc__menu` open rule has overflow-y:auto and a max-height using vh (50vh-75vh, e.g. min(70vh,...)) and no `overflow:visible`/`max-height:none` remains on the open menu; (c) no `left:calc(100%` / `left:100%` rule exists for `.toc__menu`; the open menu has top:100% and left:0 (below the button, same left edge) in the sidebar; (d) the panel keeps an opaque background and a border in light and in dark; (e) the header/.nav__title keeps the blue button background.",
+              "Verify at 1024, 1280, 1900 on pi-bench and rsna, light and dark: panel.getBoundingClientRect().left == button left (+-2px), panel.top >= button.bottom, panel.right <= sidebar column right edge or <= viewport, bottom <= innerHeight; long TOC scrolls inside (scrollHeight > clientHeight, overflowY auto); elementFromPoint at panel centre is inside the panel; no horizontal page scroll; after scrolling 1500px with panel open it stays directly under the sticky button."
+            ],
+            "verify": [
+              "bash .harness/build.sh",
+              "python3 tests/toc_css_check.py",
+              "grep -q 'Escape' assets/js/post-ux.js",
+              "git diff --quiet HEAD -- _includes/author-profile.html _sass/minimal-mistakes/_sidebar.scss"
+            ]
+          },
+          {
+            "id": "F065",
+            "description": "Narrow screens (< 1024px) keep the sticky text-column button (directly above the first paragraph, sticky under the masthead, near the viewport top when the masthead hides) with the panel opening directly BELOW the button, scrollable (max-height about 60-70vh, overflow-y:auto), no wrapper box around the button in any state. Resizing across 1024px moves the single nav.toc between the sidebar and text column; stale open panel closed on move; aria-expanded accurate; one nav.toc; both placements show the panel below the button and the button with no chrome.",
+            "steps": [
+              "At 375 and 768 on rsna and pi-bench, light and dark: nav.toc is a descendant of .page__content; button sticky as in F061; open panel is below the button, left edge aligned, scrolls internally when long, Escape/outside/entry close; no wrapper chrome (computed styles per F059); no horizontal overflow.",
+              "Resize 1280 -> 768 -> 1280: querySelectorAll('nav.toc').length === 1, parent switches, toggle works, aria-expanded matches, scroll-spy highlights; check the 1023/1024 boundary.",
+              "Coder creates tests/toc_css_check.py (stdlib only) that reads _site/assets/css/main.css (after bash .harness/build.sh) and exits non-zero with a message unless ALL hold: (a) every rule whose selector targets `nav.toc`, `.toc` (MM base), `.toc--js`, `.sidebar__right.sticky`, `.sidebar > .sidebar__right.sticky` or `.page__content > .sidebar__right.sticky` (any width/media, including html[data-theme=dark]/dark-mode variants) that applies to the button wrapper has no border (only none/0), no box-shadow (only none), no non-transparent background, border-radius 0 or unset; (b) a `.toc__menu` open rule has overflow-y:auto and a max-height using vh (50vh-75vh, e.g. min(70vh,...)) and no `overflow:visible`/`max-height:none` remains on the open menu; (c) no `left:calc(100%` / `left:100%` rule exists for `.toc__menu`; the open menu has top:100% and left:0 (below the button, same left edge) in the sidebar; (d) the panel keeps an opaque background and a border in light and in dark; (e) the header/.nav__title keeps the blue button background."
+            ],
+            "verify": [
+              "bash .harness/build.sh",
+              "python3 -c \"import sys; s=open('assets/js/post-ux.js').read(); ('addEventListener(\\\"change\\\"' in s or \\\"addEventListener('change'\\\" in s or 'addListener' in s or 'resize' in s) or sys.exit('no breakpoint change handling for TOC placement')\"",
+              "python3 tests/toc_css_check.py",
+              "git diff --quiet HEAD -- _includes/author-profile.html _sass/minimal-mistakes/_sidebar.scss"
+            ]
+          }
+        ],
+        "drop": []
+      },
+      "decided_at": "2026-11-18T13:54:09Z"
     }
   ]
 }
