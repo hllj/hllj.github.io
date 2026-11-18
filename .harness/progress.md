@@ -286,3 +286,6 @@ init ok. Fetched live pages: pi-bench, home, /blog/ plus built how-i-setup-this-
 
 ## 2026-11-18 session 46 - F039 (coder)
 Added _pages/404.md (layout single, permalink /404.html) with message and Home / Blog buttons. Built; /nonexistent/ on dev server returns 404 with the styled page (server restart needed once to pick up 404.html since it runs --no-watch). Verify cmd passes. Known: none.
+
+## F039 Test report (tester, session 46)
+init ok. /nonexistent/, /blog/nope/x, /foo.html all return HTTP 404 with the styled page (site CSS, masthead, footer, Lato font, no horizontal overflow); h1 "Page not found", friendly text, buttons Go to Home (/) and Browse the Blog (/blog/). Nit: "1 min read" meta shown on 404 (cosmetic). Result: pass.
