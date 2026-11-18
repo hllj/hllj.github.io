@@ -23,3 +23,6 @@ Added _sass/minimal-mistakes/_post-ux.scss (:root{--post-ux:1}) imported in mini
 
 ## 2026-11-18 - F002 (tester)
 Ran init.sh (ok). Post page HTML includes defer post-ux.js; script served 200; main.css contains --post-ux: 1. In browser: data-post-ux="1" on html, computed --post-ux = 1, no console errors. Probe: home page also loads script. Result: pass.
+
+## 2026-11-18 - F003 (coder)
+Defined --pux-* tokens (type scale, spacing scale, accent, text/muted/border colors, content width) in _sass/minimal-mistakes/_post-ux.scss and applied them to .page__title, .page__content headings/body/links and .page__meta. Verified: verify command passes (--pux-accent in main.css), post page 200. Not visually checked in browser. Known issues: --pux-content-width is defined but not yet applied to layout (later width feature). Next: F004.

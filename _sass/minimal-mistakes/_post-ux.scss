@@ -1,4 +1,75 @@
 /* Post UX customisations */
 :root {
   --post-ux: 1;
+
+  /* Type scale (modular, ratio ~1.2) */
+  --pux-font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --pux-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --pux-text-xs: 0.8125rem;
+  --pux-text-sm: 0.9375rem;
+  --pux-text-base: 1.0625rem;
+  --pux-text-lg: 1.25rem;
+  --pux-text-xl: 1.5rem;
+  --pux-text-2xl: 1.875rem;
+  --pux-text-3xl: 2.375rem;
+  --pux-leading-body: 1.7;
+  --pux-leading-heading: 1.25;
+
+  /* Spacing scale */
+  --pux-space-1: 0.25rem;
+  --pux-space-2: 0.5rem;
+  --pux-space-3: 0.75rem;
+  --pux-space-4: 1rem;
+  --pux-space-5: 1.5rem;
+  --pux-space-6: 2rem;
+  --pux-space-7: 3rem;
+
+  /* Colors (light mode) */
+  --pux-accent: #2a6df4;
+  --pux-accent-hover: #1a4fba;
+  --pux-text: #24292f;
+  --pux-text-muted: #6a737d;
+  --pux-border: #e1e4e8;
+  --pux-bg: #ffffff;
+
+  /* Content width */
+  --pux-content-width: 44rem;
+}
+
+.page__title,
+.page__content h1,
+.page__content h2,
+.page__content h3,
+.page__content h4 {
+  color: var(--pux-text);
+  line-height: var(--pux-leading-heading);
+}
+
+.page__title {
+  font-size: var(--pux-text-3xl);
+  margin-bottom: var(--pux-space-3);
+}
+
+.page__content {
+  color: var(--pux-text);
+  font-size: var(--pux-text-base);
+  line-height: var(--pux-leading-body);
+
+  h2 { font-size: var(--pux-text-2xl); margin-top: var(--pux-space-7); margin-bottom: var(--pux-space-4); }
+  h3 { font-size: var(--pux-text-xl); margin-top: var(--pux-space-6); margin-bottom: var(--pux-space-3); }
+  h4 { font-size: var(--pux-text-lg); margin-top: var(--pux-space-5); margin-bottom: var(--pux-space-2); }
+
+  p, ul, ol { margin-bottom: var(--pux-space-5); }
+
+  a {
+    color: var(--pux-accent);
+    &:hover { color: var(--pux-accent-hover); }
+  }
+}
+
+.page__meta,
+.page__meta a,
+.page__taxonomy {
+  color: var(--pux-text-muted);
+  font-size: var(--pux-text-xs);
 }
