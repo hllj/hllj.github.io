@@ -201,3 +201,6 @@ _post-ux.scss: text measure cap now `min(100%, 60ch)` (was 50ch), removed the 23
 
 ## F060 Test report (tester, session 71)
 init ok. Iframe measurements (data-theme set) at 375/768/1280 x light/dark on pi-coding-agent-setup, pi-bench-harness-iterations, rsna-knee wrap-up (wide) and how-i-setup-this-blog (non-wide): p/ul/ol/blockquote widths identical across posts: 351/563/724px (was ~402 at 1280); ~72 chars/line at 1280 (under 80); no pre/table/img/figure extends past .page; scrollWidth==viewport everywhere. Result: pass.
+
+## Session 72 - F059 rework (coder)
+_post-ux.scss: `.page__content nav.toc` now fit-content, border 0, box-shadow none, background none; removed `.toc--js {width:100%}`; aside wrapper reset (auto width, no bg/border); open menu gets own light bg/border only when open. Note Sass minifies `background: transparent` to rgba(0,0,0,0), so verify needs `background: none`. Headless Chrome iframe: computed border 0px, shadow none, bg transparent; collapsed nav width == button width (143px at 375); open menu overflow visible, scrollHeight==clientHeight. Author sidebar files untouched (verify passes). Known: dark and 1900px not screenshot-checked.
