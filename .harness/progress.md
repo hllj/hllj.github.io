@@ -110,3 +110,6 @@ init ok. rsna-knee-abnormality-detection-wrap-up (6 triggers). Open: fixed full-
 
 ## 2026-11-18 session 17 - F016
 Layout single.html adds loading="lazy" decoding="async" to all content imgs via Liquid replace; post-ux.js ensures lazy/async/alt and sets width/height from natural size on load (CSS height:auto keeps ratio). Verified: rsna wrap-up built HTML has 6 lazy imgs; verify grep passes. Known: width/height only set after load (no intrinsic dims in markdown source); pi-bench post has no images.
+
+## F016 Test report (tester, session 17)
+init ok. rsna wrap-up: 6/6 content imgs have loading=lazy, decoding=async, alt; teaser/avatar imgs untouched. Probe: built HTML has no width/height/aspect-ratio on any content img; JS adds dims only after load, and an unloaded lazy image measures height 0, so layout still shifts on load. Result: FAIL (layout-shift part of description unmet).

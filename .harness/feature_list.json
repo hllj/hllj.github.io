@@ -558,16 +558,22 @@
       "depends_on": [
         "F014"
       ],
-      "status": "claimed",
+      "status": "failing",
       "passes": false,
-      "updated_at": "2026-11-18T07:10:03Z",
+      "updated_at": "2026-11-18T07:10:35Z",
       "attempts": [
         {
           "at": "2026-11-18T07:10:03Z",
           "event": "claim",
           "note": ""
+        },
+        {
+          "at": "2026-11-18T07:10:35Z",
+          "event": "fail",
+          "note": "Lazy/decoding attrs present (6/6 content imgs on rsna wrap-up), alt ok. But layout-shift goal not met: built HTML imgs have no width/height and no CSS aspect-ratio; post-ux.js sets width/height only AFTER load, which is too late. An unloaded lazy img has 0 height (verified: new Image loading=lazy appended to .page__content measures height 0), so the page jumps when each image loads. Need dimensions reserved before load (e.g. build-time width/height or aspect-ratio via per-image data, or placeholder min-height)."
         }
-      ]
+      ],
+      "notes": "Lazy/decoding attrs present (6/6 content imgs on rsna wrap-up), alt ok. But layout-shift goal not met: built HTML imgs have no width/height and no CSS aspect-ratio; post-ux.js sets width/height only AFTER load, which is too late. An unloaded lazy img has 0 height (verified: new Image loading=lazy appended to .page__content measures height 0), so the page jumps when each image loads. Need dimensions reserved before load (e.g. build-time width/height or aspect-ratio via per-image data, or placeholder min-height)."
     },
     {
       "id": "F017",
