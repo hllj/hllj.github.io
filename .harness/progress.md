@@ -235,3 +235,6 @@ Pagination (on / and /page2..4/; /blog/ is unpaginated) restyled as pill buttons
 
 ## F033 Test report (tester, session 37)
 init ok. /page2/ at 1024: pagination pills 40px, radius 999px, current "2" dark bg/white text (distinct from white pills), scrollWidth 1024. Fetched /: Previous disabled, 1 current; /page4/: 4 current, Next disabled. /blog/ is unpaginated (no pagination markup; cards from F032). /categories/ and /tags/: headings with 1px bottom border, index pills 999px radius. At 375 on /page3/: pagination one row, 351 wide, scrollWidth 375. Screenshots rendered blank in the pane, so verified via computed styles. Dark mode not checked (F020). Result: pass.
+
+## 2026-11-18 session 38 - F034 (coder)
+post-meta.html: read time now ceil(words/wpm), min 1 (was floor+1); 'Updated <date>' span shown only when last_modified_at set and differs from date. Added last_modified_at: 2026-11-18 to pi-bench post as sample. Verified: pi-bench shows Updated + 20 min read, pi-coding-agent-setup has no Updated span; verify cmd passes. Known: none.

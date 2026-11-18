@@ -1,5 +1,6 @@
 ---
 title: "Từ 70% lên 90% trên SWE-bench Verified Mini — nhưng cái gì đã work, cái gì không"
+last_modified_at: 2026-11-18
 categories: blog
 classes: wide
 tags:
