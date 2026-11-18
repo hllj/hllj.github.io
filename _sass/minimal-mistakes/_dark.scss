@@ -48,7 +48,8 @@ html[data-theme="dark"] {
   .archive__item, .archive__item-teaser { background: transparent; }
   input, textarea, select { background: #161b22; color: #e6edf3; border-color: #30363d; }
   :not(pre) > code { background: #21262d; color: #e6edf3; }
-  .toc { background: #161b22; color: #e6edf3; box-shadow: none; }
+  .toc { background: transparent; color: #e6edf3; box-shadow: none; }
+  .toc--js.is-open .toc__menu { background: #161b22; border-color: #30363d; }
   .toc .nav__title { background: #1a4f9c; }
   .toc__menu a { color: #9aa5b1; }
 

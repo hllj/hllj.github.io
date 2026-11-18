@@ -207,3 +207,6 @@ _post-ux.scss: `.page__content nav.toc` now fit-content, border 0, box-shadow no
 
 ## F059 rework Test report (tester, session 72)
 init ok. Iframe measurements (data-theme set) at 375/768/1280/1900 x light/dark on rsna, pi-bench, how-i-setup posts: nav.toc border 0, shadow none, float none, static, aside wrapper transparent/no border/shadow; nav width == header width (143/171/187), menu overflow visible, scrollHeight==clientHeight, aria-expanded toggles back, no horizontal overflow. Screenshot dark 1280: only blue button visible. FAIL: dark computed nav.toc background is rgb(22,27,34) (html[data-theme=dark] .toc rule), spec requires transparent. Not exercised: real keyboard events, scroll-spy.
+
+## F059 rework 2 (session 73)
+- Dark rule `.toc{background:#161b22}` in _dark.scss overrode transparency; changed to transparent, open menu gets own dark bg. Verified compiled CSS + verify cmds; no browser run.
