@@ -258,3 +258,6 @@ Rebuilt and re-audited contrast in-browser (text nodes, effective bg walked thro
 
 ## F035 Test report (tester, session 41)
 init ok. pi-bench at 1024: real Tab -> "Skip to primary navigation" fixed 249x53, 3px outline; Enter -> #site-nav. 92 focusables, 0 without a focus ring. Own contrast audit over all visible text nodes (effective bg walked up ancestors, AA 4.5/3): 0 failures (image-bg nodes skipped). Landmarks labelled (Skip links, Primary, Breadcrumb, TOC sidebar, On this page, More posts, Site footer). CSS has prefers-reduced-motion:reduce rules (scroll-behavior auto, animation/transition ~0); media emulation not possible in pane, CSS only. Dark mode unchecked (F020). Result: pass.
+
+## 2026-11-19 session 42 - F036 (coder)
+Responsive audit: measured via same-origin iframes at 320/375/768/1024/1440 on 3 posts and /blog/ (+/page2/): scrollWidth == clientWidth everywhere already. Tap targets: added min 40x40 for nav links, site title, breadcrumbs, chips, taxonomy items, footer links, TOC links, header anchors, code-copy, share buttons, author Follow button, archive titles (end of _post-ux.scss). Re-audit: 0 controls below 40px (inline prose links excluded by design). Known: dark mode unchecked (F020).

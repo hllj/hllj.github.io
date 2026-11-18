@@ -744,3 +744,48 @@ html[data-theme="dark"] :where(a, button, input, select, textarea, summary, [tab
 .toc .nav__title { background-color: #00688f; color: #fff; }
 .btn--twitter { background-color: #1a6fb0; }
 .page__lead code { color: #1f2933; }
+
+/* F036 responsive: tap targets >= 40px for chrome controls (prose links excluded) */
+.masthead__menu-item > a,
+.greedy-nav .site-title,
+.breadcrumbs a,
+.page__lead > a,
+.page__meta-chips .page__chip,
+.page__taxonomy-item,
+.page__footer-follow a,
+.page__footer-copyright a,
+.author__urls a,
+.archive__item-title a,
+.taxonomy__index a,
+.toc__toggle,
+.code-copy,
+.page__share .btn,
+.sidebar a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  min-width: 40px;
+  box-sizing: border-box;
+}
+.greedy-nav button, .greedy-nav .search__toggle { min-width: 40px; min-height: 40px; }
+.page__footer-copyright a { justify-content: center; }
+.masthead__menu-item > a { justify-content: center; padding: 0 0.25em; }
+.archive__item-title a { display: flex; }
+.page__chip, .page__taxonomy-item { justify-content: center; }
+.toc__toggle { justify-content: center; }
+.code-copy { justify-content: center; }
+.post-breadcrumbs a,
+.page__content .header-link,
+.toc__menu a,
+.author__urls-wrapper .btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  min-width: 40px;
+  box-sizing: border-box;
+}
+.post-breadcrumbs a, .page__content .header-link { justify-content: center; }
+.toc__menu a { display: flex; }
+.page__content h2 .header-link, .page__content h3 .header-link, .page__content h4 .header-link { line-height: 1; vertical-align: middle; }
+.author__urls-wrapper button.btn { min-height: 40px; min-width: 40px; padding-top: 0; padding-bottom: 0; }
+.layout--single .sidebar .author__urls-wrapper button.btn { min-height: 40px; min-width: 40px; }
