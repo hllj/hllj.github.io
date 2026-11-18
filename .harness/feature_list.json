@@ -1413,8 +1413,16 @@
       "depends_on": [
         "F001"
       ],
-      "status": "todo",
-      "passes": false
+      "status": "claimed",
+      "passes": false,
+      "updated_at": "2026-11-18T10:26:00Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T10:26:00Z",
+          "event": "claim",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F040",
