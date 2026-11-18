@@ -292,3 +292,6 @@ init ok. /nonexistent/, /blog/nope/x, /foo.html all return HTTP 404 with the sty
 
 ## 2026-11-18 session 47 - F040 (coder)
 Search (lunr overlay) already focused input on open and showed title+snippet. Added in assets/js/lunr/lunr-en.js: empty-query hint, friendly escaped "No results for ..." message, aria-live on results; small styles at end of _post-ux.scss. Verified in browser: focus on #search after toggle, "harness" gives 2 results with snippets, gibberish gives no-results message, empty shows hint, no overflow. Known: none.
+
+## F040 Test report (tester, session 47)
+init ok. In browser: toggle focuses #search; "harness" -> 2 results with title+snippet; gibberish and an HTML-injection string -> escaped "No results for ..." message; unicode "viet" returns 18 results; clearing shows hint; results aria-live=polite. Nit: hint not shown on very first open until query cleared. Result: pass.
