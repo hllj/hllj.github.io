@@ -271,3 +271,6 @@ init ok, tests/toc_css_check.py passes. Iframes (data-theme set, transitions off
 
 ## Session 83 - F065 (coder)
 No code change: resize/breakpoint handling (session 79) and the below-button panel + tests/toc_css_check.py (session 80) already cover F065. Re-ran all 4 verify cmds (build, resize grep, toc_css_check, sidebar git diff): pass. Claimed. Not re-measured in browser this session.
+
+## F065 rework Test report (tester, session 83)
+init ok, tests/toc_css_check.py passes. Iframes (resize event after width change, transitions off) on pi-bench (375/768/1023/1024/1280 x light/dark, open and closed) and CNN-Architecture-Part-1 (375/768/1280/768/1024/1023 x light/dark): always 1 nav.toc; content at <=1023, sidebar at >=1024; aria matches open/closed; open menu 4-6px below nav, left == nav left, overflow-y auto, scrollHeight 680 > clientHeight 478-558, opaque bg + 1px border; nav and aside border 0, shadow none, bg transparent; no horizontal overflow; at 375 wrapper sticky, Escape and outside click close. Not exercised: real key events, scroll-spy highlight (hidden pane), hidden-masthead top. Result: pass.
