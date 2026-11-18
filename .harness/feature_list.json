@@ -1978,8 +1978,16 @@
       ],
       "id": "F054",
       "passes": false,
-      "status": "todo",
-      "source": "proposal:P003"
+      "status": "claimed",
+      "source": "proposal:P003",
+      "updated_at": "2026-11-18T11:58:11Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T11:58:11Z",
+          "event": "claim",
+          "note": ""
+        }
+      ]
     },
     {
       "category": "functional",
