@@ -20,3 +20,6 @@ Ran init.sh (server up, smoke ok). curl of post page: 200, h1.page__title with t
 
 ## 2026-11-18 - F002 (coder)
 Added _sass/minimal-mistakes/_post-ux.scss (:root{--post-ux:1}) imported in minimal-mistakes.scss; assets/js/post-ux.js loaded with defer from _includes/footer/custom.html. Verified: verify command passes, script served 200 by local server. Known issues: none. Next: F003.
+
+## 2026-11-18 - F002 (tester)
+Ran init.sh (ok). Post page HTML includes defer post-ux.js; script served 200; main.css contains --post-ux: 1. In browser: data-post-ux="1" on html, computed --post-ux = 1, no console errors. Probe: home page also loads script. Result: pass.
