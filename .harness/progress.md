@@ -274,3 +274,6 @@ init ok. Used real print rendering: headless Chrome --print-to-pdf on pi-bench p
 ## 2026-11-18 F037 (retry)
 - Added @media print block at end of _post-ux.scss: hero/overlay bg none, black text, no padding, lead + hero image hidden (lead duplicated content).
 - Verified: headless Chrome print-to-pdf (use --headless=new --virtual-time-budget=5000) of pi-bench post, 12 pages; page 1 is black-on-white title, meta, content. Verify cmd passes.
+
+## F037 Test report (tester, session 44)
+init ok. Real print via headless Chrome --print-to-pdf of pi-bench (12pp), pi-coding-agent-setup (12pp), rsna wrap-up (23pp). pi-bench page 1: black-on-white title, meta, content; hero banner/lead duplicate gone (rendered PNG checked); no masthead/TOC/share/comments/related text; URLs appended to external links; max text x 578pt < 612 (other posts also within page). Result: pass.
