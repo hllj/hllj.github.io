@@ -261,3 +261,6 @@ init ok. pi-bench at 1024: real Tab -> "Skip to primary navigation" fixed 249x53
 
 ## 2026-11-19 session 42 - F036 (coder)
 Responsive audit: measured via same-origin iframes at 320/375/768/1024/1440 on 3 posts and /blog/ (+/page2/): scrollWidth == clientWidth everywhere already. Tap targets: added min 40x40 for nav links, site title, breadcrumbs, chips, taxonomy items, footer links, TOC links, header anchors, code-copy, share buttons, author Follow button, archive titles (end of _post-ux.scss). Re-audit: 0 controls below 40px (inline prose links excluded by design). Known: dark mode unchecked (F020).
+
+## F036 Test report (tester, session 42)
+init ok. Via same-origin iframes at 320/375/768/1024/1440 on pi-bench post, pi-coding-agent-setup, rsna wrap-up, how-i-setup-this-blog, /blog/, /page2/, /categories/: documentElement scrollWidth == clientWidth in all 35 combos. Own tap-target audit (all a/button, excluding skip links and inline prose links by design): 0 below 40px; spot check at 320 on pi-bench shows nav, toggles, header anchors, copy buttons, Follow all 40px. Overflowing elements at 320 are code spans inside scrollable code blocks (no page overflow). Inline prose links 16-37px high (excluded, reasonable). Dark mode unchecked (F020). Result: pass.
