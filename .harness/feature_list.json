@@ -1754,14 +1754,19 @@
         "blog-index"
       ],
       "id": "F048",
-      "passes": false,
-      "status": "claimed",
+      "passes": true,
+      "status": "passing",
       "source": "proposal:P002",
-      "updated_at": "2026-11-18T11:01:51Z",
+      "updated_at": "2026-11-18T11:03:18Z",
       "attempts": [
         {
           "at": "2026-11-18T11:01:51Z",
           "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T11:03:18Z",
+          "event": "pass",
           "note": ""
         }
       ]
