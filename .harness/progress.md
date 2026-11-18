@@ -138,3 +138,6 @@ Added to _post-ux.scss: inline links underlined (1px, thicker on hover), focus-v
 
 ## F019 Test report (tester, session 21)
 init ok. No post has real footnotes, so injected kramdown-style markup (sup>a.footnote, .footnotes li>a.reversefootnote) into pi-bench post. Inline links underlined 1px (2px hover rule present); footnote ref 24x24.75 inline-block accent color; back-link 24x24; click ref -> #fn:1, back -> #fnref:1; li:target bg rgb(255,248,197) text rgb(31,41,51); keyboard Tab focus shows 3px solid accent outline; scrollWidth == viewport. Hover not exercised with real mouse. Result: pass.
+
+## 2026-11-18 session 22 - F020 (coder)
+Dark mode: head inline script sets html[data-theme] from localStorage 'theme' or prefers-color-scheme before paint (no flash); masthead .theme-toggle button (aria-pressed) toggles and persists; new _sass/minimal-mistakes/_dark.scss overrides colors under html[data-theme="dark"] (body, masthead, text, tables, blockquote/notices, footnotes, toc). Verified on pi-bench post: init light, click -> dark (bg rgb(13,17,23), localStorage dark, aria-pressed true), reload stays dark; verify cmd passes. Not verified with real OS dark emulation (logic: matchMedia fallback). Known: footer keeps skin colors; other page types (index, archive) only lightly themed (F021 covers polish).

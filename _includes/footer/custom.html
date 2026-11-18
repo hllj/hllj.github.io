@@ -1,3 +1,17 @@
 <!-- start custom footer snippets -->
+<script>
+  (function () {
+    var root = document.documentElement, btn = document.querySelector('.theme-toggle');
+    if (!btn) return;
+    function sync() { btn.setAttribute('aria-pressed', root.getAttribute('data-theme') === 'dark' ? 'true' : 'false'); }
+    sync();
+    btn.addEventListener('click', function () {
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      sync();
+    });
+  })();
+</script>
 <script src="{{ '/assets/js/post-ux.js' | relative_url }}" defer></script>
 <!-- end custom footer snippets -->
