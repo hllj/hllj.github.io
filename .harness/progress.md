@@ -307,3 +307,7 @@ Review only, no code changes. Posts: CNN-Architecture-Part-2 (long Vietnamese), 
 
 ## F042 Test report (tester, session 49)
 init ok. Opened CNN-Architecture-Part-2 and pi-coding-agent-setup at 375 light: no console errors, scrollWidth==375, no broken images. FAIL: masthead at 375 has site-subtitle (x73-173) overlapping the Home menu item (x155-219); Home shows clipped as "ome". Persistent after reload, on all posts. Did not complete remaining viewport/theme combos since a visible layout bug already contradicts "no layout bugs". Result: fail.
+
+## 2026-11-18 session 50 - F042 retry (coder)
+Fixed masthead collision: at <600px .site-subtitle hidden (display:none) and .site-title flex-shrink:0 (end of _post-ux.scss). Previously subtitle (x73-173) overlapped Home (x155-219).
+Verified with getBoundingClientRect (pairwise overlap of nav children, nav items, page title/meta/breadcrumbs/chips; scrollWidth; links clipping) at 320/375/768/1280 x light/dark on rsna wrap-up and pi-coding-agent-setup: no overlaps, scrollWidth==viewport. At 375: title 12-73, links 85-219 all visible; at 320: Home visible, rest in hamburger menu. Verify cmd passes. Known: none.

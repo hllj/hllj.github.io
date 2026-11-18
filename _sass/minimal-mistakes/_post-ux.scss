@@ -849,3 +849,9 @@ html[data-theme="dark"] :where(a, button, input, select, textarea, summary, [tab
 .search-content .results__empty { color: #565e66; font-size: 0.95em; margin: 1em 0; }
 .search-content .results__empty { color: #1f2933; }
 .search-content .archive__item-excerpt { color: #1f2933; }
+
+/* F042 masthead: the tagline collides with the nav on narrow screens; hide it there */
+.greedy-nav .site-title { flex-shrink: 0; }
+@media (max-width: 599px) {
+  .site-subtitle { display: none; }
+}
