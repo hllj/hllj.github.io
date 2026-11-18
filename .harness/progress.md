@@ -211,3 +211,6 @@ Prev/next post nav rewritten as two cards (_includes/post_pagination.html, style
 
 ## F029 Test report (tester, session 33)
 init ok. Fetched all 19 posts: every middle post has two cards (prev/next) with title + date; first post (how-i-setup-this-blog) has disabled prev "No older posts" + next card; last (rsna wrap-up) has prev card + disabled next "No newer posts" (dashed, opacity .55, non-link). pi-bench at 1024: two 388x138 cards, scrollWidth 1024. Clicking next navigated to the rsna post. At 375: cards stack (351 wide, 89/56 tall), scrollWidth 375. Dark variant not verified (my guessed selector did not trigger it; left to F020 as coder noted). Result: pass.
+
+## 2026-11-18 session 34 - F030 (coder)
+Related posts restyled as cards (end of _post-ux.scss, scoped .layout--single .page__related): CSS grid 1 col <600px, 2 cols >=600, 4 cols >=1500; 16:9 cropped teaser, title clamped 3 lines, date + read time, excerpt clamped 4 lines, dark variant. Verified pi-bench: 2 cols (388px cards) at 1024, 1 col 351px at 375, scrollWidth ok; verify cmd passes. Known: none.

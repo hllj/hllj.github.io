@@ -614,3 +614,31 @@ html[data-theme="dark"] .post-breadcrumbs { color: #9ba7b4; }
 html[data-theme="dark"] .layout--single .post-nav.pagination .post-nav__card,
 :root.dark .layout--single .post-nav.pagination .post-nav__card { background: #161b22; border-color: #30363d; color: #e6edf3; }
 @media print { .post-nav { display: none !important; } }
+
+/* Related post cards (F030) */
+.layout--single .page__related {
+  .page__related-title { margin-bottom: 0.75rem; letter-spacing: 0.04em; }
+  .grid__wrapper { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 0; }
+  .grid__item { float: none; width: auto; margin: 0; padding: 0; min-width: 0; display: flex; }
+  .archive__item {
+    display: flex; flex-direction: column; width: 100%; min-width: 0; overflow: hidden;
+    border: 1px solid #d5dbe1; border-radius: 12px; background: #fff; color: #1f2933;
+    &:hover, &:focus-within { border-color: #3b6fd4; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+  }
+  .archive__item-teaser { margin: 0; aspect-ratio: 16 / 9; overflow: hidden; background: #eef1f4;
+    img { width: 100%; height: 100%; object-fit: cover; display: block; } }
+  .archive__item-title { margin: 0.75rem 0.9rem 0.25rem; font-size: 1rem; line-height: 1.3; overflow-wrap: anywhere;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .page__meta { margin: 0 0.9rem 0.4rem; font-size: 0.75rem; color: #52606d; display: flex; flex-wrap: wrap; gap: 0.25rem 0.75rem; }
+  .page__meta-sep { display: none; }
+  .archive__item-excerpt { margin: 0 0.9rem 0.9rem; font-size: 0.85rem; line-height: 1.45; color: #323f4b;
+    display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+}
+@media (min-width: 600px) { .layout--single .page__related .grid__wrapper { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1500px) { .layout--single .page__related .grid__wrapper { grid-template-columns: repeat(4, 1fr); } }
+html[data-theme="dark"] .layout--single .page__related .archive__item,
+:root.dark .layout--single .page__related .archive__item { background: #161b22; border-color: #30363d; color: #e6edf3; }
+html[data-theme="dark"] .layout--single .page__related .archive__item-excerpt,
+html[data-theme="dark"] .layout--single .page__related .page__meta,
+:root.dark .layout--single .page__related .archive__item-excerpt,
+:root.dark .layout--single .page__related .page__meta { color: #adbac7; }
