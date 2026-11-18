@@ -74,3 +74,6 @@ init ok, rebuilt. 375px on pi-bench-harness-iterations and how-i-setup-this-blog
 
 ## 2026-11-18 - F010 (coder, session 11)
 Added _includes/anchor-headings.html (Liquid; appends a server-rendered "#" a.header-link to h1-h4 with ids; used in single.html for {{ content }}). Theme JS also injects runtime header-links, so post-ux.js removes those duplicates. CSS in _post-ux.scss: hidden until heading hover or link focus (always 0.5 opacity on hover:none devices). Verified at 4000: 17 headings each with exactly 1 link; clicking sets hash to the heading id. Known: :focus opacity not observable in unfocused pane (rule present in built CSS). Posts body headings are h1 in this blog, so h1 is included too.
+
+## F010 Test report (tester, session 11)
+init ok. pi-bench-harness-iterations: 17 content headings (h1/h2 in body) each have exactly 1 a.header-link ("#", href=#id, aria-label); no duplicates (theme runtime links removed); only id-less h4 is the TOC title (no anchor needed). Clicking a link sets location.hash to the heading's (unicode, percent-encoded) id. Opacity 0 by default, focus -> opacity 1; hover rule and hover:none 0.5 rule present in built CSS. Real mouse hover not reproducible in the pane (:hover never matched), so hover verified via CSS rules only. Other posts: link counts match id'd headings; home page has none. Result: pass.
