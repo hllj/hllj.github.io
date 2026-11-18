@@ -2246,10 +2246,10 @@
       "tags": [
         "post-css"
       ],
-      "passes": false,
-      "status": "claimed",
+      "passes": true,
+      "status": "passing",
       "source": "proposal:P008",
-      "updated_at": "2026-11-18T13:15:46Z",
+      "updated_at": "2026-11-18T13:16:50Z",
       "attempts": [
         {
           "at": "2026-11-18T12:57:30Z",
@@ -2264,6 +2264,11 @@
         {
           "at": "2026-11-18T13:15:46Z",
           "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T13:16:50Z",
+          "event": "pass",
           "note": ""
         }
       ]
