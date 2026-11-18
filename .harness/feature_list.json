@@ -1748,6 +1748,79 @@
       "passes": false,
       "status": "todo",
       "source": "proposal:P002"
+    },
+    {
+      "category": "functional",
+      "priority": 52,
+      "description": "Author sidebar looks and behaves the same on every layout that shows it (post, home, blog index, categories, about): same compact avatar, name/bio sizes, link layout and mobile inline author line with Follow dropdown, in light and dark",
+      "steps": [
+        "In _sass/minimal-mistakes/_post-ux.scss move the 'Compact author sidebar on posts' block (keep the comment marker '/* Compact author sidebar' and keep it before '/* Wide posts') off the .layout--single scope so it targets .sidebar on all layouts; make the print rule generic too (.sidebar)",
+        "bash .harness/build.sh, serve, and open /blog/pi-bench-harness-iterations/, /, /blog/, /categories/ and /about/ at 1280px",
+        "In each, measure via JS getBoundingClientRect/getComputedStyle: .author__avatar img width, .author__name and .author__bio font-size, and the vertical distance between consecutive .author__urls li; values must be equal across pages within 2px (avatar about 72px, links no longer one very tall single column)",
+        "Repeat at 768px and 375px: at <1024px every page shows the compact inline author line (36px avatar, name, 1-line bio) with the Follow dropdown opening on click and no horizontal overflow",
+        "Repeat in dark mode (html[data-theme=dark]); text remains readable and styling identical to light apart from colours"
+      ],
+      "verify": [
+        "bash .harness/build.sh",
+        "python3 -c \"s=open('_sass/minimal-mistakes/_post-ux.scss').read();a=s.index('/* Compact author sidebar');b=s.index('/* Wide posts');blk=s[a:b];import sys;sys.exit(1 if '.layout--single' in blk else 0)\""
+      ],
+      "depends_on": [],
+      "tags": [
+        "sidebar",
+        "scss"
+      ],
+      "id": "F052",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P003"
+    },
+    {
+      "category": "functional",
+      "priority": 53,
+      "description": "Author sidebar spacing defects fixed: at least 12px gap between the Follow button and the location line, and uniform compact row spacing in the links list, on every layout",
+      "steps": [
+        "Add margin/padding in _sass/minimal-mistakes/_post-ux.scss (after F-sidebar unification, same compact block) so .author__urls-wrapper button has >=12px space before the first .author__urls li (location) on desktop; on mobile the dropdown must not overlap the button",
+        "Build and open /blog/pi-bench-harness-iterations/, / and /about/ at 1280px; measure with getBoundingClientRect: location li top minus Follow button bottom >= 12px",
+        "Measure the vertical gap between every pair of consecutive link rows in .author__urls: all equal within 2px and each row pitch <= 32px (no very large gaps)",
+        "Check at 375px and 768px that the dropdown list rows are likewise evenly spaced, in light and dark"
+      ],
+      "verify": [
+        "bash .harness/build.sh",
+        "grep -Eq 'author__urls' _sass/minimal-mistakes/_post-ux.scss"
+      ],
+      "depends_on": [],
+      "tags": [
+        "sidebar",
+        "scss"
+      ],
+      "id": "F053",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P003"
+    },
+    {
+      "category": "bug",
+      "priority": 54,
+      "description": "Author links show 'Email' once: the duplicate Email entry (author.email plus an Email item in author.links) is removed so each link renders a single time",
+      "steps": [
+        "Cause: _config.yml author.links has an Email item (mailto) while author.email is also set, and _includes/author-profile.html renders both the links loop and the author.email block, so Email appears at the start and end",
+        "Fix by removing the redundant 'Email' item from author.links in _config.yml (keep author.email, which renders one Email entry with schema.org markup); also drop or fix any links entry that has a label but no url only if it renders an empty item (the include already skips url-less links, so confirm Website does not render)",
+        "Build and open /, /blog/, /categories/, /about/ and a post: the links list shows Email exactly once and each other link once; no empty icon-only entry"
+      ],
+      "verify": [
+        "bash .harness/build.sh",
+        "python3 -c \"import re,sys;h=open('_site/blog/pi-bench-harness-iterations/index.html').read();m=re.search(r'<ul class=\\\"author__urls.*?</ul>',h,re.S);sys.exit(0 if m and m.group(0).count('fa-envelope')==1 else 1)\"",
+        "python3 -c \"import re,sys\nfor p in ['index.html','blog/index.html','categories/index.html','about/index.html']:\n h=open('_site/'+p).read();m=re.search(r'<ul class=\\\"author__urls.*?</ul>',h,re.S);assert m and m.group(0).count('fa-envelope')==1,p\""
+      ],
+      "depends_on": [],
+      "tags": [
+        "sidebar",
+        "config"
+      ],
+      "id": "F054",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P003"
     }
   ]
 }
