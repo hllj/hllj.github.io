@@ -255,3 +255,32 @@
     w.appendChild(t);
   });
 })();
+
+// Back-to-top floating button: appears after ~600px of scrolling
+(function () {
+  "use strict";
+  var btn = document.querySelector(".back-to-top");
+  if (!btn) return;
+  var visible = false;
+  var update = function () {
+    var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+    var show = y > 600;
+    if (show === visible) return;
+    visible = show;
+    btn.classList.toggle("is-visible", show);
+    if (show) btn.removeAttribute("hidden"); else btn.setAttribute("hidden", "");
+  };
+  var ticking = false;
+  window.addEventListener("scroll", function () {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(function () { ticking = false; update(); });
+  }, { passive: true });
+  btn.addEventListener("click", function () {
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+    var h = document.querySelector(".page__title, h1");
+    if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
+  });
+  update();
+})();

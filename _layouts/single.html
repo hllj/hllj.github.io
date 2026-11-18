@@ -14,7 +14,8 @@ layout: default
   {% endunless %}
 {% endif %}
 
-{% if page.date %}<div class="reading-progress" id="reading-progress" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="reading-progress__bar"></div></div>{% endif %}
+{% if page.date %}<div class="reading-progress" id="reading-progress" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="reading-progress__bar"></div></div>
+<button type="button" class="back-to-top" aria-label="Back to top" hidden><svg aria-hidden="true" width="20" height="20" viewBox="0 0 20 20"><path d="M4 12l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>{% endif %}
 
 <div id="main" role="main">
   {% include sidebar.html %}

@@ -438,3 +438,32 @@ html { scroll-behavior: smooth; }
   text-decoration: none;
   &:hover { text-decoration: underline; }
 }
+
+// Back-to-top floating button
+.back-to-top {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 50;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: #1f2933;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  &[hidden] { display: none; }
+  &:hover { background: #3b4a58; }
+  &:focus-visible { outline: 3px solid var(--pux-accent, #1a73e8); outline-offset: 2px; }
+  @media (prefers-reduced-motion: no-preference) {
+    animation: pux-btt-in 0.2s ease-out;
+  }
+}
+@keyframes pux-btt-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+html[data-theme="dark"] .back-to-top { background: #e6edf3; color: #0d1117; &:hover { background: #fff; } }
+@media print { .back-to-top { display: none !important; } }

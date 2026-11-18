@@ -157,3 +157,6 @@ init ok, rebuilt. Dark-mode JS audit (transitions off) on pi-coding-agent-setup:
 
 ## F021 Test report (tester, session 24)
 init ok, rebuilt. Dark-mode audit (transitions off) on rsna wrap-up (TOC): 0 light bgs, 0 text <4.5:1, TOC title bg rgb(26,79,156), scrollWidth==viewport. pi-bench post: 0 light bgs; only sr-only label (visually hidden) flagged. Result: pass.
+
+## 2026-11-18 session 25 - F022 (coder)
+Back-to-top: static `button.back-to-top[hidden]` in _layouts/single.html (dated pages), wired in post-ux.js (shows when scrollY>600, click -> scrollTo top, behavior auto if prefers-reduced-motion, focuses h1), styled in _post-ux.scss (fixed 44px round, dark-mode variant, hidden in print). Verified on pi-bench: hidden/display none at top, displayed after 1200px scroll, click gives intermediate scroll positions (1072,559,274) then 0 and hides; scrollWidth ok; verify cmd passes. Reduced-motion path not exercised in browser. Known: none.
