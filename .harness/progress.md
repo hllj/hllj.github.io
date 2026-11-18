@@ -270,3 +270,7 @@ Print stylesheet appended to _post-ux.scss: hides skip links, masthead, progress
 
 ## F037 Test report (tester, session 43)
 init ok. Used real print rendering: headless Chrome --print-to-pdf on pi-bench post (13 pages), pdftotext/pdftoppm. Good: no masthead, TOC, share, comments, related, sidebar; external links followed by (url); max text x 578pt < 612 page width (no overflow); tables fit. FAIL: page 1 prints the hero overlay banner (dark background image) with white title/meta/lead on it; with background graphics off (browser default) title would be white-on-white. Print CSS does not reset .page__hero overlay colors/background. Result: fail.
+
+## 2026-11-18 F037 (retry)
+- Added @media print block at end of _post-ux.scss: hero/overlay bg none, black text, no padding, lead + hero image hidden (lead duplicated content).
+- Verified: headless Chrome print-to-pdf (use --headless=new --virtual-time-budget=5000) of pi-bench post, 12 pages; page 1 is black-on-white title, meta, content. Verify cmd passes.

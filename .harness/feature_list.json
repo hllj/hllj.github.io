@@ -1334,9 +1334,9 @@
       "depends_on": [
         "F003"
       ],
-      "status": "failing",
+      "status": "claimed",
       "passes": false,
-      "updated_at": "2026-11-18T10:23:17Z",
+      "updated_at": "2026-11-18T10:23:56Z",
       "attempts": [
         {
           "at": "2026-11-18T10:22:17Z",
@@ -1347,6 +1347,11 @@
           "at": "2026-11-18T10:23:17Z",
           "event": "fail",
           "note": "Real print output (headless Chrome --print-to-pdf of /blog/pi-bench-harness-iterations/, 13 pages): masthead/TOC/share/comments/related/sidebar hidden, URLs appended, no horizontal overflow (max x 578 < 612pt). BUT the post-header hero overlay is not neutralized: page 1 prints the dark overlay_image banner with the title, meta and lead in WHITE text on top of it, and then the lead paragraph is duplicated below. With default print settings (background graphics off) the white title/meta/lead on white paper would be invisible, and it wastes the top of the page; not 'clean black on white, only title/meta/content'. Fix: in @media print force .page__hero, .page__hero--overlay and their title/meta/lead to background:none, color:#000, padding small, and drop the lead duplicate or hero image."
+        },
+        {
+          "at": "2026-11-18T10:23:56Z",
+          "event": "claim",
+          "note": ""
         }
       ],
       "notes": "Real print output (headless Chrome --print-to-pdf of /blog/pi-bench-harness-iterations/, 13 pages): masthead/TOC/share/comments/related/sidebar hidden, URLs appended, no horizontal overflow (max x 578 < 612pt). BUT the post-header hero overlay is not neutralized: page 1 prints the dark overlay_image banner with the title, meta and lead in WHITE text on top of it, and then the lead paragraph is duplicated below. With default print settings (background graphics off) the white title/meta/lead on white paper would be invisible, and it wastes the top of the page; not 'clean black on white, only title/meta/content'. Fix: in @media print force .page__hero, .page__hero--overlay and their title/meta/lead to background:none, color:#000, padding small, and drop the lead duplicate or hero image."

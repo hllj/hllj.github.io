@@ -821,3 +821,25 @@ html[data-theme="dark"] :where(a, button, input, select, textarea, summary, [tab
   img { max-width: 100% !important; height: auto !important; }
   h1, h2, h3, h4 { page-break-after: avoid; }
 }
+
+/* F037: neutralize the hero overlay in print: black on white, no banner image, no duplicated lead */
+@media print {
+  .page__hero, .page__hero--overlay {
+    background: none !important;
+    background-image: none !important;
+    color: #000 !important;
+    padding: 0 !important;
+    margin: 0 0 0.75rem !important;
+    min-height: 0 !important;
+    height: auto !important;
+    text-shadow: none !important;
+  }
+  .page__hero--overlay .wrapper { padding: 0 !important; max-width: none !important; }
+  .page__hero .page__title, .page__hero--overlay .page__title,
+  .page__hero .page__meta, .page__hero--overlay .page__meta,
+  .page__hero .page__meta a, .page__hero--overlay .page__meta a,
+  .page__hero .page__lead, .page__hero--overlay .page__lead,
+  .page__hero .page__hero-caption { color: #000 !important; text-shadow: none !important; background: none !important; }
+  .page__hero .page__lead, .page__hero--overlay .page__lead { display: none !important; }
+  .page__hero .page__hero-image { display: none !important; }
+}
