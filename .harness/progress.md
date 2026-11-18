@@ -178,3 +178,6 @@ init ok. pi-bench post (1024px): nav.post-breadcrumbs above h1 (nav bottom 112 <
 
 ## 2026-11-18 session 28 - F025 (coder)
 Compact author sidebar on posts: new block at end of _post-ux.scss scoped to `.layout--single .sidebar`: avatar 72px, small name, bio clamped to 3 lines, opacity 1, social links in 2-col grid at >=1024px (sidebar height 443 -> 306 at 1280); below 1024px an inline author line (36px avatar, name, 1-line bio, 32px Follow button, hairline borders; height 74 -> 50 at 375). Hidden in print. Verified in browser at 1280 and 375: scrollWidth == viewport. Known: none. Dropdown links on mobile not clicked through.
+
+## F025 Test report (tester, session 28)
+init ok, rebuilt. pi-bench post at 1280: sidebar 282x294 (avatar 72, bio 2 lines, 6 links), scrollWidth 1280. At 375: sidebar is a 50px inline author line (avatar 36, name, 1-line bio, 32px Follow button), sits just before content, scrollWidth 375; Follow dropdown opens as popup (no layout shift, sidebar stays 50px) and toggles closed. At 768 on rsna wrap-up: 52px line, scrollWidth 768. Dark mode: name/bio rgb(230,237,243), transparent bg, fine. Screenshots blank (known), DOM measurements used. Result: pass.
