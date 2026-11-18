@@ -2350,6 +2350,92 @@
           "note": ""
         }
       ]
+    },
+    {
+      "category": "functional",
+      "priority": 63,
+      "description": "On desktop (viewport >= 1024px, where the author sidebar is the left column) the 'On this page' TOC button lives in the LEFT sidebar directly below the author card (avatar, name, bio, Follow, location/links) and is sticky: the author card scrolls away while the button stays pinned (below the masthead when shown, near viewport top when masthead auto-hides, via --pux-mast-h / html.masthead-hidden from F061). The button is NOT shown in the text column on desktop (no second button above the first paragraph). Exactly one nav.toc exists in the DOM at every width (no duplicate ids/links). Button keeps F059 look (content-sized, no container chrome). Author sidebar content and spacing (F052-F054) unchanged.",
+      "steps": [
+        "Implementation options (coder picks one, must keep ONE nav.toc in the DOM): (a) in assets/js/post-ux.js TOC IIFE, on matchMedia('(min-width: 1024px)') move the existing aside.sidebar__right.sticky (the node, not a clone) into the author sidebar container (.sidebar, after .author__urls-wrapper / author-profile markup) and move it back into .page__content (before first child) when the query stops matching; or (b) capture the toc markup in _layouts/single.html and render it once inside the sidebar with CSS display:contents on narrow. The sidebar column is a float/sticky element in MM (_sass/minimal-mistakes/_sidebar.scss): the TOC wrapper needs position: sticky; top: calc(var(--pux-mast-h,60px)+8px) (and 8px under html.masthead-hidden) with the same transition/reduced-motion handling as F061; ensure the sidebar's own sticky/overflow/height does not stop it from sticking for the full length of the post (the sidebar column must be as tall as the article or the sticky wrapper must be a direct child of an element that is).",
+        "If JS is used for the move, it must be idempotent, run on load and on resize/matchMedia change, and the aria-expanded/open state and listeners survive the move; with JS disabled the TOC simply stays in the text column.",
+        "Do not edit _includes/author-profile.html markup or _sidebar.scss rules for the author card; add new rules scoped to the TOC wrapper in _sass/minimal-mistakes/_post-ux.scss.",
+        "Browser check at 1024, 1280, 1900 on /blog/rsna-knee-abnormality-detection-wrap-up/ and /blog/pi-bench-harness-iterations/: button top is below the author card's bottom at scrollY=0 and its left/width sit within the sidebar column; after scrolling 1500px the author card is off-screen and the button is still visible at the same x with top >= masthead bottom (masthead shown) and top <= 16px (masthead hidden); querySelectorAll('nav.toc').length === 1 and no duplicate ids; no TOC button inside .page__content at >=1024; near the end of the post the button does not overlap footer/prev-next; documentElement.scrollWidth == viewport; light and dark (data-theme=dark); author card height/spacing identical before/after (compare getBoundingClientRect of .author__avatar..urls)."
+      ],
+      "verify": [
+        "bash .harness/build.sh",
+        "python3 -c \"import sys; s=open('assets/js/post-ux.js').read(); ('matchMedia' in s and '1024' in s) or sys.exit('no 1024px matchMedia relocation of the TOC in post-ux.js (or layout-based equivalent)')\"",
+        "python3 -c \"import sys,re; c=open('_site/blog/pi-bench-harness-iterations/index.html').read(); n=len(re.findall(r'<nav[^>]*class=\\\"toc\\\"',c)); sys.exit(0 if n==1 else 'expected exactly one nav.toc in built post, got %d'%n)\"",
+        "python3 -c \"import sys,re; c=open('_site/assets/css/main.css').read().replace(' ',''); sys.exit(0 if re.search(r'@media[^{]*min-width:1024px[^{]*\\{[^@]*\\.sidebar[^{}]*\\{[^}]*position:sticky',c) or re.search(r'\\.sidebar[^{}]*toc[^{}]*\\{[^}]*position:sticky',c) or re.search(r'\\.sidebar[^{}]*sidebar__right[^{}]*\\{[^}]*position:sticky',c) else 'no sticky rule for the TOC inside the sidebar in built css')\"",
+        "git diff --quiet HEAD -- _includes/author-profile.html _sass/minimal-mistakes/_sidebar.scss"
+      ],
+      "depends_on": [
+        "F061",
+        "F062"
+      ],
+      "tags": [
+        "toc",
+        "sidebar",
+        "post-css"
+      ],
+      "id": "F063",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P011"
+    },
+    {
+      "category": "functional",
+      "priority": 64,
+      "description": "When the TOC button is in the left sidebar (desktop >= 1024px) the opened list is an overlay dropdown that opens over the text to the RIGHT of the button (not inside the ~300px sidebar column): readable width (max about 28rem / 92vw, text wraps with no horizontal overflow), never clipped by the sidebar, never pushed under post text (z-index above text, below masthead), shows ALL entries with no inner scroll, opaque background and border readable in light and dark. F062 behaviour kept: Enter/Space toggle, aria-expanded accurate, Escape closes and refocuses the button, outside click and entry click close, entry click jumps to the section. Panel stays attached to the sticky button while scrolling.",
+      "steps": [
+        "CSS in _post-ux.scss scoped to the sidebar-hosted TOC (e.g. a class like toc--in-sidebar added by JS, or a descendant selector under .sidebar): .toc--js.is-open .toc__menu { position:absolute; top:0 or 100% (choose so it aligns with the button top or just under it); left:calc(100% + .5rem) or aligned to the sidebar's right edge; width:max-content; max-width:min(28rem, calc(100vw - sidebar right edge - 1rem)); z-index above .page__content text; max-height:none; overflow:visible }. Check every ancestor between the wrapper and the page (sidebar, .sidebar sticky container) has overflow: visible and does not create a clipping/stacking context that hides or underlays the panel; the panel must paint over the first-column text.",
+        "Verify at 1024, 1280, 1900 on pi-bench and rsna, light and dark: open the panel; panel.getBoundingClientRect().left >= sidebar right edge - 4px (opens to the right of the sidebar, or at minimum starts right of the button) and right <= viewport width; panel scrollHeight == clientHeight; elementFromPoint at the panel centre and at each of the first and last entries is inside the panel (not covered by text or sidebar); every nav.toc a link is inside the panel and visible (or reachable by page scroll, no inner scroll); document scrollHeight and first paragraph top unchanged vs closed; no horizontal scroll. Scroll 1500px with panel open: panel still adjacent to the button. Escape, outside click, entry click close it and aria-expanded flips; keyboard Enter/Space on the button toggles."
+      ],
+      "verify": [
+        "bash .harness/build.sh",
+        "python3 -c \"import re,sys; c=open('_site/assets/css/main.css').read().replace(' ',''); sys.exit(0 if re.search(r'(sidebar|toc--in-sidebar)[^{}]*\\.toc__menu[^{}]*\\{[^}]*(left:calc\\(100%|left:100%)',c) else 'no right-opening dropdown rule for the sidebar-hosted TOC in built css')\"",
+        "grep -q 'Escape' assets/js/post-ux.js",
+        "git diff --quiet HEAD -- _includes/author-profile.html _sass/minimal-mistakes/_sidebar.scss"
+      ],
+      "depends_on": [
+        "F063"
+      ],
+      "tags": [
+        "toc",
+        "sidebar",
+        "post-css"
+      ],
+      "id": "F064",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P011"
+    },
+    {
+      "category": "functional",
+      "priority": 65,
+      "description": "Narrow screens (< 1024px, sidebar stacks above the content) keep the F061/F062 behaviour after the TOC relocation: the TOC button is in the text column directly above the first paragraph, sticky under the masthead (and near the viewport top when the masthead hides), with the overlay dropdown panel (F062) opening beneath it. Resizing across the 1024px breakpoint moves the single nav.toc between the sidebar and the text column without losing open/closed state sanity (a stale open panel is closed on move), listeners or aria-expanded accuracy, and without a duplicate TOC.",
+      "steps": [
+        "At 375 and 768 on rsna and pi-bench, light and dark: nav.toc is a descendant of .page__content; button sticky as in F061 (top >= masthead bottom when masthead shown, <= 16px when hidden); open panel overlays text, no inner scroll, Escape/outside/entry close it; no horizontal overflow.",
+        "Resize the viewport 1280 -> 768 -> 1280 (resize_window or iframe widths) and check querySelectorAll('nav.toc').length === 1 each time, the node's parent switches between the sidebar and .page__content, the toggle still opens/closes, aria-expanded matches the panel visibility, and the post-ux scroll-spy still highlights the active entry.",
+        "Re-check the exact 1023/1024 boundary: at 1023 the TOC is in the text column, at 1024 in the sidebar."
+      ],
+      "verify": [
+        "bash .harness/build.sh",
+        "python3 -c \"import sys; s=open('assets/js/post-ux.js').read(); ('addEventListener(\\\"change\\\"' in s or \\\"addEventListener('change'\\\" in s or 'addListener' in s or 'resize' in s) or sys.exit('no breakpoint change handling for TOC placement')\"",
+        "python3 -c \"import sys,re; c=open('_site/assets/css/main.css').read().replace(' ',''); sys.exit(0 if re.search(r'\\.page__content>\\.sidebar__right\\.sticky\\{[^}]*position:sticky',c) else 'narrow-screen sticky text-column TOC rule missing from built css')\"",
+        "git diff --quiet HEAD -- _includes/author-profile.html _sass/minimal-mistakes/_sidebar.scss"
+      ],
+      "depends_on": [
+        "F063"
+      ],
+      "tags": [
+        "toc",
+        "sidebar",
+        "post-css"
+      ],
+      "id": "F065",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P011"
     }
   ]
 }
