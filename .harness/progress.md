@@ -229,3 +229,6 @@ Blog index cards: archive-single.html now outputs tag chips (.archive__item-tags
 
 ## F032 Test report (tester, session 36)
 init ok. /blog/ at 1024: 19 cards, each with title, excerpt, date, read time; tags chips (pill, 999px) on all 14 posts; the 5 entries without tags are projects/reading items with no tags in source (not a defect). Hover on card: translateY(-3px), shadow 0 8px 20px, border color change (0.15s transition). scrollWidth 1024; at 375 cards 351px, scrollWidth 375. Dark mode not checked. Result: pass.
+
+## 2026-11-18 session 37 - F033 (coder)
+Pagination (on / and /page2..4/; /blog/ is unpaginated) restyled as pill buttons with dark current-page highlight, disabled prev/next, wrap, dark variant, print hidden; taxonomy archives (/categories/, /tags/) got bordered section headings and pill index (_post-ux.scss end). Verified /page2/: current "2" dark bg/white text, all 40px pills, scrollWidth 1024; /categories/ heading border 1px. Known: dark variant unchecked until F020.
