@@ -41,3 +41,6 @@ Cause of prior fail: 70ch at 19.125px root (xl) gave ~81 chars/line. Changed .pa
 
 ## F004 (tester, session 5)
 Rebuilt; 1280px RSNA wrap-up: 37 long paragraphs measured per-character: mean 56, max 69 chars/line (<=75); Inter active, lh 32.5px (1.7), mb 27px, h2 33.75/700, h4 14.3/600 (no h3 in post). Probe: pi-coding-agent-setup p width 603px, no horizontal overflow. Result: pass.
+
+## 2026-11-18 - F005 (coder, session 6)
+Added _includes/post-meta.html (single row: date, "N min read", category chips), used in _layouts/single.html header and page__hero.html (overlay posts). Footer now only shows tags (removed duplicate categories/updated-date lines). Styles appended to _post-ux.scss (chips, overlay colors, title spacing). Verified: build ok, verify grep ok, browser screenshot of hero post shows single row. Known issues: none. Archive pages still use page__meta.html.
