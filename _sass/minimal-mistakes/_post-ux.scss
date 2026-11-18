@@ -660,8 +660,9 @@ html[data-theme="dark"] .layout--single .page__related .page__meta,
 }
 @media print { .page__comments { display: none; } }
 
-/* F032: blog index cards */
-.layout--posts .entries-grid .archive__item {
+/* F032/F055: blog index and home cards (shared rules) */
+.layout--posts .entries-grid .archive__item,
+.layout--home .entries-list .archive__item {
   display: flex; flex-direction: column; height: 100%; box-sizing: border-box;
   background: #fff; border: 1px solid #d9dee3; border-radius: 10px; overflow: hidden;
   transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
@@ -678,12 +679,18 @@ html[data-theme="dark"] .layout--single .page__related .page__meta,
 }
 .layout--single .page__related .archive__item-tags { display: none; }
 html[data-theme="dark"] .layout--posts .entries-grid .archive__item,
-:root.dark .layout--posts .entries-grid .archive__item { background: #161b22; border-color: #30363d; color: #e6edf3; }
+html[data-theme="dark"] .layout--home .entries-list .archive__item,
+:root.dark .layout--posts .entries-grid .archive__item,
+:root.dark .layout--home .entries-list .archive__item { background: #161b22; border-color: #30363d; color: #e6edf3; }
 html[data-theme="dark"] .layout--posts .entries-grid .archive__item-excerpt,
-:root.dark .layout--posts .entries-grid .archive__item-excerpt { color: #c9d1d9; }
+html[data-theme="dark"] .layout--home .entries-list .archive__item-excerpt,
+:root.dark .layout--posts .entries-grid .archive__item-excerpt,
+:root.dark .layout--home .entries-list .archive__item-excerpt { color: #c9d1d9; }
 html[data-theme="dark"] .layout--posts .entries-grid .archive__item-tags li,
-:root.dark .layout--posts .entries-grid .archive__item-tags li { background: #21262d; border-color: #30363d; color: #c9d1d9; }
-@media print { .layout--posts .archive__item-tags { display: none; } }
+html[data-theme="dark"] .layout--home .entries-list .archive__item-tags li,
+:root.dark .layout--posts .entries-grid .archive__item-tags li,
+:root.dark .layout--home .entries-list .archive__item-tags li { background: #21262d; border-color: #30363d; color: #c9d1d9; }
+@media print { .layout--posts .archive__item-tags, .layout--home .archive__item-tags { display: none; } }
 
 /* F033: pagination and taxonomy archives */
 .pagination { margin: 2.5rem 0 1rem; float: none; clear: both;
@@ -942,3 +949,9 @@ html { scroll-padding-top: 1rem; }
 }
 html[data-theme="dark"] .archive__back-top { color: #9aa7b4; &:hover { color: #e6edf3; } }
 @media print { .archive__back-top { display: none !important; } }
+
+/* F055: home Recent posts as a single-column card list */
+.layout--home .entries-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.25rem; margin: 0; width: 100%; box-sizing: border-box;
+  .list__item { float: none; clear: none; width: auto; margin: 0; padding: 0; min-width: 0; display: flex; }
+  .list__item > .archive__item { width: 100%; height: auto; }
+}
