@@ -375,3 +375,6 @@ Archive "Back to top" links in posts/tags/categories layouts used class .back-to
 
 ## F051 Test report (tester, session 60)
 init ok. /blog/ iframes 375/768/1280 x light/dark: 5 .archive__back-top links, height 44, position static, no bg/radius, scrollWidth<=clientWidth, gap to card row 6-9px, page scrollWidth==viewport. Dark (transitions disabled) color rgb(154,167,180) on #0d1117. Real headless Chrome 1280 screenshot: right-aligned "BACK TO TOP" text link below each year's cards, clear of cards, single rule. (Dark screenshot not obtainable: head script resets theme; relied on computed colors.) Post page: exactly 1 .back-to-top, hidden/0x0 at top, 44x44 circle fixed in viewport after scroll at 375; it is icon-only SVG (no text label), its CSS unchanged in diff. Result: pass.
+
+## 2026-11-18 session 60 - curator
+Refreshed learnings.md (dark mode done, headless Chrome visual checks, claim/tester gotchas, backlog F052-F057).
