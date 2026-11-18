@@ -267,3 +267,6 @@ init ok. Via same-origin iframes at 320/375/768/1024/1440 on pi-bench post, pi-c
 
 ## 2026-11-18 session 43 - F037 (coder)
 Print stylesheet appended to _post-ux.scss: hides skip links, masthead, progress, back-to-top, breadcrumbs, TOC, share, post-nav, comments, related, tags footer; single full-width column, black on white; external links get " (url)" after; pre wraps (no overflow); tables/images fit. Verified by unwrapping the compiled @media print rules into screen styles in the browser (real print preview not available): only title + meta row + content visible, links show URLs, pre fits, scrollWidth == viewport. Verify cmd passes. Known: dark mode unchecked (F020).
+
+## F037 Test report (tester, session 43)
+init ok. Used real print rendering: headless Chrome --print-to-pdf on pi-bench post (13 pages), pdftotext/pdftoppm. Good: no masthead, TOC, share, comments, related, sidebar; external links followed by (url); max text x 578pt < 612 page width (no overflow); tables fit. FAIL: page 1 prints the hero overlay banner (dark background image) with white title/meta/lead on it; with background graphics off (browser default) title would be white-on-white. Print CSS does not reset .page__hero overlay colors/background. Result: fail.
