@@ -14,6 +14,8 @@ layout: default
   {% endunless %}
 {% endif %}
 
+{% if page.date %}<div class="reading-progress" id="reading-progress" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="reading-progress__bar"></div></div>{% endif %}
+
 <div id="main" role="main">
   {% include sidebar.html %}
 

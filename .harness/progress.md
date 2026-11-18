@@ -47,3 +47,6 @@ Added _includes/post-meta.html (single row: date, "N min read", category chips),
 
 ## F005 (tester, session 6)
 init ok; rebuilt. Browser on pi-bench-harness-iterations (hero overlay) and pi-coding-agent-setup: title 39px, 12px margin, exactly one .page__meta--row in header: date, "N min read", category chip (links to /categories/#blog); no duplicate read-time/date/category in footer (only Tags). Screenshot confirms single row. No horizontal overflow at 1024px. Note: hero teaser paragraph sits between title and meta row (hero layout), judged acceptable. Result: pass.
+
+## 2026-11-18 - F006 (coder, session 7)
+Added fixed #reading-progress bar (only when page.date, i.e. posts) in _layouts/single.html, styles in _post-ux.scss, scroll logic (rAF, scaleX) in assets/js/post-ux.js. Verified in browser: scroll 0/50/100% gives scaleX 0/0.5/1, position fixed top 0; not in home page HTML; verify grep passes. Known issues: none.
