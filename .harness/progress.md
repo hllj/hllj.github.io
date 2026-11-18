@@ -65,3 +65,6 @@ Added TOC scroll-spy in assets/js/post-ux.js (rAF scroll handler; active = last 
 
 ## F008 Test report (tester, session 9)
 init ok. Browser 1280x800 on pi-bench-harness-iterations (17 TOC entries). Swept scrollY 0..max step 700 (24 positions, 1.2s settle): exactly one .is-active entry, always equal to last TOC heading with top<=140px. Clicked TOC entry #10: after smooth scroll settles, that entry is the single active one, aria-current=true, 3px left border, weight 600, accent color; screenshot confirms. Notes: with <=250ms waits the pane lagged (rAF in hidden pane), not a product bug. At bottom of page the sticky TOC (818px) is taller than an 800px viewport so last entries may be cut off; minor, out of scope. Result: pass.
+
+## 2026-11-18 - F009 (coder, session 10)
+Mobile TOC collapsible: post-ux.js adds a toggle button + .toc--js/.is-open (click title toggles; link click collapses on <1024px); _post-ux.scss (max-width 1023px) makes the TOC static full-width, menu hidden unless open (max-height 60vh scroll). Verified at 375px on pi-bench-harness-iterations: collapsed by default (31px high, menu display none), tap expands (448px, aria-expanded true), no horizontal overflow; desktop 1024 keeps menu visible and toggle hidden. Known issues: without JS the TOC stays expanded. TOC sits at top of content (below hero teaser/meta).

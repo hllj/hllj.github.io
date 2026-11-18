@@ -155,3 +155,27 @@ html { scroll-behavior: smooth; }
   border-left-color: var(--pux-accent, #2a6df4);
   background: rgba(42, 109, 244, .08);
 }
+
+/* Mobile TOC: collapsible block at the top of the post */
+@media (max-width: 1023px) {
+  .page__content > .sidebar__right.sticky {
+    position: static;
+    float: none;
+    width: 100%;
+    margin: 0 0 1.25em;
+    padding: 0;
+  }
+  .toc--js .toc__menu { display: none; }
+  .toc--js.is-open .toc__menu { display: block; max-height: 60vh; overflow-y: auto; }
+  .toc--js .nav__title { cursor: pointer; display: flex; align-items: center; justify-content: space-between; margin: 0; }
+  .toc--js .toc__toggle {
+    background: none; border: 0; padding: .25rem .5rem; margin-left: auto; color: inherit; cursor: pointer;
+  }
+  .toc__chevron {
+    display: inline-block; width: .5em; height: .5em;
+    border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+    transform: rotate(45deg); transition: transform .15s;
+  }
+  .toc--js.is-open .toc__chevron { transform: rotate(-135deg); }
+}
+@media (min-width: 1024px) { .toc__toggle { display: none; } }

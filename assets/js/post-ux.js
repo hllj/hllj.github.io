@@ -63,3 +63,29 @@
   window.addEventListener("resize", onScroll);
   update();
 })();
+
+// Mobile TOC: collapsible block (collapsed by default below 1024px; CSS only applies the collapse there)
+(function () {
+  "use strict";
+  var toc = document.querySelector(".page__content .toc");
+  if (!toc) return;
+  var title = toc.querySelector(".nav__title");
+  var menu = toc.querySelector(".toc__menu");
+  if (!title || !menu) return;
+  var btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "toc__toggle";
+  btn.setAttribute("aria-expanded", "false");
+  btn.setAttribute("aria-label", "Toggle table of contents");
+  btn.innerHTML = '<span class="toc__chevron" aria-hidden="true"></span>';
+  title.appendChild(btn);
+  toc.classList.add("toc--js");
+  var set = function (open) {
+    toc.classList.toggle("is-open", open);
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+  };
+  title.addEventListener("click", function () { set(!toc.classList.contains("is-open")); });
+  menu.addEventListener("click", function (e) {
+    if (e.target.closest("a") && window.matchMedia("(max-width: 1023px)").matches) set(false);
+  });
+})();
