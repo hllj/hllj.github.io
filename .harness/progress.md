@@ -162,3 +162,6 @@ Cause confirmed on built pages: _config.yml author.links had an Email item and a
 
 ## Session 65 - F054
 Rebuilt, ran all 3 verify entries (rc=0), confirmed Email once plus Twitter/Facebook/GitHub/Instagram on /, /categories/, /tags/ and a post. Claimed. No code changes.
+
+## F054 Test report (tester, session 65)
+init ok. Parsed ul.author__urls on /, /categories/, /tags/ and pi-bench post (served :4000): each lists Twitter (twitter.com/hopbui3/), Facebook, GitHub, Instagram, Email (mailto:vanhop3499@gmail.com) exactly once, each with a valid href and icon+label; Email is last only, no empty icon-only entry (the "Custom Social Profile Link" li is inside an HTML comment, not rendered). Real headless Chrome 1280 screenshots of / and the post (1500px tall) viewed: sidebar shows Twitter, Facebook, GitHub, Instagram, Email once each. Result: pass.

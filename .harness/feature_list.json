@@ -1977,10 +1977,10 @@
         "config"
       ],
       "id": "F054",
-      "passes": false,
-      "status": "claimed",
+      "passes": true,
+      "status": "passing",
       "source": "proposal:P003",
-      "updated_at": "2026-11-18T12:03:37Z",
+      "updated_at": "2026-11-18T12:04:21Z",
       "attempts": [
         {
           "at": "2026-11-18T11:58:11Z",
@@ -2005,6 +2005,11 @@
         {
           "at": "2026-11-18T12:03:37Z",
           "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T12:04:21Z",
+          "event": "pass",
           "note": ""
         }
       ],
