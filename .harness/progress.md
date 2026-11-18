@@ -17,3 +17,6 @@ Known issues: none. Next: F002.
 
 ## 2026-11-18 - F001 (tester)
 Ran init.sh (server up, smoke ok). curl of post page: 200, h1.page__title with title text, page__content present with 60 paragraphs. Probes: sibling post and home return 200. No browser used (HTTP-level check). Result: pass.
+
+## 2026-11-18 - F002 (coder)
+Added _sass/minimal-mistakes/_post-ux.scss (:root{--post-ux:1}) imported in minimal-mistakes.scss; assets/js/post-ux.js loaded with defer from _includes/footer/custom.html. Verified: verify command passes, script served 200 by local server. Known issues: none. Next: F003.
