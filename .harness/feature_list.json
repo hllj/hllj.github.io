@@ -1716,14 +1716,19 @@
         "post-nav"
       ],
       "id": "F047",
-      "passes": false,
-      "status": "claimed",
+      "passes": true,
+      "status": "passing",
       "source": "proposal:P001",
-      "updated_at": "2026-11-18T10:58:34Z",
+      "updated_at": "2026-11-18T10:59:12Z",
       "attempts": [
         {
           "at": "2026-11-18T10:58:34Z",
           "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:59:12Z",
+          "event": "pass",
           "note": ""
         }
       ]

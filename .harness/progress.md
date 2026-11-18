@@ -348,3 +348,6 @@ init ok. pi-bench-harness-iterations at 1280: default open (aria-expanded true, 
 
 ## 2026-11-18 session 56 - F047 (coder)
 Post footer rhythm (end of _post-ux.scss): .page__meta and .page__share were floated left (clear both), which swallowed the share/post-nav margins (cards touched share row). Set float:none on both (higher-specificity selectors), tags margin-bottom 0, share margin-top 24px, post-nav margin-top 24px, gap 16px. Measured via iframes at 375/768/1280 x light/dark: tags->share 24, share->card 25 (incl. 1px nav border-top), card gap 16 (side-by-side and stacked), scrollWidth==viewport. Verify cmd passes. Known: none.
+
+## F047 Test report (tester, session 56)
+init ok. Iframe measurements on pi-bench-harness-iterations at 375/768/1280 x light/dark: footer tags bottom -> share top 24px; share bottom -> first card top 25px (incl 1px border); card gap 16px both side by side (1280, cards 318-782 / 798-1262) and stacked (375); floats none; scrollWidth==viewport. Screenshot unpainted (known capture lag), relied on measurements. Result: pass.
