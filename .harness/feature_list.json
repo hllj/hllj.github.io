@@ -2127,6 +2127,28 @@
           "note": ""
         }
       ]
+    },
+    {
+      "category": "functional",
+      "priority": 58,
+      "description": "Home page images load on every paginated page (/page2/, /page3/, ...): root cause is index.html using relative src (images/...) which resolves to /page2/images/... and 404s. Make the home intro images use root-relative URLs via relative_url (and audit any other relative img/href in index.html), so the same images render on / and every /pageN/.",
+      "steps": [
+        "Run .harness/init.sh",
+        "Open / and note the two intro images (Tet Hue photo, home_page_1) render",
+        "Click Next/page 2 and page 3 in the pagination; open /page2/ and /page3/ directly",
+        "Verify every img in the intro content loads (naturalWidth > 0, HTTP 200) on /, /page2/, /page3/, and no other relative asset URL remains in the page content"
+      ],
+      "verify": [
+        "bash .harness/build.sh && for p in _site/index.html _site/page2/index.html _site/page3/index.html; do test -f $p && ! grep -qE '<img[^>]+src=\"images/' $p || exit 1; done"
+      ],
+      "depends_on": [],
+      "tags": [
+        "home"
+      ],
+      "id": "F058",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P007"
     }
   ]
 }
