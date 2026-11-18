@@ -867,3 +867,23 @@ html[data-theme="dark"] :where(a, button, input, select, textarea, summary, [tab
 .post-breadcrumbs li { display: flex; align-items: center; min-height: 40px; line-height: 1.3; }
 .post-breadcrumbs li + li::before { margin-right: 0.5rem; }
 .post-breadcrumbs a { line-height: 1.3; }
+
+/* F045 TOC polish: no stray toggle box on desktop, normal-weight links, no underline, even indentation */
+@media (min-width: 1024px) { .toc .toc__toggle { display: none; } }
+.toc__toggle { background: none; border: 0; }
+.toc .toc__menu a {
+  font-weight: 400;
+  text-decoration: none;
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  padding-right: .75rem;
+  padding-left: calc(.75rem - 3px);
+  border-bottom: 1px solid rgba(128, 128, 128, .2);
+}
+.toc .toc__menu li ul > li a { padding-left: calc(1.5rem - 3px); font-weight: 400; }
+.toc .toc__menu li ul li ul > li a { padding-left: calc(2.25rem - 3px); }
+.toc .toc__menu li ul li ul li ul > li a { padding-left: calc(3rem - 3px); }
+.toc .toc__menu a:hover { text-decoration: none; }
+.toc .toc__menu a.is-active { font-weight: 500; }
+.page__content .toc .toc__menu li a,
+.page__content .toc .toc__menu li a:hover { text-decoration: none; }
