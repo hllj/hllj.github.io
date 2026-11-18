@@ -232,3 +232,6 @@ init ok. /blog/ at 1024: 19 cards, each with title, excerpt, date, read time; ta
 
 ## 2026-11-18 session 37 - F033 (coder)
 Pagination (on / and /page2..4/; /blog/ is unpaginated) restyled as pill buttons with dark current-page highlight, disabled prev/next, wrap, dark variant, print hidden; taxonomy archives (/categories/, /tags/) got bordered section headings and pill index (_post-ux.scss end). Verified /page2/: current "2" dark bg/white text, all 40px pills, scrollWidth 1024; /categories/ heading border 1px. Known: dark variant unchecked until F020.
+
+## F033 Test report (tester, session 37)
+init ok. /page2/ at 1024: pagination pills 40px, radius 999px, current "2" dark bg/white text (distinct from white pills), scrollWidth 1024. Fetched /: Previous disabled, 1 current; /page4/: 4 current, Next disabled. /blog/ is unpaginated (no pagination markup; cards from F032). /categories/ and /tags/: headings with 1px bottom border, index pills 999px radius. At 375 on /page3/: pagination one row, 351 wide, scrollWidth 375. Screenshots rendered blank in the pane, so verified via computed styles. Dark mode not checked (F020). Result: pass.
