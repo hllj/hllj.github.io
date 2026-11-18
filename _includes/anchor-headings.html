@@ -1,0 +1,20 @@
+{%- comment -%} Appends a "#" permalink to every h2-h4 that has an id. Usage: include anchor-headings.html html=content {%- endcomment -%}
+{%- assign out = include.html -%}
+{%- for lvl in (1..4) -%}
+  {%- assign open = '<h' | append: lvl | append: ' id="' -%}
+  {%- assign close = '</h' | append: lvl | append: '>' -%}
+  {%- assign parts = out | split: open -%}
+  {%- if parts.size > 1 -%}
+    {%- capture rebuilt -%}{{ parts[0] }}
+      {%- for part in parts offset: 1 -%}
+        {%- assign id = part | split: '"' | first -%}
+        {%- assign pieces = part | split: close -%}
+        {%- assign head = pieces | first -%}
+        {%- assign tail = part | remove_first: head | remove_first: close -%}
+        {{- open }}{{ head }}<a href="#{{ id }}" class="header-link" aria-label="Link to this section" title="Link to this section">#</a>{{ close }}{{ tail -}}
+      {%- endfor -%}
+    {%- endcapture -%}
+    {%- assign out = rebuilt -%}
+  {%- endif -%}
+{%- endfor -%}
+{{ out }}

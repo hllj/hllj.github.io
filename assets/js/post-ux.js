@@ -89,3 +89,31 @@
     if (e.target.closest("a") && window.matchMedia("(max-width: 1023px)").matches) set(false);
   });
 })();
+
+// Heading anchors: the theme script also injects "#" links at runtime; keep only the server-rendered one.
+(function () {
+  "use strict";
+  var run = function () {
+    document.querySelectorAll(".page__content .header-link").forEach(function (a) {
+      if (a.hasAttribute("aria-label")) return;
+      if (a.parentElement.querySelector(".header-link[aria-label]")) a.remove();
+    });
+  };
+  run();
+  window.addEventListener("load", run);
+  setTimeout(run, 300);
+})();
+
+// Heading anchors: the theme script also injects "#" links at runtime; keep only the server-rendered one.
+(function () {
+  "use strict";
+  var run = function () {
+    document.querySelectorAll(".page__content .header-link").forEach(function (a) {
+      if (a.hasAttribute("aria-label")) return;
+      if (a.parentElement.querySelector(".header-link[aria-label]")) a.remove();
+    });
+  };
+  run();
+  window.addEventListener("load", run);
+  setTimeout(run, 300);
+})();

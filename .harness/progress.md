@@ -71,3 +71,6 @@ Mobile TOC collapsible: post-ux.js adds a toggle button + .toc--js/.is-open (cli
 
 ## F009 Test report (tester, session 10)
 init ok, rebuilt. 375px on pi-bench-harness-iterations and how-i-setup-this-blog: TOC collapsed by default (31px, menu display none, aria-expanded false), toggle button or title click expands (448px capped / 156px, aria-expanded true), TOC link click collapses, re-toggle works, no horizontal overflow (scrollWidth 375). TOC sits at y~390-600, within first viewport. Screenshot pane blank so DOM measurements used. Result: pass.
+
+## 2026-11-18 - F010 (coder, session 11)
+Added _includes/anchor-headings.html (Liquid; appends a server-rendered "#" a.header-link to h1-h4 with ids; used in single.html for {{ content }}). Theme JS also injects runtime header-links, so post-ux.js removes those duplicates. CSS in _post-ux.scss: hidden until heading hover or link focus (always 0.5 opacity on hover:none devices). Verified at 4000: 17 headings each with exactly 1 link; clicking sets hash to the heading id. Known: :focus opacity not observable in unfocused pane (rule present in built CSS). Posts body headings are h1 in this blog, so h1 is included too.

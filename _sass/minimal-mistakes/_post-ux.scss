@@ -179,3 +179,9 @@ html { scroll-behavior: smooth; }
   .toc--js.is-open .toc__chevron { transform: rotate(-135deg); }
 }
 @media (min-width: 1024px) { .toc__toggle { display: none; } }
+
+/* Heading anchor links */
+.page__content .header-link { left: 0; margin-left: .4em; text-decoration: none; font-weight: 400; }
+.page__content :is(h1, h2, h3, h4):hover .header-link,
+.page__content :is(h1, h2, h3, h4) .header-link:focus { opacity: 1; }
+@media (hover: none) { .page__content :is(h1, h2, h3, h4) .header-link { opacity: .5; } }
