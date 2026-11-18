@@ -98,3 +98,6 @@ init ok. 375px on pi-coding-agent-setup, pi-bench-harness-iterations, how-i-setu
 
 ## 2026-11-18 - F014 (coder, session 15)
 Added image/figure CSS to _post-ux.scss: img block, max-width 100%, height auto, centered, 8px radius; caption (em right after img, or figcaption) centered, italic, 0.85rem, muted color. Verified on rsna-knee wrap-up at 375/768/1280: 6 images fill the content column (right edge within column), scrollWidth == viewport, radius 8px, captions styled. Known issues: captions rely on the "![](..)\n*caption*" markdown pattern.
+
+## F014 Test report (tester, session 15)
+init ok. rsna-knee wrap-up at 375/768/1280: 6 content images (SVG, natural 1200px) fill their paragraph/column exactly (375: 12..363; 768/1280: width 402 = paragraph width, 0px offsets), display block, radius 8px, documentElement scrollWidth == viewport at all three. Captions (em after img) italic, centered, 0.85rem, muted rgb(91,101,115) for all 6. 4 other imgs on page are related-post teasers (outside scope, unrounded). Screenshot pane blank; DOM measurements used. Note: text column is only ~402px wide at 768 and 1280 (layout, not F014). Result: pass.
