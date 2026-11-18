@@ -70,6 +70,7 @@
   var toc = document.querySelector(".page__content .toc");
   if (!toc) return;
   // F063: on desktop (>= 1024px) move the TOC wrapper (same node) into the left author sidebar
+  var closeToc;
   var wrap = toc.closest(".sidebar__right");
   var side = document.querySelector("#main > .sidebar");
   var article = document.querySelector("#main > article.page");
@@ -94,7 +95,16 @@
       }
     };
     place();
-    if (mq.addEventListener) mq.addEventListener("change", place); else if (mq.addListener) mq.addListener(place);
+    // a stale open panel is closed when the TOC moves across the breakpoint
+    var wasWide = mq.matches;
+    var onMove = function () {
+      if (mq.matches === wasWide) return;
+      wasWide = mq.matches;
+      place();
+      if (typeof closeToc === "function") closeToc();
+    };
+    window.addEventListener("resize", onMove);
+    if (mq.addEventListener) mq.addEventListener("change", onMove); else if (mq.addListener) mq.addListener(onMove);
   }
   var title = toc.querySelector(".nav__title");
   var menu = toc.querySelector(".toc__menu");
@@ -115,6 +125,7 @@
   };
   var saved = null;
   try { saved = localStorage.getItem(KEY); } catch (e) {}
+  closeToc = function () { set(false, false); };
   set(false, false); // overlay panel: always start closed
   title.addEventListener("click", function () { set(!toc.classList.contains("is-open"), true); });
   menu.addEventListener("click", function (e) {
