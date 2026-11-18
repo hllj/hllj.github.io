@@ -252,3 +252,6 @@ init ok. Post at 1024: first Tab focuses "Skip to primary navigation" (fixed, 3p
 Fixed contrast failures: accent/link color #2a6df4 -> #1c55c4 (5.7:1 on #eee), muted text #565e66, footer and TOC header bg #00688f (white 6:1), twitter share btn #1a6fb0, inline code in lead dark. Ran a JS audit over all visible text on pi-bench: 0 elements below 4.5:1 (assuming #eee page bg). Known: dark mode contrast unchecked (F020).
 
 ## 2026-11-18 curator: refreshed learnings (F035 contrast gotcha and tokens)
+
+## 2026-11-18 session 41 - F035 (coder, claim)
+Rebuilt and re-audited contrast in-browser (text nodes, effective bg walked through ancestors, 4.5:1 / 3:1 large) on pi-bench, pi-coding-agent-setup, rsna wrap-up and /blog/: 0 failures except the visually-hidden "Toggle search" label (clipped, not visible). Verify cmd passes. Session 40 fix (link #1c55c4, footer/TOC #00688f, muted #565e66) holds. Claimed F035. Known: dark mode contrast unchecked until F020.
