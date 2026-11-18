@@ -157,7 +157,7 @@ html { scroll-behavior: auto; }
 .toc--js.is-open .toc__menu { display: block; max-height: none; overflow: visible; margin-top: .5rem; }
 .toc--js { width: 100%; }
 .toc--js > header { width: fit-content; max-width: 100%; }
-.toc--js .nav__title { cursor: pointer; display: inline-flex; align-items: center; gap: .6rem; width: fit-content; min-height: 40px; box-sizing: border-box; padding: 0 .5rem 0 .9rem; margin: 0; border-radius: 8px; }
+.toc--js .nav__title { cursor: pointer; display: inline-flex; align-items: center; gap: max(.6rem, 10px); width: fit-content; min-height: 40px; box-sizing: border-box; padding: 0 .5rem 0 .9rem; margin: 0; border-radius: 8px; }
 .toc--js .nav__title .fa-list { margin: 0; }
 .toc--js .toc__toggle { background: none; border: 0; padding: .25rem .5rem; margin-left: auto; color: inherit; cursor: pointer; }
 .toc__chevron {
