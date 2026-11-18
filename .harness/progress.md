@@ -80,3 +80,6 @@ init ok. pi-bench-harness-iterations: 17 content headings (h1/h2 in body) each h
 
 ## 2026-11-18 - F011 (coder, session 12)
 Code blocks restyled in _post-ux.scss: dark theme (#161b22, text #e6edf3, token colors), 8px radius, 16/24px padding, mono stack 14px, language label bar via ::before per language class (bash/json/python/js/ts/yaml/etc; hidden for plaintext). Verified in browser on pi-coding-agent-setup: 4 blocks (json, bash x3) with radius 8px, padding, mono font, labels shown, no overflow. Known issues: languages outside the CSS list get no label.
+
+## F011 Test report (tester, session 12)
+init ok. pi-coding-agent-setup: 4 blocks (json, bash x3): radius 8px, padding 16/24, bg #161b22, text #e6edf3 (~14:1 contrast), ui-monospace 14px, language label shown via ::before ("json"/"bash"). Other posts: python blocks present, plaintext block gets no label (intended). 375px: no horizontal overflow, pre overflow-x auto. Inline code unaffected (light bg, dark text). Known issue (languages outside CSS list get no label) judged acceptable ("when known"). Result: pass.
