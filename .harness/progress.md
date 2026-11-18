@@ -244,3 +244,6 @@ init ok. pi-bench (last_modified_at set): meta shows date, "Updated November 18,
 
 ## 2026-11-18 session 39 - F035 (coder)
 A11y: aria-labels on landmarks (skip links, primary nav, TOC aside/nav, main, footer); global :focus-visible ring (3px blue, lighter in dark); skip links become a fixed visible box on focus; global prefers-reduced-motion block (no smooth scroll, transitions/animations ~0). Styles at end of _post-ux.scss. Verified in browser: first Tab focuses "Skip to primary navigation" (fixed, 3px outline), click goes to #site-nav; labels present; verify cmd passes. Known: contrast not audited site-wide beyond earlier features; dark mode ring selector html[data-theme=dark] (F020).
+
+## F035 Test report (tester, session 39)
+init ok. Post at 1024: first Tab focuses "Skip to primary navigation" (fixed, 3px outline); 79 focusable elements all show an outline when focused; landmarks have aria-labels (Skip links, Primary, Breadcrumb, TOC, Main content, Site footer). Served CSS contains prefers-reduced-motion:reduce rules (scroll-behavior auto, animation/transition ~0); emulation of the media feature not possible in pane, checked in CSS only. Contrast measured: body text 12.6:1 OK, but content/TOC links #2a6df4 on #eee = 3.94:1 and footer copyright white on #0092ca = 3.52:1 -> fail AA. Result: FAIL (contrast).

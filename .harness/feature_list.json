@@ -1255,16 +1255,22 @@
       "depends_on": [
         "F003"
       ],
-      "status": "claimed",
+      "status": "failing",
       "passes": false,
-      "updated_at": "2026-11-18T10:14:37Z",
+      "updated_at": "2026-11-18T10:15:31Z",
       "attempts": [
         {
           "at": "2026-11-18T10:14:37Z",
           "event": "claim",
           "note": ""
+        },
+        {
+          "at": "2026-11-18T10:15:31Z",
+          "event": "fail",
+          "note": "Contrast AA not met. On /blog/pi-bench-harness-iterations/ in-content links (and TOC links) are rgb(42,109,244) on page bg #eee = 3.94:1 (17px and 11.7px text, needs 4.5:1); footer copyright is white on #0092ca = 3.52:1 at 11px text (needs 4.5:1). Coder's own known issue says contrast not audited. Other parts work: skip links appear fixed with 3px outline, landmarks labelled, :focus-visible rings on all 79 focusables, prefers-reduced-motion CSS present (could not emulate in browser)."
         }
-      ]
+      ],
+      "notes": "Contrast AA not met. On /blog/pi-bench-harness-iterations/ in-content links (and TOC links) are rgb(42,109,244) on page bg #eee = 3.94:1 (17px and 11.7px text, needs 4.5:1); footer copyright is white on #0092ca = 3.52:1 at 11px text (needs 4.5:1). Coder's own known issue says contrast not audited. Other parts work: skip links appear fixed with 3px outline, landmarks labelled, :focus-visible rings on all 79 focusables, prefers-reduced-motion CSS present (could not emulate in browser)."
     },
     {
       "id": "F036",
