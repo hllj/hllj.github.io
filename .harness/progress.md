@@ -329,3 +329,6 @@ init ok. Iframe measurements on pi-bench-harness-iterations and rsna wrap-up at 
 
 ## 2026-11-18 session 53 - F045 (coder)
 TOC polish (end of _post-ux.scss): toggle hidden again at >=1024 (a later display:inline-flex rule was overriding the media query, causing the empty box); toggle bg none; .toc__menu a weight 400 (active 500), text-decoration none (needed .page__content .toc specificity to beat the F019 inline-link underline), explicit padding-left per level (9/21/33/45px incl 3px border), uniform vertical padding. Verified at 1024 and 375: underline none, weights 400/500, padding levels consistent, toggle none on desktop, chevron toggle 40x40 transparent on mobile, scrollWidth==viewport, one .is-active entry. Dark mode: only colors inherited, no new colors added. Known: none.
+
+## F045 Test report (tester, session 53)
+init ok. Browser at 1280 and 375 on pi-bench-harness-iterations: desktop toggle display none (no grey box), mobile chevron toggle 40x40 transparent, expands OK; .toc__menu a weight 400 (active 500), text-decoration none; padding-left consistent per level (10.5/24 desktop, 6/15 mobile); active entry follows scroll (Tong quan -> Ket luan), dark theme renders fine; scrollWidth==viewport. FAIL: entry spacing uneven - nested ul margin-bottom 18px gives 58px gap after each nested group vs 40px elsewhere. Result: fail.
