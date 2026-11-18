@@ -2146,14 +2146,19 @@
         "home"
       ],
       "id": "F058",
-      "passes": false,
-      "status": "claimed",
+      "passes": true,
+      "status": "passing",
       "source": "proposal:P007",
-      "updated_at": "2026-11-18T12:54:01Z",
+      "updated_at": "2026-11-18T12:54:21Z",
       "attempts": [
         {
           "at": "2026-11-18T12:54:01Z",
           "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T12:54:21Z",
+          "event": "pass",
           "note": ""
         }
       ]

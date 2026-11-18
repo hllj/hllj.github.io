@@ -186,3 +186,6 @@ init ok. Real headless Chrome screenshots of / (tall, 1280) and /page2/ viewed: 
 
 ## Session 69 - F058 (coder)
 index.html intro imgs now use `{{ '/images/..' | relative_url }}` (were relative `images/...`, 404 on /pageN/). Built; verify cmd passes; curl on /, /page2/, /page3/: both intro images and avatar return 200. No other relative src/href in index.html. Known: none.
+
+## F058 Test report (tester, session 69)
+init ok. curl on /, /page2/, /page3/, /page4/: every img src is root-relative (/images/...) and returns 200 (Tet Hue photo, home_page_1, avatar); no relative src/href left in page content; /page5/ is 404 (does not exist). index.html uses relative_url for both intro images. Did not check naturalWidth in a browser (HTTP 200 + valid src only). Result: pass.
