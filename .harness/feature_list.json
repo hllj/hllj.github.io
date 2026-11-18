@@ -1515,9 +1515,9 @@
         "F021",
         "F039"
       ],
-      "status": "claimed",
-      "passes": false,
-      "updated_at": "2026-11-18T10:31:42Z",
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T10:33:09Z",
       "attempts": [
         {
           "at": "2026-11-18T10:29:30Z",
@@ -1532,6 +1532,11 @@
         {
           "at": "2026-11-18T10:31:42Z",
           "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:33:09Z",
+          "event": "pass",
           "note": ""
         }
       ],
