@@ -247,3 +247,6 @@ A11y: aria-labels on landmarks (skip links, primary nav, TOC aside/nav, main, fo
 
 ## F035 Test report (tester, session 39)
 init ok. Post at 1024: first Tab focuses "Skip to primary navigation" (fixed, 3px outline); 79 focusable elements all show an outline when focused; landmarks have aria-labels (Skip links, Primary, Breadcrumb, TOC, Main content, Site footer). Served CSS contains prefers-reduced-motion:reduce rules (scroll-behavior auto, animation/transition ~0); emulation of the media feature not possible in pane, checked in CSS only. Contrast measured: body text 12.6:1 OK, but content/TOC links #2a6df4 on #eee = 3.94:1 and footer copyright white on #0092ca = 3.52:1 -> fail AA. Result: FAIL (contrast).
+
+## 2026-11-18 session 40 - F035 retry (coder)
+Fixed contrast failures: accent/link color #2a6df4 -> #1c55c4 (5.7:1 on #eee), muted text #565e66, footer and TOC header bg #00688f (white 6:1), twitter share btn #1a6fb0, inline code in lead dark. Ran a JS audit over all visible text on pi-bench: 0 elements below 4.5:1 (assuming #eee page bg). Known: dark mode contrast unchecked (F020).

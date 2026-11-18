@@ -25,10 +25,10 @@
   --pux-space-7: 3rem;
 
   /* Colors (light mode) */
-  --pux-accent: #2a6df4;
+  --pux-accent: #1c55c4;
   --pux-accent-hover: #1a4fba;
   --pux-text: #24292f;
-  --pux-text-muted: #6a737d;
+  --pux-text-muted: #565e66;
   --pux-border: #e1e4e8;
   --pux-bg: #ffffff;
 
@@ -735,3 +735,12 @@ html[data-theme="dark"] :where(a, button, input, select, textarea, summary, [tab
     scroll-behavior: auto !important;
   }
 }
+
+/* F035 contrast (AA): darker footer bg so white text >= 4.5:1; accessible link color */
+.page__footer { background-color: #00688f; color: #fff; }
+.page__footer a, .page__footer-copyright, .page__footer-copyright a { color: #fff; }
+.page__content a, .toc a { color: #1c55c4; }
+.page__content a:hover, .toc a:hover { color: #1a4fba; }
+.toc .nav__title { background-color: #00688f; color: #fff; }
+.btn--twitter { background-color: #1a6fb0; }
+.page__lead code { color: #1f2933; }
