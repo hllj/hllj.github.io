@@ -113,3 +113,6 @@ Layout single.html adds loading="lazy" decoding="async" to all content imgs via 
 
 ## F016 Test report (tester, session 17)
 init ok. rsna wrap-up: 6/6 content imgs have loading=lazy, decoding=async, alt; teaser/avatar imgs untouched. Probe: built HTML has no width/height/aspect-ratio on any content img; JS adds dims only after load, and an unloaded lazy image measures height 0, so layout still shifts on load. Result: FAIL (layout-shift part of description unmet).
+
+## 2026-11-18 session 18 - F016 (retry)
+Added _plugins/img_dimensions.rb: post_render hook adds intrinsic width/height (PNG/GIF/JPEG header or SVG width/height/viewBox) to local <img> tags at build time; CSS height:auto keeps ratio. Verified on rsna wrap-up: all 6 content imgs have width/height in built HTML; unloaded lazy imgs measure 312-402px tall (not 0). Verify cmd passes. Known: local plugin does not run on classic GitHub Pages builds (needs Actions/local build); remote images get no dims.
