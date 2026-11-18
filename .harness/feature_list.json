@@ -1043,13 +1043,18 @@
       "depends_on": [
         "F003"
       ],
-      "status": "claimed",
-      "passes": false,
-      "updated_at": "2026-11-18T10:06:50Z",
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T10:07:24Z",
       "attempts": [
         {
           "at": "2026-11-18T10:06:50Z",
           "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:07:24Z",
+          "event": "pass",
           "note": ""
         }
       ]

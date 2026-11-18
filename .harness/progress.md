@@ -208,3 +208,6 @@ init ok. pi-bench post at 1024 (stubbed clipboard): 4 pill buttons 40px tall in 
 
 ## 2026-11-18 session 33 - F029 (coder)
 Prev/next post nav rewritten as two cards (_includes/post_pagination.html, styles at end of _post-ux.scss): label, title, date; missing neighbour shows a dashed disabled card ("No older/newer posts"); stacks at <=600px; dark variant; hidden in print. Verified: pi-bench shows two 388px cards with dates at 1024, scrollWidth ok; oldest/newest posts show one disabled card; verify cmd passes. Known: dark variant selector (html[data-theme=dark]/:root.dark) to be rechecked in F020.
+
+## F029 Test report (tester, session 33)
+init ok. Fetched all 19 posts: every middle post has two cards (prev/next) with title + date; first post (how-i-setup-this-blog) has disabled prev "No older posts" + next card; last (rsna wrap-up) has prev card + disabled next "No newer posts" (dashed, opacity .55, non-link). pi-bench at 1024: two 388x138 cards, scrollWidth 1024. Clicking next navigated to the rsna post. At 375: cards stack (351 wide, 89/56 tall), scrollWidth 375. Dark variant not verified (my guessed selector did not trigger it; left to F020 as coder noted). Result: pass.
