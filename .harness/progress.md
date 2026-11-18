@@ -101,3 +101,6 @@ Added image/figure CSS to _post-ux.scss: img block, max-width 100%, height auto,
 
 ## F014 Test report (tester, session 15)
 init ok. rsna-knee wrap-up at 375/768/1280: 6 content images (SVG, natural 1200px) fill their paragraph/column exactly (375: 12..363; 768/1280: width 402 = paragraph width, 0px offsets), display block, radius 8px, documentElement scrollWidth == viewport at all three. Captions (em after img) italic, centered, 0.85rem, muted rgb(91,101,115) for all 6. 4 other imgs on page are related-post teasers (outside scope, unrounded). Screenshot pane blank; DOM measurements used. Note: text column is only ~402px wide at 768 and 1280 (layout, not F014). Result: pass.
+
+## 2026-11-18 - F015 (coder, session 16)
+Added image lightbox in post-ux.js (click/Enter on .page__content img opens fixed overlay with full-size img + close button; Esc, overlay click or button closes; focus returns to the opener; body scroll locked) plus styles in _post-ux.scss. Skips images inside links and related/archive teasers. Verified on rsna-knee wrap-up: 6 triggers; open -> overlay, focus on close button, natural width 1200; Esc closes and focus returns; overlay click closes and focus returns; verify grep passes. Known issues: none.

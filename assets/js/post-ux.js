@@ -166,3 +166,59 @@
     block.appendChild(btn);
   });
 })();
+
+// Click-to-zoom lightbox for images in post content
+(function () {
+  "use strict";
+  var imgs = document.querySelectorAll(".page__content img");
+  if (!imgs.length) return;
+  var overlay = null, opener = null;
+  var close = function () {
+    if (!overlay) return;
+    document.removeEventListener("keydown", onKey, true);
+    overlay.parentNode.removeChild(overlay);
+    overlay = null;
+    document.documentElement.classList.remove("lightbox-open");
+    if (opener && opener.focus) opener.focus();
+    opener = null;
+  };
+  var onKey = function (e) {
+    if (e.key === "Escape" || e.key === "Esc") { e.preventDefault(); close(); }
+    else if (e.key === "Tab") { e.preventDefault(); }
+  };
+  var open = function (img) {
+    if (overlay) return;
+    opener = img;
+    overlay = document.createElement("div");
+    overlay.className = "lightbox";
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+    overlay.setAttribute("aria-label", img.alt || "Image preview");
+    overlay.tabIndex = -1;
+    var big = document.createElement("img");
+    big.src = img.currentSrc || img.src;
+    big.alt = img.alt || "";
+    overlay.appendChild(big);
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "lightbox__close";
+    btn.setAttribute("aria-label", "Close image");
+    btn.textContent = "×";
+    overlay.appendChild(btn);
+    overlay.addEventListener("click", close);
+    document.body.appendChild(overlay);
+    document.documentElement.classList.add("lightbox-open");
+    document.addEventListener("keydown", onKey, true);
+    btn.focus();
+  };
+  Array.prototype.forEach.call(imgs, function (img) {
+    if (img.closest("a") || img.closest(".page__related, .archive")) return;
+    img.classList.add("lightbox-trigger");
+    img.tabIndex = 0;
+    img.setAttribute("role", "button");
+    img.addEventListener("click", function () { open(img); });
+    img.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(img); }
+    });
+  });
+})();
