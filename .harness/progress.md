@@ -53,3 +53,6 @@ Added fixed #reading-progress bar (only when page.date, i.e. posts) in _layouts/
 
 ## F006 Test report (tester, session 7)
 init ok, rebuilt. Browser on pi-bench-harness-iterations: scroll 0/50/75/100% gives scaleX 0/0.5/0.75/1, bar fixed top 0, 3px, accent color, aria-valuenow updates. Reload at scrollY 5000 restores bar to 0.333. Not present on home or categories (and only 4 post pages include it). Note: rAF updates lag under very short waits in the pane; fine with 1s waits. Result: pass.
+
+## 2026-11-18 - F007 (coder, session 8)
+single.html: TOC auto-enabled for posts (page.date) with >=3 h2/h3 unless `toc: false`; label fixed to "On this page". _post-ux.scss: html smooth scroll (respects reduced motion), heading scroll-margin-top 4.5rem, and sticky right float TOC for `.wide` posts (MM disables the right sidebar there). Verified at 1280px on pi-bench-harness-iterations: 17 entries, aside position sticky, stays at top 27px after scrolling 2500px, hash target lands at 81px (masthead is not sticky). Smooth animation not observable in the hidden pane. Known issues: pi-coding-agent-setup has `toc: false` front matter so no TOC (explicit opt-out).

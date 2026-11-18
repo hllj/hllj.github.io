@@ -127,3 +127,22 @@
     transform-origin: 0 50%;
   }
 }
+
+/* Table of contents: smooth scroll + anchor offset */
+html { scroll-behavior: smooth; }
+.page__content :is(h1, h2, h3, h4, h5, h6)[id] { scroll-margin-top: 4.5rem; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Sticky TOC on the right for wide posts (MM disables the right sidebar there) */
+@media (min-width: 1024px) {
+  .wide .page__content > .sidebar__right.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 1.5rem;
+    float: right;
+    width: 230px;
+    margin: 0 0 1em 2rem;
+    padding-left: 0;
+    z-index: 10;
+  }
+}
