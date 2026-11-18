@@ -14,3 +14,6 @@ Notes: sass emits many deprecation warnings (harmless). Do not commit _site or v
 ## 2026-11-18 - F001 (coder)
 Baseline only, no code changes. init.sh passes (server up, smoke ok). Verify command passes: build.sh succeeds and _site/blog/pi-bench-harness-iterations/index.html contains page__title; h1.page__title served at http://127.0.0.1:4000/blog/pi-bench-harness-iterations/.
 Known issues: none. Next: F002.
+
+## 2026-11-18 - F001 (tester)
+Ran init.sh (server up, smoke ok). curl of post page: 200, h1.page__title with title text, page__content present with 60 paragraphs. Probes: sibling post and home return 200. No browser used (HTTP-level check). Result: pass.

@@ -18,8 +18,21 @@
         "scaffold"
       ],
       "depends_on": [],
-      "status": "todo",
-      "passes": false
+      "status": "passing",
+      "passes": true,
+      "updated_at": "2026-11-18T06:37:56Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T06:37:33Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T06:37:56Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "id": "F002",
