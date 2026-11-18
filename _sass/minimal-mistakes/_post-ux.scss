@@ -472,7 +472,7 @@ html[data-theme="dark"] .back-to-top { background: #e6edf3; color: #0d1117; &:ho
 html.masthead-autohide .masthead {
   position: sticky;
   top: 0;
-  background-color: #fff;
+  background-color: #eee;
   transition: transform 0.25s ease;
   will-change: transform;
   &.is-hidden { transform: translateY(-100%); }
@@ -852,6 +852,12 @@ html[data-theme="dark"] :where(a, button, input, select, textarea, summary, [tab
 
 /* F042 masthead: the tagline collides with the nav on narrow screens; hide it there */
 .greedy-nav .site-title { flex-shrink: 0; }
-@media (max-width: 599px) {
+@media (max-width: 699px) {
   .site-subtitle { display: none; }
 }
+
+/* F043 masthead: title + tagline spaced and centered; masthead and breadcrumb share the page background */
+.greedy-nav .site-title { align-items: center; gap: 12px; }
+@media (min-width: 700px) { .site-title .site-subtitle { display: inline; } }
+.site-title .site-subtitle { white-space: nowrap; font-weight: normal; line-height: 1; }
+.masthead__inner-wrap { justify-content: flex-start; }
