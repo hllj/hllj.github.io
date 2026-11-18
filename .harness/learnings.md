@@ -24,10 +24,13 @@
 - Text column is only ~402px wide at 768 and 1280 (layout issue, relevant to F025/F026/F036).
 - Related-post teaser images are outside post-image styling; lightbox skips images inside links and teasers.
 - Tester independently injects probes (long strings, forced widths); self-check the same edge cases before claiming.
+- Contrast (F035): do audit text contrast against the real page bg (#eee) with a JS pass before claiming; the old accent #2a6df4 (3.94:1) and footer #0092ca (3.52:1) failed AA. Current AA-safe tokens: link #1c55c4, muted #565e66, footer/TOC header #00688f, share btn #1a6fb0 (_post-ux.scss end, ~line 740). Reuse these; do not reintroduce lighter blues.
+- prefers-reduced-motion cannot be emulated in the browser pane; tester checks the CSS only.
 
 ## Decisions
 - None from humans so far. Contrast target: dark text on tinted bg, AA or better (F018 used #1f2933, ~13:1).
 
 ## Open risks
-- Remaining: F019-F042 (dark mode F020/F021, nav/cards F029/F030, blog index F032/F033, a11y F035, responsive audit F036, print F037, SEO F038, 404 F039, search F040, footer F041, final review F042). New CSS must be checked again in dark mode once F020 lands.
+- Remaining: F035 (retest), F036-F042; earlier F019-F034 done except dark mode F020/F021 if still open (dark mode F020/F021, nav/cards F029/F030, blog index F032/F033, responsive audit F036, print F037, SEO F038, 404 F039, search F040, footer F041, final review F042). New CSS must be checked again in dark mode once F020 lands.
+- F035 retry (contrast fix) awaits tester; dark mode contrast unchecked until F020.
 - Remote images get no dimensions; classic Pages builds skip _plugins.
