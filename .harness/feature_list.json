@@ -2272,6 +2272,58 @@
           "note": ""
         }
       ]
+    },
+    {
+      "category": "functional",
+      "priority": 61,
+      "description": "The 'On this page' TOC button is sticky: while scrolling a post it stays pinned just below the masthead at the same left position/alignment and same look as now (content-sized blue button, no container chrome, no full-width bar). Works when the masthead is visible and when it auto-hides on scroll down (F023): the button sits directly under the masthead when shown and moves up to the viewport top (small gap) when hidden, with no overlap and no large empty gap. Light and dark; 375/768/1280/1900 widths. Author sidebar untouched.",
+      "steps": [
+        "Cause: _post-ux.scss ~line 138 forces `.page__content > .sidebar__right.sticky` to position: static (F059). Change it to position: sticky; top: <masthead offset>; z-index above content, keeping width auto, transparent, no border/shadow, margin as now. Sticky only works if no ancestor between it and the scroll root has overflow hidden/auto; check .page__content/.page and fix (overflow: visible) if needed.",
+        "Offset: masthead is `html.masthead-autohide .masthead {position: sticky; top:0}` and toggles `.is-hidden` (translateY(-100%)) in assets/js/post-ux.js (~line 293). Expose masthead height as a CSS variable (e.g. --pux-mast-h set from mast.offsetHeight on load/resize) and a state hook (e.g. html class `masthead-hidden` toggled alongside .is-hidden in the same update function). CSS: top: calc(var(--pux-mast-h) + 8px) normally, top: 8px when masthead hidden, with a transition matching the masthead (0.25s, none under prefers-reduced-motion). If JS/autohide is absent, fall back to top: 8px offset below a static masthead (sticky stays within viewport).",
+        "Verify in browser: open /blog/rsna-knee-abnormality-detection-wrap-up/ at 1280, scroll 1500px down then up: button stays visible and left-aligned with its original x (same as before scrolling, compare getBoundingClientRect().left); when masthead is hidden button top <= 16px; when masthead shown button top >= masthead bottom and does not overlap it. Repeat at 375 and 768 and in dark (data-theme=dark). Scroll back to top: button returns to its normal place above the first paragraph. Page scrollWidth == viewport. Button must not stay sticky past the end of the post content (no overlap with footer/prev-next)."
+      ],
+      "verify": [
+        "bash .harness/build.sh",
+        "python3 -c \"import re,sys; c=open('_site/assets/css/main.css').read(); m=re.search(r'\\.page__content\\s*>\\s*\\.sidebar__right\\.sticky\\s*\\{[^}]*\\}',c[c.rfind('F059') if 'F059' in c else 0:]); sys.exit(0 if 'position:sticky' in c.replace(' ','') else 'no sticky rule in built css')\"",
+        "grep -q 'masthead-hidden\\|pux-mast-h' assets/js/post-ux.js",
+        "git diff --quiet HEAD -- _includes/author-profile.html _sass/minimal-mistakes/_sidebar.scss"
+      ],
+      "depends_on": [],
+      "tags": [
+        "toc",
+        "post-css"
+      ],
+      "id": "F061",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P010"
+    },
+    {
+      "category": "functional",
+      "priority": 62,
+      "description": "The opened 'On this page' list is a dropdown panel overlaying the post content (absolutely positioned under the button, z-index above text, does not push text down or change page height), showing ALL entries with no inner vertical scroll (panel grows to fit), with an opaque background and border readable in light and dark. Toggle is keyboard accessible (button/title focusable, Enter/Space toggles, aria-expanded accurate), and it closes on Escape (focus returns to the button) and on click/tap outside; choosing an entry still jumps to the section. Works with the sticky button (F061) at 375/768/1280/1900.",
+      "steps": [
+        "CSS (_post-ux.scss ~line 155-160): make `.toc--js` position: relative (or the sticky wrapper the containing block); `.toc--js.is-open .toc__menu {position:absolute; top:100%; left:0; z-index:<above content, below masthead>; margin-top:.35rem; width: max-content; max-width: min(92vw, 28rem); max-height:none; overflow:visible; background:#fff/#161b22 dark; border; border-radius; box-shadow ok on the panel only}`. nav.toc/aside must remain chrome-free when collapsed or open (F059). Keep long headings wrapping (overflow-wrap) so no horizontal overflow at 375.",
+        "JS (assets/js/post-ux.js TOC IIFE ~line 67): make the title/button keyboard-operable if it is not natively a button (role/tabindex/Enter/Space) without double-firing; add document keydown Escape -> close and focus the toggle; add document click listener closing when target is outside nav.toc; keep the existing close-on-link-click (extend to all widths), localStorage persistence may be dropped or kept but a fresh page load should start closed because the panel overlays text.",
+        "Verify in browser at 375/768/1280 light+dark on a post with many headings (pi-bench or rsna): open the panel: document.documentElement.scrollHeight and first paragraph top are unchanged versus closed; panel scrollHeight == clientHeight (no inner scroll) and lists every nav.toc a link; panel z-order covers text (elementFromPoint at panel centre is inside the panel); aria-expanded true/false; Escape closes; click on body text closes; click on an entry navigates and closes; while scrolled down with the sticky button the panel stays attached under the button. If a post has more entries than fit the viewport, the panel still has no inner scroll (page scroll is used)."
+      ],
+      "verify": [
+        "bash .harness/build.sh",
+        "grep -q 'Escape' assets/js/post-ux.js",
+        "python3 -c \"import re,sys; c=open('_site/assets/css/main.css').read().replace(' ',''); sys.exit(0 if re.search(r'\\.toc--js\\.is-open\\.toc__menu\\{[^}]*position:absolute',c) else 'toc menu not absolute in built css')\"",
+        "git diff --quiet HEAD -- _includes/author-profile.html _sass/minimal-mistakes/_sidebar.scss"
+      ],
+      "depends_on": [
+        "F061"
+      ],
+      "tags": [
+        "toc",
+        "post-css"
+      ],
+      "id": "F062",
+      "passes": false,
+      "status": "todo",
+      "source": "proposal:P010"
     }
   ]
 }
