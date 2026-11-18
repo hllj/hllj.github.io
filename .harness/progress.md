@@ -10,3 +10,7 @@ Run: .harness/init.sh (bundle install into vendor/bundle, build, serve http://12
 Test: no test suite exists; verify commands build with .harness/build.sh and grep _site output. Behaviour is verified by the tester in the browser (Playwright). Keep verify-grep markers (class names/ids) as named in the features.
 Features: .harness/feature_list.json (42 features, F001-F042).
 Notes: sass emits many deprecation warnings (harmless). Do not commit _site or vendor/bundle.
+
+## 2026-11-18 - F001 (coder)
+Baseline only, no code changes. init.sh passes (server up, smoke ok). Verify command passes: build.sh succeeds and _site/blog/pi-bench-harness-iterations/index.html contains page__title; h1.page__title served at http://127.0.0.1:4000/blog/pi-bench-harness-iterations/.
+Known issues: none. Next: F002.
