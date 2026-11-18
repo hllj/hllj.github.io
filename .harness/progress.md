@@ -214,3 +214,6 @@ init ok. Fetched all 19 posts: every middle post has two cards (prev/next) with 
 
 ## 2026-11-18 session 34 - F030 (coder)
 Related posts restyled as cards (end of _post-ux.scss, scoped .layout--single .page__related): CSS grid 1 col <600px, 2 cols >=600, 4 cols >=1500; 16:9 cropped teaser, title clamped 3 lines, date + read time, excerpt clamped 4 lines, dark variant. Verified pi-bench: 2 cols (388px cards) at 1024, 1 col 351px at 375, scrollWidth ok; verify cmd passes. Known: none.
+
+## F030 Test report (tester, session 34)
+init ok, rebuilt. pi-bench: "You may also enjoy" has 4 cards each with teaser img, title, excerpt, date + read time. 1024: 2 cols (388px), 375: 1 col (351px), 1700: 4 cols (223px, equal 340px height), scrollWidth == viewport at all three. 4 other posts checked: each renders 4 grid items. Dark mode not checked. Result: pass.
