@@ -3,7 +3,7 @@
   --post-ux: 1;
 
   /* Type scale (modular, ratio ~1.2) */
-  --pux-font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --pux-font-body: "Inter", "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --pux-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --pux-text-xs: 0.8125rem;
   --pux-text-sm: 0.9375rem;
@@ -54,6 +54,18 @@
   color: var(--pux-text);
   font-size: var(--pux-text-base);
   line-height: var(--pux-leading-body);
+  font-family: var(--pux-font-body);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+
+  // comfortable measure (~70ch) for text blocks; code, images, tables stay wide
+  > p, > ul, > ol, > blockquote, > h1, > h2, > h3, > h4, > h5, > h6, > dl {
+    max-width: 70ch;
+  }
+
+  h1, h2, h3, h4 { font-family: var(--pux-font-body); font-weight: 700; letter-spacing: -0.01em; }
+  h2 { border-bottom: 1px solid var(--pux-border); padding-bottom: var(--pux-space-2); }
+  h4 { font-weight: 600; color: var(--pux-text-muted); }
 
   h2 { font-size: var(--pux-text-2xl); margin-top: var(--pux-space-7); margin-bottom: var(--pux-space-4); }
   h3 { font-size: var(--pux-text-xl); margin-top: var(--pux-space-6); margin-bottom: var(--pux-space-3); }

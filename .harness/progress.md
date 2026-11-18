@@ -29,3 +29,6 @@ Defined --pux-* tokens (type scale, spacing scale, accent, text/muted/border col
 
 ## 2026-11-18 - F003 (tester)
 Rebuilt; --pux-accent in main.css. Browser (1024px) on /blog/pi-coding-agent-setup/ and pi-bench-harness-iterations: body 17px (token base), h2 30px, link color rgb(42,109,244)=accent, text rgb(36,41,47), meta 13px (xs), line-heights per tokens. Note: hero-overlay posts keep white title/meta and the overlay rule (1.953em) wins over the title token (~39px vs 38px); minor, out of scope (hero styling). --pux-bg/--pux-content-width not yet applied (coder noted). Result: pass.
+
+## 2026-11-18 - F004 (coder)
+Added Inter (Google Fonts, vietnamese subset) link in _includes/head/custom.html; --pux-font-body now Inter/Be Vietnam Pro stack; .page__content text blocks max-width 70ch, line-height 1.7, h2 border/weight, h4 muted. Verified in browser on RSNA wrap-up post: paragraph width ~750px at 17px (~72 chars), font Inter, lh 28.9px, h2 30px. Known issues: Google Fonts needs network; falls back to system stack offline. That post has no h3, so h3/h4 hierarchy checked only via CSS sizes (24/20px).
