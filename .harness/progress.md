@@ -141,3 +141,6 @@ init ok. No post has real footnotes, so injected kramdown-style markup (sup>a.fo
 
 ## 2026-11-18 session 22 - F020 (coder)
 Dark mode: head inline script sets html[data-theme] from localStorage 'theme' or prefers-color-scheme before paint (no flash); masthead .theme-toggle button (aria-pressed) toggles and persists; new _sass/minimal-mistakes/_dark.scss overrides colors under html[data-theme="dark"] (body, masthead, text, tables, blockquote/notices, footnotes, toc). Verified on pi-bench post: init light, click -> dark (bg rgb(13,17,23), localStorage dark, aria-pressed true), reload stays dark; verify cmd passes. Not verified with real OS dark emulation (logic: matchMedia fallback). Known: footer keeps skin colors; other page types (index, archive) only lightly themed (F021 covers polish).
+
+## F020 Test report (tester, session 22)
+init ok. pi-bench post: cleared storage, light by default, masthead .theme-toggle click -> data-theme dark, body bg rgb(13,17,23), localStorage dark, aria-pressed true. Reload: stays dark, text rgb(230,237,243), no contrast problems; theme script is in head before body (no flash by construction; paint not captured). Emulated OS dark with empty storage: starts dark. Probe: toggle to light under OS dark, reload -> stays light (stored choice beats OS). Result: pass.
