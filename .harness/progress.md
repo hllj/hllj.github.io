@@ -135,3 +135,6 @@ Curator (session 20): refreshed .harness/learnings.md.
 
 ## 2026-11-18 session 21 - F019 (coder)
 Added to _post-ux.scss: inline links underlined (1px, thicker on hover), focus-visible 3px outline; footnote refs and back-links get a 24x24 tap target, accent color, hover underline; .footnotes block with top border and :target highlight. Verified with a temporary post containing a footnote (removed): footnote ref 24x24.75, link underlined, hrefs #fn:1 / #fnref:1, scrollWidth ok. No existing post has footnotes. Known: none.
+
+## F019 Test report (tester, session 21)
+init ok. No post has real footnotes, so injected kramdown-style markup (sup>a.footnote, .footnotes li>a.reversefootnote) into pi-bench post. Inline links underlined 1px (2px hover rule present); footnote ref 24x24.75 inline-block accent color; back-link 24x24; click ref -> #fn:1, back -> #fnref:1; li:target bg rgb(255,248,197) text rgb(31,41,51); keyboard Tab focus shows 3px solid accent outline; scrollWidth == viewport. Hover not exercised with real mouse. Result: pass.
