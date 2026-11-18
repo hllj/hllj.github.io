@@ -190,3 +190,6 @@ init ok. rsna wrap-up at 1280 (JS measurement; pane screenshots are cropped): p 
 
 ## 2026-11-18 F026 (retry)
 - Wide blocks (figures, tables, pre) now max-width calc(100% - 230px - 2rem) at >=1024px so the sticky floated TOC never covers them. Verified at 1280 on rsna wrap-up: imgs 678px (text 402px), no block rect intersects TOC rect, scrollWidth 1280.
+
+## F026 Test report (tester, session 30)
+init ok, rebuilt (CSS contains calc(100% - 230px - 2rem)). rsna wrap-up at 1280: text p 600px, li 563, img/table/pre max 678 (stop short of TOC at x1032), 0 tables overflowing, TOC sticky 33 links. Scrolled to y=3000/6000/9000/13000: 0 img/table/pre intersect TOC rect (earlier failure fixed). scrollWidth 1280. At 375: img 351, pre 349, scrollWidth 375. Result: pass.
