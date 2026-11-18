@@ -154,3 +154,6 @@ init ok, rebuilt. Dark-mode JS audit (transitions off) on pi-coding-agent-setup:
 ## 2026-11-18 F021 (retry)
 - Fixed TOC header contrast in dark mode: .toc .nav__title bg #1f6feb -> #1a4f9c (text #e6edf3, 6.7:1). Build OK, compiled CSS contains new value.
 - Lesson: audit a post WITH a TOC (rsna-knee-abnormality-detection-wrap-up) too.
+
+## F021 Test report (tester, session 24)
+init ok, rebuilt. Dark-mode audit (transitions off) on rsna wrap-up (TOC): 0 light bgs, 0 text <4.5:1, TOC title bg rgb(26,79,156), scrollWidth==viewport. pi-bench post: 0 light bgs; only sr-only label (visually hidden) flagged. Result: pass.
