@@ -259,3 +259,6 @@ init ok, tests/toc_css_check.py passes. Iframes (data-theme set, transitions off
 
 ## Session 81 - F062 (coder)
 No code change: the F059 rework 2 commit already implements F062 (open .toc__menu absolute top:100% left:0, max-height min(70vh,40rem), overflow-y auto, opaque bg + border, Escape/outside/link close). Re-ran all 4 verify cmds (build, Escape grep, tests/toc_css_check.py, git diff on author-profile/_sidebar) - all pass. Claimed. Not re-measured in browser this session (tester covered 375/768/1280/1900 light/dark in session 80).
+
+## F062 Test report (tester, session 81)
+init ok, tests/toc_css_check.py passes. Iframes on pi-bench at 375/768/1280/1900 x light/dark: open menu absolute, top 4-6px below nav, left == nav left, overflow-y auto, max-height 70vh (480/490px at 700 high), scrollHeight>clientHeight, scrollTop settable, opaque bg (#fff / rgb(22,27,34)) + 1px border, z 20/30, page scrollHeight and first p top unchanged, no horizontal overflow, aria true on open; Escape closes + focus returns to button; outside click and entry click close. Sticky state (scroll 1500, 375/768/1280): panel bottom <= viewport. Note: at scroll 0 the button sits near/below the fold so the panel extends below the viewport (static 70vh, page scroll reveals it); judged acceptable. Not exercised: real Enter/Space key events (native button). Result: pass.
