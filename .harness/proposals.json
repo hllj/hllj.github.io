@@ -334,6 +334,33 @@
         "drop": []
       },
       "decided_at": "2026-11-18T10:46:39Z"
+    },
+    {
+      "id": "P005",
+      "status": "approved",
+      "by": "planner",
+      "reason": "Fix F054 verify: drop non-existent /about/ and sidebar-less /blog/, use pages with author__urls",
+      "at": "2026-11-18T11:58:50Z",
+      "payload": {
+        "add": [],
+        "drop": [],
+        "amend": [
+          {
+            "id": "F054",
+            "steps": [
+              "Cause: _config.yml author.links has an Email item (mailto) while author.email is also set, and _includes/author-profile.html renders both the links loop and the author.email block, so Email appears at the start and end",
+              "Fix by removing the redundant 'Email' item from author.links in _config.yml (keep author.email, which renders one Email entry with schema.org markup); also drop or fix any links entry that has a label but no url only if it renders an empty item (the include already skips url-less links, so confirm Website does not render)",
+              "Build and open /, /categories/, /tags/ and a post (e.g. /blog/pi-bench-harness-iterations/): the links list shows Email exactly once and each other link once; no empty icon-only entry"
+            ],
+            "verify": [
+              "bash .harness/build.sh",
+              "python3 -c \"import re,sys;h=open('_site/blog/pi-bench-harness-iterations/index.html').read();m=re.search(r'<ul class=\\\"author__urls.*?</ul>',h,re.S);sys.exit(0 if m and m.group(0).count('fa-envelope')==1 else 1)\"",
+              "python3 -c \"import re\nfor p in ['index.html','categories/index.html','tags/index.html','blog/pi-bench-harness-iterations/index.html']:\n h=open('_site/'+p).read();m=re.search(r'<ul class=\\\"author__urls.*?</ul>',h,re.S);assert m and m.group(0).count('fa-envelope')==1,p\""
+            ]
+          }
+        ]
+      },
+      "decided_at": "2026-11-18T11:59:30Z"
     }
   ]
 }

@@ -1562,9 +1562,22 @@
         "header"
       ],
       "id": "F043",
-      "passes": false,
-      "status": "todo",
-      "source": "proposal:P001"
+      "passes": true,
+      "status": "passing",
+      "source": "proposal:P001",
+      "updated_at": "2026-11-18T10:49:57Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T10:48:43Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:49:57Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "category": "functional",
@@ -1584,9 +1597,22 @@
         "header"
       ],
       "id": "F044",
-      "passes": false,
-      "status": "todo",
-      "source": "proposal:P001"
+      "passes": true,
+      "status": "passing",
+      "source": "proposal:P001",
+      "updated_at": "2026-11-18T10:51:23Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T10:50:27Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:51:23Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "category": "functional",
@@ -1606,9 +1632,33 @@
         "toc"
       ],
       "id": "F045",
-      "passes": false,
-      "status": "todo",
-      "source": "proposal:P001"
+      "passes": true,
+      "status": "passing",
+      "source": "proposal:P001",
+      "updated_at": "2026-11-18T10:55:16Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T10:52:17Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:53:25Z",
+          "event": "fail",
+          "note": "Entry spacing not uniform: nested .toc__menu ul has margin-bottom 18px, so the gap between the last nested entry and the next top-level entry is 58px vs 40px elsewhere (measured via link top deltas at 375 and 1280 on /blog/pi-bench-harness-iterations/: 40,40,40,40,58,40..., 58 again after 'Một task có khả năng...'). Visible as an extra blank gap in the TOC after 'Tổng kết: ...'. Description requires even entry spacing. Rest passes: toggle hidden on desktop / chevron 40x40 transparent on mobile, weights 400/500, no underline, active highlight tracks scroll, dark ok, scrollWidth==viewport. Fix: zero the margin on .toc__menu ul."
+        },
+        {
+          "at": "2026-11-18T10:54:16Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:55:16Z",
+          "event": "pass",
+          "note": ""
+        }
+      ],
+      "notes": "Entry spacing not uniform: nested .toc__menu ul has margin-bottom 18px, so the gap between the last nested entry and the next top-level entry is 58px vs 40px elsewhere (measured via link top deltas at 375 and 1280 on /blog/pi-bench-harness-iterations/: 40,40,40,40,58,40..., 58 again after 'Một task có khả năng...'). Visible as an extra blank gap in the TOC after 'Tổng kết: ...'. Description requires even entry spacing. Rest passes: toggle hidden on desktop / chevron 40x40 transparent on mobile, weights 400/500, no underline, active highlight tracks scroll, dark ok, scrollWidth==viewport. Fix: zero the margin on .toc__menu ul."
     },
     {
       "category": "functional",
@@ -1631,9 +1681,22 @@
         "toc"
       ],
       "id": "F046",
-      "passes": false,
-      "status": "todo",
-      "source": "proposal:P001"
+      "passes": true,
+      "status": "passing",
+      "source": "proposal:P001",
+      "updated_at": "2026-11-18T10:56:57Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T10:56:09Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:56:57Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "category": "functional",
@@ -1653,9 +1716,22 @@
         "post-nav"
       ],
       "id": "F047",
-      "passes": false,
-      "status": "todo",
-      "source": "proposal:P001"
+      "passes": true,
+      "status": "passing",
+      "source": "proposal:P001",
+      "updated_at": "2026-11-18T10:59:12Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T10:58:34Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T10:59:12Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "category": "functional",
@@ -1678,9 +1754,22 @@
         "blog-index"
       ],
       "id": "F048",
-      "passes": false,
-      "status": "todo",
-      "source": "proposal:P002"
+      "passes": true,
+      "status": "passing",
+      "source": "proposal:P002",
+      "updated_at": "2026-11-18T11:03:18Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T11:01:51Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T11:03:18Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "category": "functional",
@@ -1700,9 +1789,22 @@
         "blog-index"
       ],
       "id": "F049",
-      "passes": false,
-      "status": "todo",
-      "source": "proposal:P002"
+      "passes": true,
+      "status": "passing",
+      "source": "proposal:P002",
+      "updated_at": "2026-11-18T11:05:36Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T11:04:05Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T11:05:36Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "category": "functional",
@@ -1722,9 +1824,22 @@
         "blog-index"
       ],
       "id": "F050",
-      "passes": false,
-      "status": "todo",
-      "source": "proposal:P002"
+      "passes": true,
+      "status": "passing",
+      "source": "proposal:P002",
+      "updated_at": "2026-11-18T11:09:40Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T11:09:00Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T11:09:40Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "category": "functional",
@@ -1745,9 +1860,22 @@
         "blog-index"
       ],
       "id": "F051",
-      "passes": false,
-      "status": "todo",
-      "source": "proposal:P002"
+      "passes": true,
+      "status": "passing",
+      "source": "proposal:P002",
+      "updated_at": "2026-11-18T11:51:34Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T11:50:48Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T11:51:34Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "category": "functional",
@@ -1770,9 +1898,22 @@
         "scss"
       ],
       "id": "F052",
-      "passes": false,
-      "status": "todo",
-      "source": "proposal:P003"
+      "passes": true,
+      "status": "passing",
+      "source": "proposal:P003",
+      "updated_at": "2026-11-18T11:54:51Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T11:53:17Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T11:54:51Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "category": "functional",
@@ -1794,9 +1935,27 @@
         "scss"
       ],
       "id": "F053",
-      "passes": false,
-      "status": "todo",
-      "source": "proposal:P003"
+      "passes": true,
+      "status": "passing",
+      "source": "proposal:P003",
+      "updated_at": "2026-11-18T11:57:38Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T11:56:38Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T11:56:38Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T11:57:38Z",
+          "event": "pass",
+          "note": ""
+        }
+      ]
     },
     {
       "category": "bug",
@@ -1805,12 +1964,12 @@
       "steps": [
         "Cause: _config.yml author.links has an Email item (mailto) while author.email is also set, and _includes/author-profile.html renders both the links loop and the author.email block, so Email appears at the start and end",
         "Fix by removing the redundant 'Email' item from author.links in _config.yml (keep author.email, which renders one Email entry with schema.org markup); also drop or fix any links entry that has a label but no url only if it renders an empty item (the include already skips url-less links, so confirm Website does not render)",
-        "Build and open /, /blog/, /categories/, /about/ and a post: the links list shows Email exactly once and each other link once; no empty icon-only entry"
+        "Build and open /, /categories/, /tags/ and a post (e.g. /blog/pi-bench-harness-iterations/): the links list shows Email exactly once and each other link once; no empty icon-only entry"
       ],
       "verify": [
         "bash .harness/build.sh",
         "python3 -c \"import re,sys;h=open('_site/blog/pi-bench-harness-iterations/index.html').read();m=re.search(r'<ul class=\\\"author__urls.*?</ul>',h,re.S);sys.exit(0 if m and m.group(0).count('fa-envelope')==1 else 1)\"",
-        "python3 -c \"import re,sys\nfor p in ['index.html','blog/index.html','categories/index.html','about/index.html']:\n h=open('_site/'+p).read();m=re.search(r'<ul class=\\\"author__urls.*?</ul>',h,re.S);assert m and m.group(0).count('fa-envelope')==1,p\""
+        "python3 -c \"import re\nfor p in ['index.html','categories/index.html','tags/index.html','blog/pi-bench-harness-iterations/index.html']:\n h=open('_site/'+p).read();m=re.search(r'<ul class=\\\"author__urls.*?</ul>',h,re.S);assert m and m.group(0).count('fa-envelope')==1,p\""
       ],
       "depends_on": [],
       "tags": [
@@ -1820,7 +1979,21 @@
       "id": "F054",
       "passes": false,
       "status": "todo",
-      "source": "proposal:P003"
+      "source": "proposal:P003",
+      "updated_at": "2026-11-18T11:58:23Z",
+      "attempts": [
+        {
+          "at": "2026-11-18T11:58:11Z",
+          "event": "claim",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T11:58:23Z",
+          "event": "fail",
+          "note": "verify command failed: python3 -c \"import re,sys | $ bash .harness/build.sh $ python3 -c \"import re,sys;h=open('_site/blog/pi-bench-harness-iterations/index.html').read();m=re.search(r'<ul class=\\\"author__urls.*?</ul>',h,re.S);sys.exit(0 if m and m.group(0).count('fa-envelope')==1 else 1)\"  (log: .harness/sessions/063-verify-F054.log)"
+        }
+      ],
+      "notes": "verify command failed: python3 -c \"import re,sys | $ bash .harness/build.sh $ python3 -c \"import re,sys;h=open('_site/blog/pi-bench-harness-iterations/index.html').read();m=re.search(r'<ul class=\\\"author__urls.*?</ul>',h,re.S);sys.exit(0 if m and m.group(0).count('fa-envelope')==1 else 1)\"  (log: .harness/sessions/063-verify-F054.log)"
     },
     {
       "category": "functional",
