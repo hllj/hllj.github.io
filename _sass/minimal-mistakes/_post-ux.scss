@@ -899,3 +899,14 @@ html { scroll-padding-top: 1rem; }
 .taxonomy__section { scroll-margin-top: 5.5rem; display: flow-root; }
 .taxonomy__section .archive__subtitle { scroll-margin-top: 5.5rem; }
 .taxonomy__index a:focus-visible { outline: 3px solid #1a73e8; outline-offset: 2px; }
+
+/* F050: blog index grid fills the content width (replaces float/span columns) */
+.layout--posts .entries-grid {
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; margin: 0; width: 100%; box-sizing: border-box;
+  align-items: stretch; justify-content: start;
+  .grid__item { float: none; clear: none; width: auto; margin: 0; padding: 0; min-width: 0; display: flex;
+    &:nth-child(n) { margin: 0; clear: none; } }
+  .grid__item > .archive__item { width: 100%; }
+}
+@media (min-width: 600px) { .layout--posts .entries-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1000px) { .layout--posts .entries-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
