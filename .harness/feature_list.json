@@ -2490,9 +2490,9 @@
       ],
       "id": "F065",
       "passes": false,
-      "status": "todo",
+      "status": "claimed",
       "source": "proposal:P011",
-      "updated_at": "2026-11-18T13:49:27Z",
+      "updated_at": "2026-11-18T13:59:48Z",
       "attempts": [
         {
           "at": "2026-11-18T13:47:45Z",
@@ -2502,6 +2502,11 @@
         {
           "at": "2026-11-18T13:49:27Z",
           "event": "pass",
+          "note": ""
+        },
+        {
+          "at": "2026-11-18T13:59:48Z",
+          "event": "claim",
           "note": ""
         }
       ]

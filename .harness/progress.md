@@ -268,3 +268,6 @@ No code change: the F059 rework 2 commit already replaced the right-opening rule
 
 ## F064 rework Test report (tester, session 82)
 init ok, tests/toc_css_check.py passes. Iframes (data-theme set, transitions off) on pi-bench at 1280/1900 x light/dark (1024 iframe is 1020 inner so layout stays narrow; not exact): panel left == nav left (16), top 6px below nav bottom, width 259/288 (<= 28rem), overflow-y auto, scrollHeight 680 > clientHeight 555 at 800px high, z 30, opaque bg (#fff / rgb(22,27,34)) + 1px border, 17 links, no horizontal overflow. After scroll 1500 panel stays under the sticky button, bottom 684-813 <= innerHeight, elementFromPoint at panel centre inside panel; Escape closes (aria false). Note: panel is wider than the 184px sidebar column (extends over text, max 28rem) - within spec wording. At scroll 0 the button is below the fold so panel starts off-screen (page scroll reveals). Not exercised: rsna, real key events, outside/link click re-check (covered in earlier sessions, logic unchanged). Result: pass.
+
+## Session 83 - F065 (coder)
+No code change: resize/breakpoint handling (session 79) and the below-button panel + tests/toc_css_check.py (session 80) already cover F065. Re-ran all 4 verify cmds (build, resize grep, toc_css_check, sidebar git diff): pass. Claimed. Not re-measured in browser this session.
