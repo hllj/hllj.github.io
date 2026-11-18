@@ -323,3 +323,6 @@ init ok. Measured via iframes at 375/600/699/700/768/1024/1280 in light and dark
 
 ## 2026-11-18 session 52 - F044 (coder)
 Breadcrumb: ol/li now flex align-items:center, li min-height 40px (same as link tap target), separator gap symmetric 0.5rem each side (end of _post-ux.scss). Measured at 375/768/1280 x light/dark: link vs current crumb vertical center diff 0, left edge == masthead title left (12/14/18), scrollWidth==viewport. Verify cmd passes. Known: none.
+
+## F044 Test report (tester, session 52)
+init ok. Iframe measurements on pi-bench-harness-iterations and rsna wrap-up at 375/768/1280 x light/dark: Blog link vs "/ title" crumb vertical center diff 0 (text center within 0.5px), li height 40 both; separator symmetric (gap link->crumb == ::before margin-right, 6/7/9px); breadcrumb left == masthead title left (12/14/18); scrollWidth==viewport. Probe: injected very long multi-word title: at 375/768 it wraps to its own row without overflow (right edge within viewport), at 1280 stays on one line. CNN-Architecture-Part-2 slug no longer exists (no li) so skipped. Result: pass.
