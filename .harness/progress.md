@@ -351,3 +351,6 @@ Post footer rhythm (end of _post-ux.scss): .page__meta and .page__share were flo
 
 ## F047 Test report (tester, session 56)
 init ok. Iframe measurements on pi-bench-harness-iterations at 375/768/1280 x light/dark: footer tags bottom -> share top 24px; share bottom -> first card top 25px (incl 1px border); card gap 16px both side by side (1280, cards 318-782 / 798-1262) and stacked (375); floats none; scrollWidth==viewport. Screenshot unpainted (known capture lag), relied on measurements. Result: pass.
+
+## 2026-11-18 session 57 - F048 (coder)
+Blog index year pills: root cause of bad landing was floated entries of the previous section overflowing, so the h2 (clear:both) sat hundreds of px below its section top and the browser scrolled to the section box. Fix (end of _post-ux.scss): .taxonomy__section display:flow-root + scroll-margin-top 5.5rem (also on h2), html scroll-padding-top, pill :focus-visible ring; smooth scroll now only inside prefers-reduced-motion:no-preference (auto otherwise). Verified at 1024 (pane): all 5 pills and direct /blog/#2021 land with h2 top 112px (>0, bottom<viewport); verify cmds pass. Pane stalls smooth scroll, so tested with scroll-behavior:auto override. Masthead is not sticky on the blog index (autohide only on posts). Known: 375/768/dark not separately measured (layout is width-independent CSS).

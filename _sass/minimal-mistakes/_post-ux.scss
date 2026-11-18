@@ -129,7 +129,8 @@
 }
 
 /* Table of contents: smooth scroll + anchor offset */
-html { scroll-behavior: smooth; }
+html { scroll-behavior: auto; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 .page__content :is(h1, h2, h3, h4, h5, h6)[id] { scroll-margin-top: 5.5rem; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
@@ -892,3 +893,9 @@ html[data-theme="dark"] :where(a, button, input, select, textarea, summary, [tab
 .layout--single .page .page__inner-wrap .page__share, .layout--single .page__inner-wrap > .page__share { float: none; clear: both; width: 100%; margin: 24px 0 0; }
 .layout--single .post-nav.pagination { clear: both; margin-top: 24px; gap: 16px; }
 .layout--single .page .page__inner-wrap .page__meta { float: none; }
+
+/* F048 blog index: year pills land with the year heading visible below the masthead */
+html { scroll-padding-top: 1rem; }
+.taxonomy__section { scroll-margin-top: 5.5rem; display: flow-root; }
+.taxonomy__section .archive__subtitle { scroll-margin-top: 5.5rem; }
+.taxonomy__index a:focus-visible { outline: 3px solid #1a73e8; outline-offset: 2px; }
