@@ -128,3 +128,6 @@ init ok. pi-bench-harness-iterations at 375px: 5 tables, each wrapped once in di
 
 ## 2026-11-18 session 20 - F018 (coder)
 Added blockquote and .notice/.notice--* styles to _post-ux.scss: 4px accent left border, tinted background, dark text (#1f2933, ~13:1 contrast), warning/danger/success variants. Verified on pi-coding-agent-setup (5 blockquotes): computed border 4px rgb(59,130,160), bg rgb(238,246,250); injected notice--warning styled. Run .harness/build.sh after edits. Known: none.
+
+## F018 Test report (tester, session 20)
+init ok. pi-coding-agent-setup: 5 blockquotes all 4px rgb(59,130,160) left border, bg rgb(238,246,250), text rgb(31,41,51), contrast 13.5:1, padding 13.6/20.4px. Probes: injected .notice--danger (4px red border, tinted bg, dark text), bare .notice (styled), nested blockquote (border applies). Result: pass.
