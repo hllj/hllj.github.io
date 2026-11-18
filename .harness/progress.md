@@ -95,3 +95,6 @@ Code blocks already scrolled internally (pre overflow-x auto from F011). Added t
 
 ## F013 Test report (tester, session 14)
 init ok. 375px on pi-coding-agent-setup, pi-bench-harness-iterations, how-i-setup-this-blog: documentElement scrollWidth 375 on all, no element (outside pre) extends past viewport; pre overflow-x auto, long ones scroll internally (scrollWidth 447/441/415 > clientWidth 349). Probes: injected 400-char and long-path inline code (wrap, right edge 361px), 3800px-wide pre with CJK (scrollLeft works, page width stays 375), 300-char inline code in a table (right 363). Result: pass.
+
+## 2026-11-18 - F014 (coder, session 15)
+Added image/figure CSS to _post-ux.scss: img block, max-width 100%, height auto, centered, 8px radius; caption (em right after img, or figcaption) centered, italic, 0.85rem, muted color. Verified on rsna-knee wrap-up at 375/768/1280: 6 images fill the content column (right edge within column), scrollWidth == viewport, radius 8px, captions styled. Known issues: captions rely on the "![](..)\n*caption*" markdown pattern.

@@ -288,3 +288,28 @@ html { scroll-behavior: smooth; }
   word-break: break-word;
 }
 .page__content pre { max-width: 100%; }
+
+// Images and figures: responsive, centered, rounded; caption (italic line right after an image) styled.
+.page__content img,
+.page__content figure img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 8px;
+}
+.page__content p > img + em,
+.page__content figure > figcaption {
+  display: block;
+  max-width: 100%;
+  margin: 0.6em auto 0;
+  text-align: center;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  font-style: italic;
+  color: #5b6573;
+  overflow-wrap: anywhere;
+}
+.page__content figure { margin: 1.5em 0; }
+.page__content figure > figcaption { margin-top: 0.6em; padding: 0; background: none; }
