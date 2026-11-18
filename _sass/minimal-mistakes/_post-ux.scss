@@ -175,6 +175,15 @@ html.masthead-autohide.masthead-hidden .page__content > .sidebar__right.sticky {
   html:not(.masthead-autohide) .sidebar > .sidebar__right.sticky { top: 8px; }
   html.masthead-autohide.masthead-hidden .sidebar > .sidebar__right.sticky { top: 8px; }
 }
+/* F064: sidebar-hosted TOC opens as an overlay to the right of the button */
+@media (min-width: 1024px) {
+  .sidebar.sidebar--has-toc .toc--js.is-open .toc__menu {
+    top: 0; left: calc(100% + .5rem); margin-top: 0;
+    width: max-content;
+    max-width: min(28rem, calc(100vw - 260px));
+    z-index: 30;
+  }
+}
 @media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
   .sidebar > .sidebar__right.sticky { transition: none; }
 }
