@@ -1515,16 +1515,22 @@
         "F021",
         "F039"
       ],
-      "status": "claimed",
+      "status": "failing",
       "passes": false,
-      "updated_at": "2026-11-18T10:29:30Z",
+      "updated_at": "2026-11-18T10:30:22Z",
       "attempts": [
         {
           "at": "2026-11-18T10:29:30Z",
           "event": "claim",
           "note": ""
+        },
+        {
+          "at": "2026-11-18T10:30:22Z",
+          "event": "fail",
+          "note": "At 375px viewport the masthead is broken on all posts (CNN-Architecture-Part-2, pi-coding-agent-setup): .site-subtitle (x 73-173) overlaps the Home menu item (x 155-219) so Home renders clipped as 'ome' behind the tagline 'My little window and wall' (verified by screenshot zoom + getBoundingClientRect after fresh load). Coder only checked scrollWidth, not visual layout. Fix: hide subtitle or wrap/shrink at narrow widths. Other checks: no console errors, no horizontal overflow, no broken images at 375 light."
         }
-      ]
+      ],
+      "notes": "At 375px viewport the masthead is broken on all posts (CNN-Architecture-Part-2, pi-coding-agent-setup): .site-subtitle (x 73-173) overlaps the Home menu item (x 155-219) so Home renders clipped as 'ome' behind the tagline 'My little window and wall' (verified by screenshot zoom + getBoundingClientRect after fresh load). Coder only checked scrollWidth, not visual layout. Fix: hide subtitle or wrap/shrink at narrow widths. Other checks: no console errors, no horizontal overflow, no broken images at 375 light."
     }
   ]
 }

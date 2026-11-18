@@ -304,3 +304,6 @@ init ok. Live post footer: links Twitter, Facebook, GitHub, Instagram, Feed (all
 
 ## 2026-11-18 session 49 - F042 (coder)
 Review only, no code changes. Posts: CNN-Architecture-Part-2 (long Vietnamese), pi-coding-agent-setup (code), rsna wrap-up (images). In 375/768/1280 x light/dark (iframe + data-theme): documentElement scrollWidth == viewport in all 18 combos, no content element overflowing outside pre/table-wrap, dark bg #0d1117 / text #e6edf3, light text #24292f. Fresh-tab console on all 3 posts: no errors; no broken images. (Console errors seen earlier came from my iframe probe/stale buffer, not fresh loads.) Verify cmd passes. Known: none.
+
+## F042 Test report (tester, session 49)
+init ok. Opened CNN-Architecture-Part-2 and pi-coding-agent-setup at 375 light: no console errors, scrollWidth==375, no broken images. FAIL: masthead at 375 has site-subtitle (x73-173) overlapping the Home menu item (x155-219); Home shows clipped as "ome". Persistent after reload, on all posts. Did not complete remaining viewport/theme combos since a visible layout bug already contradicts "no layout bugs". Result: fail.
