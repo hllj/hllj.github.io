@@ -765,6 +765,154 @@
         "drop": []
       },
       "decided_at": "2026-11-18T13:54:09Z"
+    },
+    {
+      "id": "P013",
+      "status": "rejected",
+      "by": "planner",
+      "reason": "Subscribe by email form and subscriber list export",
+      "at": "2026-11-21T10:15:25Z",
+      "payload": {
+        "add": [
+          {
+            "id": "F066",
+            "category": "functional",
+            "description": "Email subscribe form: every blog post page ends with a 'Subscribe' form (email input with a label, and a submit button) that POSTs to the Buttondown embed endpoint. The Buttondown username comes from a new `subscribe.buttondown_username` key in _config.yml, in a new include _includes/subscribe-form.html. If the key is empty, the form is not rendered.",
+            "steps": [
+              "Set subscribe.buttondown_username in _config.yml and run bash .harness/build.sh",
+              "Open /blog/pi-bench-harness-iterations/ and scroll to the end of the post",
+              "Confirm a form with a labelled email input and a submit button is visible",
+              "Confirm the form action is https://buttondown.com/api/emails/embed-subscribe/<username>, method is post, and it opens in a new tab",
+              "Blank the config key, rebuild, and confirm no subscribe form is rendered"
+            ],
+            "verify": [
+              "bash .harness/build.sh && grep -q 'buttondown.com/api/emails/embed-subscribe/' _site/blog/pi-bench-harness-iterations/index.html && grep -q 'type=\"email\"' _site/blog/pi-bench-harness-iterations/index.html"
+            ],
+            "depends_on": [],
+            "tags": [
+              "subscribe",
+              "post-layout"
+            ],
+            "priority": 66,
+            "examples": [
+              {
+                "id": "EX066",
+                "name": "post page contains subscribe form",
+                "input": {
+                  "method": "GET",
+                  "path": "/blog/pi-bench-harness-iterations/",
+                  "headers": {},
+                  "query": {},
+                  "body": {}
+                },
+                "expect": {
+                  "status": 200,
+                  "body": "embed-subscribe"
+                },
+                "assertions": {
+                  "status": "exact",
+                  "body": "contains"
+                }
+              }
+            ]
+          },
+          {
+            "id": "F067",
+            "category": "functional",
+            "description": "Sidebar entry point: the author sidebar 'Follow' dropdown gets a 'Subscribe by email' item that links to the subscribe form (anchor #subscribe) on post pages, or to the blog index subscribe section on other pages. The blog index also shows the subscribe form with id=subscribe.",
+            "steps": [
+              "Rebuild the site and open a post page",
+              "Open the Follow dropdown and click 'Subscribe by email'",
+              "Confirm the page scrolls to the subscribe form",
+              "Open /blog/ and confirm the subscribe form is present with id=subscribe"
+            ],
+            "verify": [
+              "bash .harness/build.sh && grep -q 'Subscribe by email' _site/blog/pi-bench-harness-iterations/index.html && grep -q 'id=\"subscribe\"' _site/blog/pi-bench-harness-iterations/index.html"
+            ],
+            "depends_on": [
+              "F066"
+            ],
+            "tags": [
+              "subscribe",
+              "author-sidebar"
+            ],
+            "priority": 67
+          },
+          {
+            "id": "F068",
+            "category": "functional",
+            "description": "Owner can get the subscriber list: add scripts/export-subscribers.sh, which calls the Buttondown API (needs env BUTTONDOWN_API_KEY) and prints subscribers as CSV (email,creation_date). It exits 1 with a clear message if the key is missing, and supports --dry-run, which prints the request URL without any network call. Add docs/SUBSCRIBERS.md explaining how to create the Buttondown account, set the username, and view or export subscribers in the Buttondown dashboard.",
+            "steps": [
+              "Run scripts/export-subscribers.sh with no BUTTONDOWN_API_KEY and confirm exit code 1 and an error on stderr",
+              "Run BUTTONDOWN_API_KEY=x scripts/export-subscribers.sh --dry-run and confirm it prints the subscribers API URL and exits 0",
+              "With a real key, run the script and confirm a CSV with a header row is printed",
+              "Read docs/SUBSCRIBERS.md and confirm it covers setup and the dashboard export"
+            ],
+            "verify": [
+              "bash -c '! env -u BUTTONDOWN_API_KEY bash scripts/export-subscribers.sh 2>/dev/null'",
+              "BUTTONDOWN_API_KEY=x bash scripts/export-subscribers.sh --dry-run | grep -q 'api.buttondown.com/v1/subscribers'",
+              "test -s docs/SUBSCRIBERS.md"
+            ],
+            "depends_on": [
+              "F066"
+            ],
+            "tags": [
+              "subscribe",
+              "ops"
+            ],
+            "priority": 68,
+            "examples": [
+              {
+                "id": "EX068",
+                "name": "missing key fails",
+                "input": {
+                  "args": [
+                    "scripts/export-subscribers.sh"
+                  ],
+                  "stdin": "",
+                  "env": {
+                    "BUTTONDOWN_API_KEY": ""
+                  }
+                },
+                "expect": {
+                  "exit_code": 1,
+                  "stderr": "BUTTONDOWN_API_KEY"
+                },
+                "assertions": {
+                  "exit_code": "exact",
+                  "stderr": "contains"
+                }
+              },
+              {
+                "id": "EX069",
+                "name": "dry run prints URL",
+                "input": {
+                  "args": [
+                    "scripts/export-subscribers.sh",
+                    "--dry-run"
+                  ],
+                  "stdin": "",
+                  "env": {
+                    "BUTTONDOWN_API_KEY": "x"
+                  }
+                },
+                "expect": {
+                  "exit_code": 0,
+                  "stdout": "api.buttondown.com/v1/subscribers"
+                },
+                "assertions": {
+                  "exit_code": "exact",
+                  "stdout": "contains"
+                }
+              }
+            ]
+          }
+        ],
+        "amend": [],
+        "drop": []
+      },
+      "decided_at": "2026-11-21T10:20:40Z",
+      "decision_note": ""
     }
   ]
 }
