@@ -913,6 +913,186 @@
       },
       "decided_at": "2026-11-21T10:20:40Z",
       "decision_note": ""
+    },
+    {
+      "id": "P014",
+      "status": "approved",
+      "by": "planner",
+      "reason": "Follow dropdown email subscribe form with subscriber export",
+      "at": "2026-11-21T10:20:43Z",
+      "payload": {
+        "add": [
+          {
+            "id": "F066",
+            "category": "functional",
+            "description": "Author sidebar card: the Follow dropdown contains a Buttondown email subscribe form (label, email input, Subscribe button; POST to https://buttondown.com/api/emails/embed-subscribe/<username>) placed above the existing social links (Twitter/Facebook/GitHub/Instagram/Email stay). Username comes from a single config value subscribe.buttondown_username in _config.yml (default empty). If empty, no form is rendered and the dropdown shows only the social links. Works in both the desktop sidebar and the mobile inline author line Follow dropdown (single include, no duplicated form markup beyond what F052 already renders). No form at post ends or on the blog index.",
+            "steps": [
+              "Add subscribe.buttondown_username: \"\" to _config.yml with a comment explaining it",
+              "Create .harness/tmp/subscribe-test.yml with subscribe.buttondown_username: testuser (coder creates this)",
+              "Build with the test config and open a post: Follow dropdown shows the email form above the social links, and form action contains /api/emails/embed-subscribe/testuser",
+              "Build with the default config: no form in the author card, social links unchanged",
+              "Confirm no subscribe form exists in post footers or on /blog index"
+            ],
+            "verify": [
+              "cd /Users/hllj/hllj.github.io && bundle exec jekyll build --quiet --config _config.yml,.harness/tmp/subscribe-test.yml --destination /private/tmp/hllj_sub_on && python3 -c \"import sys;h=open('/private/tmp/hllj_sub_on/blog/pi-bench-harness-iterations/index.html').read();i=h.find('embed-subscribe/testuser');sys.exit(0 if i>0 and 'type=\\\"email\\\"' in h and h.find('fa-twitter',i)>i else 1)\"",
+              "cd /Users/hllj/hllj.github.io && bundle exec jekyll build --quiet --destination /private/tmp/hllj_sub_off && ! grep -q 'embed-subscribe' /private/tmp/hllj_sub_off/blog/pi-bench-harness-iterations/index.html"
+            ],
+            "examples": [
+              {
+                "id": "EX070",
+                "name": "form rendered when username set",
+                "input": {
+                  "method": "GET",
+                  "path": "/blog/pi-bench-harness-iterations/",
+                  "headers": {},
+                  "query": {},
+                  "body": {}
+                },
+                "expect": {
+                  "status": 200,
+                  "body": "embed-subscribe/testuser"
+                },
+                "assertions": {
+                  "status": "exact",
+                  "body": "contains"
+                }
+              }
+            ],
+            "depends_on": [],
+            "tags": [
+              "author",
+              "subscribe"
+            ]
+          },
+          {
+            "id": "F067",
+            "category": "functional",
+            "description": "Follow dropdown is keyboard accessible: the Follow button has aria-expanded (true/false kept in sync) and aria-controls pointing at the dropdown; Escape closes the dropdown and returns focus to the Follow button; opening it moves focus to the email input when the form is present. Applies to both the desktop sidebar and the mobile inline author line.",
+            "steps": [
+              "Open a post at mobile width and at desktop width with the form enabled",
+              "Tab to Follow, press Enter: dropdown opens, aria-expanded is true, focus is in the email input",
+              "Press Escape: dropdown closes, aria-expanded is false, focus is back on Follow",
+              "Click Follow again to close it: aria-expanded is false"
+            ],
+            "verify": [
+              "cd /Users/hllj/hllj.github.io && grep -q 'aria-expanded' assets/js/_main.js && grep -Eq 'Escape|keyCode === 27|Esc' assets/js/_main.js && grep -q 'aria-controls' _includes/author-profile.html && grep -q 'aria-expanded' _includes/author-profile.html"
+            ],
+            "depends_on": [
+              "F066"
+            ],
+            "tags": [
+              "author",
+              "subscribe",
+              "a11y"
+            ]
+          },
+          {
+            "id": "F068",
+            "category": "style",
+            "description": "Styling of the subscribe form inside the Follow dropdown: readable in light and dark mode (input, button, label and focus ring use theme colours/variables), fits the dropdown width on desktop and mobile, and does not change the F052-F054 spacing/layout (including the >=12px gap between Follow and location, and Email shown once).",
+            "steps": [
+              "Open a post with the form enabled in light and dark mode at desktop and mobile widths",
+              "Open Follow: input and button are legible with visible focus state and no horizontal overflow",
+              "Confirm Follow/location gap is still >=12px and the Email link appears once"
+            ],
+            "verify": [
+              "cd /Users/hllj/hllj.github.io && bundle exec jekyll build --quiet --config _config.yml,.harness/tmp/subscribe-test.yml --destination /private/tmp/hllj_sub_on && grep -q 'author__subscribe' /private/tmp/hllj_sub_on/assets/css/main.css && grep -Eq 'dark[^{]*author__subscribe|author__subscribe[^{]*dark' /private/tmp/hllj_sub_on/assets/css/main.css",
+              "cd /Users/hllj/hllj.github.io && python3 -c \"import re,sys;h=open('/private/tmp/hllj_sub_on/blog/pi-bench-harness-iterations/index.html').read();m=re.search(r'<ul class=\\\"author__urls.*?</ul>',h,re.S);sys.exit(0 if m and m.group(0).count('fa-envelope')==1 else 1)\""
+            ],
+            "depends_on": [
+              "F066"
+            ],
+            "tags": [
+              "author",
+              "subscribe",
+              "style"
+            ]
+          },
+          {
+            "id": "F069",
+            "category": "functional",
+            "description": "Owner script scripts/export_subscribers.py exports the Buttondown subscriber list as CSV (email, creation date, type/status columns) to stdout or --out FILE. Reads BUTTONDOWN_API_KEY from the environment, follows pagination, and supports --dry-run (prints the request it would make, no network, exit 0). Without the key it prints a clear error to stderr and exits 1. Standard library only.",
+            "steps": [
+              "Run without BUTTONDOWN_API_KEY: stderr mentions BUTTONDOWN_API_KEY, exit code 1",
+              "Run with BUTTONDOWN_API_KEY=dummy and --dry-run: prints the endpoint and a masked auth header, exit 0, no network call",
+              "With a real key (human step): CSV with a header row is printed"
+            ],
+            "verify": [
+              "cd /Users/hllj/hllj.github.io && env -u BUTTONDOWN_API_KEY python3 scripts/export_subscribers.py; test $? -eq 1",
+              "cd /Users/hllj/hllj.github.io && env -u BUTTONDOWN_API_KEY python3 scripts/export_subscribers.py 2>&1 | grep -q BUTTONDOWN_API_KEY",
+              "cd /Users/hllj/hllj.github.io && BUTTONDOWN_API_KEY=dummy python3 scripts/export_subscribers.py --dry-run | grep -q 'api.buttondown.com/v1/subscribers'"
+            ],
+            "examples": [
+              {
+                "id": "EX071",
+                "name": "missing key",
+                "input": {
+                  "args": [],
+                  "stdin": "",
+                  "env": {}
+                },
+                "expect": {
+                  "exit_code": 1,
+                  "stderr": "BUTTONDOWN_API_KEY"
+                },
+                "assertions": {
+                  "exit_code": "exact",
+                  "stderr": "contains"
+                }
+              },
+              {
+                "id": "EX072",
+                "name": "dry run",
+                "input": {
+                  "args": [
+                    "--dry-run"
+                  ],
+                  "stdin": "",
+                  "env": {
+                    "BUTTONDOWN_API_KEY": "dummy"
+                  }
+                },
+                "expect": {
+                  "exit_code": 0,
+                  "stdout": "api.buttondown.com/v1/subscribers"
+                },
+                "assertions": {
+                  "exit_code": "exact",
+                  "stdout": "contains"
+                }
+              }
+            ],
+            "depends_on": [],
+            "tags": [
+              "subscribe",
+              "scripts"
+            ]
+          },
+          {
+            "id": "F070",
+            "category": "docs",
+            "description": "docs/subscribers.md: short owner guide covering creating a Buttondown account (human step), setting subscribe.buttondown_username in _config.yml, getting the subscriber list via the Buttondown dashboard export and via scripts/export_subscribers.py (BUTTONDOWN_API_KEY, --dry-run, --out), and enabling RSS-to-email so new posts are emailed (feed URL on this site).",
+            "steps": [
+              "Read docs/subscribers.md and follow it: each step names the exact setting, command or dashboard menu",
+              "Confirm the feed URL it gives matches the site's generated feed"
+            ],
+            "verify": [
+              "cd /Users/hllj/hllj.github.io && grep -q 'buttondown_username' docs/subscribers.md && grep -q 'BUTTONDOWN_API_KEY' docs/subscribers.md && grep -q 'export_subscribers.py' docs/subscribers.md && grep -qi 'RSS' docs/subscribers.md"
+            ],
+            "depends_on": [
+              "F066",
+              "F069"
+            ],
+            "tags": [
+              "subscribe",
+              "docs"
+            ]
+          }
+        ],
+        "amend": [],
+        "drop": []
+      },
+      "decided_at": "2026-11-21T10:27:08Z"
     }
   ]
 }
