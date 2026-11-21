@@ -1093,6 +1093,66 @@
         "drop": []
       },
       "decided_at": "2026-11-21T10:27:08Z"
+    },
+    {
+      "id": "P015",
+      "status": "approved",
+      "by": "planner",
+      "reason": "RSS link in Follow dropdown",
+      "at": "2026-11-21T10:27:54Z",
+      "payload": {
+        "add": [
+          {
+            "id": "F071",
+            "category": "functional",
+            "priority": 71,
+            "description": "Follow dropdown on the author sidebar card has one RSS link item (fa-rss icon, label \"RSS\") pointing at the jekyll-feed blog feed (/feed.xml via relative_url), rendered once per layout, with the same link layout/spacing as the other social links in light and dark",
+            "steps": [
+              "Coder: in _includes/author-profile.html add one <li><a href=\"{{ site.feed.path | default: 'feed.xml' | prepend: '/' | relative_url }}\" ...><i class=\"fas fa-fw fa-rss\" aria-hidden=\"true\"></i><span class=\"label\">RSS</span></a></li> inside ul.author__urls, placed after the Email item and before the Keybase/Twitter items, using exactly the same markup pattern as the Email item (fa-fw icon, span.label). Do not add rel=nofollow (internal link). Do not touch the F066 subscribe form markup (above the ul), and do not add a second Follow control or a second feed link elsewhere in the include.",
+              "Do not add new CSS; the existing .author__urls li/a rules from F052/F053 (spacing, hover, dark mode) must apply unchanged. Only add a rule in _sass/minimal-mistakes/_post-ux.scss if the RSS row visibly differs from the Email row.",
+              "Build and open a post, the home page and /blog/: open the Follow dropdown on desktop (sidebar) and mobile (inline author line); an RSS row appears exactly once per layout, with the rss icon and label, same row height, icon/label gap and hover as GitHub/Email; clicking it opens /feed.xml",
+              "Check light and dark themes: icon and label colors match the neighbouring rows; no overflow at 375/768/1280px",
+              "With F066 form enabled (subscribe test config) the RSS row still appears in the list below the form, and fa-envelope still appears exactly once in author__urls"
+            ],
+            "verify": [
+              "cd /Users/hllj/hllj.github.io && bundle exec jekyll build --quiet --destination /private/tmp/hllj_rss",
+              "python3 -c \"import re,sys;h=open('/private/tmp/hllj_rss/blog/pi-bench-harness-iterations/index.html').read();m=re.search(r'<ul class=\\\"author__urls.*?</ul>',h,re.S);u=m.group(0) if m else '';a=re.findall(r'<a href=\\\"([^\\\"]*feed\\.xml)\\\"[^>]*>\\s*<i class=\\\"[^\\\"]*fa-rss',u);sys.exit(0 if len(a)==1 and u.count('fa-rss')==1 and u.count('fa-envelope')==1 and '>RSS<' in u else 1)\"",
+              "test -s /private/tmp/hllj_rss/feed.xml && grep -q '<feed' /private/tmp/hllj_rss/feed.xml"
+            ],
+            "examples": [
+              {
+                "id": "EX073",
+                "name": "Blog feed served at the URL the RSS link targets",
+                "input": {
+                  "method": "GET",
+                  "path": "/feed.xml",
+                  "headers": {},
+                  "query": {},
+                  "body": null
+                },
+                "expect": {
+                  "status": 200,
+                  "body": "<feed"
+                },
+                "assertions": {
+                  "status": "exact",
+                  "body": "contains"
+                }
+              }
+            ],
+            "depends_on": [
+              "F066"
+            ],
+            "tags": [
+              "author-profile",
+              "follow-dropdown"
+            ]
+          }
+        ],
+        "amend": [],
+        "drop": []
+      },
+      "decided_at": "2026-11-21T10:28:57Z"
     }
   ]
 }
